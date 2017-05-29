@@ -4,7 +4,7 @@ from pywps import ComplexInput, ComplexOutput
 from pywps import Format, FORMATS
 from pywps.app.Common import Metadata
 
-# from esmvalwps import runner
+from copernicus import runner
 
 import logging
 LOGGER = logging.getLogger("PYWPS")

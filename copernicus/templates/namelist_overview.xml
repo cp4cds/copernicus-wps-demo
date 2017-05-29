@@ -1,0 +1,34 @@
+<namelist>
+  <namelist_summary>
+    This namelist is based on namelist_overview from the tutorial.
+    It is adapted for the ESGF coupling test case. It uses the CMIP5 data from the ESGF archive:
+
+    project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=pr, model=MPI-ESM-LR, time_frequency=mon
+
+    Variable "pr" and time frequency "mon" are fixed.
+
+    This namelist is generated.
+  </namelist_summary>
+
+  <%include file="global.xml"/>
+
+  <MODELS>
+    <model>ESGF_CMIP5 MPI-M output1 MPI-M ${constraints['model']} ${constraints['experiment']} ${constraints['time_frequency']} atmos ${constraints['cmor_table']} ${constraints['ensemble']} latest ${start_year} ${end_year} CMIP5_template</model>
+  </MODELS>
+
+  <DIAGNOSTICS>
+    <diag>
+      <description>Tutorial contour plot used in the doc/overview.pdf</description>
+      <variable_def_dir>${prefix}/variable_defs/</variable_def_dir>
+      <variable>pr</variable>
+      <field_type>T2Ms</field_type>
+      <diag_script_cfg_dir>${prefix}/nml/cfg_overview</diag_script_cfg_dir>
+      <diag_script cfg="cfg_precip.ncl">surfconplot_simple.ncl</diag_script>
+    </diag>
+  </DIAGNOSTICS>
+
+  <ESGF>
+    <config_file>${workspace}/esgf_config.xml</config_file>
+  </ESGF>
+
+</namelist>

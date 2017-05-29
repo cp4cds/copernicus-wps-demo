@@ -1,0 +1,41 @@
+<namelist>
+  <namelist_summary>
+namelist_MyDiag.xml
+
+Sandbox namelist for implementing new diagnostics.
+
+It uses the CMIP5 data from the ESGF archive:
+
+project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=ta, model=MPI-ESM-LR, time_frequency=mon
+start_year=1990, end_year=2000
+
+Variable "ta" and time frequency "mon" are fixed.
+
+This namelist is generated.
+  </namelist_summary>
+
+  <%include file="global.xml"/>
+
+  <MODELS>
+    <model>ESGF_CMIP5 MPI-M output1 MPI-M ${constraints['model']} ${constraints['experiment']} ${constraints['time_frequency']} atmos ${constraints['cmor_table']} ${constraints['ensemble']} latest ${start_year} ${end_year} CMIP5_template</model>
+  </MODELS>
+
+  <!-- Please do not change anything below this line,
+      unless you want to modify the standard diagnostic settings. -->
+  <DIAGNOSTICS>
+    <diag>
+        <description>         Tutorial diagnostic  </description>
+        <variable_def_dir>    ${prefix}/variable_defs/     </variable_def_dir>
+        <variable>            MyVar                </variable>
+        <field_type>          T3M                  </field_type>
+        <diag_script_cfg_dir> ${prefix}/nml/cfg_MyDiag/    </diag_script_cfg_dir>
+
+        <diag_script cfg="cfg_MyDiag.ncl"> MyDiag.ncl </diag_script>
+    </diag>
+  </DIAGNOSTICS>
+
+  <ESGF>
+    <config_file>${workspace}/esgf_config.xml</config_file>
+  </ESGF>
+
+</namelist>
