@@ -15,11 +15,6 @@ dependencies:
 # tests
 - pytest
 - flake8
-# ipython
-- ipython
-# docs
-- sphinx=1.4.1
-- sphinx_rtd_theme
 # wps
 - pywps=4.0.0
 - nginx=1.10.3
