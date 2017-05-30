@@ -18,27 +18,23 @@ def diag(name, constraints, start_year, end_year, output_format='pdf', workspace
     result = {}
     workspace = workspace or os.curdir
 
-    try:
-        result['namelist'] = generate_namelist(
-            diag=name,
-            workspace=workspace,
-            constraints=constraints,
-            start_year=start_year,
-            end_year=end_year,
-            output_format=output_format,
-        )
+    result['namelist'] = generate_namelist(
+        diag=name,
+        workspace=workspace,
+        constraints=constraints,
+        start_year=start_year,
+        end_year=end_year,
+        output_format=output_format,
+    )
 
-        # run diag
-        result['logfile'] = run_diag(result['namelist'], workspace)
+    # run diag
+    result['logfile'] = run_diag(result['namelist'], workspace)
 
-        # references/acknowledgements document
-        result['reference'] = os.path.join(workspace, 'work', 'namelist.txt')
+    # references/acknowledgements document
+    result['reference'] = os.path.join(workspace, 'work', 'namelist.txt')
 
-        # plot output
-        result['output'] = find_plot(workspace, output_format)
-    except:
-        LOGGER.exception("diag %s failed!", name)
-        raise
+    # plot output
+    result['output'] = find_plot(workspace, output_format)
     return result
 
 
@@ -55,8 +51,8 @@ def run_diag(namelist, workspace='.'):
     try:
         output = check_output(cmd, stderr=STDOUT, cwd=config.esmval_root())
     except CalledProcessError as err:
-        LOGGER.exception('esmvaltool failed!')
-        raise Exception('esmvaltool failed: {}'.format(err.output))
+        LOGGER.error('esmvaltool failed! %s', err.output)
+        raise Exception('esmvaltool failed')
     else:
         # debug: show logfile
         if LOGGER.isEnabledFor(logging.DEBUG):

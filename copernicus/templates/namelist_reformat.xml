@@ -1,0 +1,40 @@
+<namelist>
+    <namelist_summary>
+        namelist_reformat.xml
+
+        Description:
+        Test namelist for the reformat routines
+
+        Author:
+        Mattia Righi (DLR, Germany - mattia.righi@dlr.de)
+
+        Project:
+        DLR ESMVal
+
+        This namelist is generated.
+    </namelist_summary>
+
+    <%include file="global.xml"/>
+
+    <MODELS>
+      <!-- Each block below is used for testing the project classes in projects.py -->
+      <model>ESGF_CMIP5 MPI-M output1 MPI-M ${constraints['model']} ${constraints['experiment']} ${constraints['time_frequency']} atmos ${constraints['cmor_table']} ${constraints['ensemble']} latest ${start_year} ${end_year} CMIP5_template</model>
+    </MODELS>
+
+    <DIAGNOSTICS>
+        <diag>
+            <description>Time series plot</description>
+            <variable_def_dir>${prefix}/variable_defs/</variable_def_dir>
+            <variable>tas</variable>
+            <field_type>T2Ms</field_type>
+            <diag_script_cfg_dir>${prefix}/nml/cfg_generic/</diag_script_cfg_dir>
+
+            <diag_script cfg="cfg_generic_tsline.ncl">tsline.ncl</diag_script>
+        </diag>
+    </DIAGNOSTICS>
+
+    <ESGF>
+      <config_file>${workspace}/esgf_config.xml</config_file>
+    </ESGF>
+
+</namelist>
