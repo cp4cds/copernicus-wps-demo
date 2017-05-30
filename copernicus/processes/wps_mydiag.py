@@ -55,7 +55,7 @@ class MyDiag(Process):
         super(MyDiag, self).__init__(
             self._handler,
             identifier="mydiag",
-            title="Tutorial diagnostic.",
+            title="Simple plot",
             version=esmvaltool.VERSION,
             abstract="Generates a plot for temperature using ESMValTool."
              " It is a diagnostic used in the ESMValTool tutoriaal doc/toy-diagnostic-tutorial.pdf."
