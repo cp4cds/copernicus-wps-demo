@@ -2,7 +2,7 @@
   <write_plots type="boolean">          True      </write_plots>
   <write_netcdf type="boolean">         True      </write_netcdf>
   <force_processing type="boolean">     False      </force_processing>
-  <wrk_dir type="path">                 ${workspace}/work/     </wrk_dir>
+  <wrk_dir type="path">                 ${workdir}/work/     </wrk_dir>
   <write_plot_vars type="boolean">      True      </write_plot_vars>
   <max_data_filesize type="integer">    100      </max_data_filesize>
   <max_data_blocksize type="integer">   500      </max_data_blocksize>

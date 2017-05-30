@@ -15,34 +15,13 @@ mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), '
 VERSION = "1.1.0"
 
 
-def diag(name, constraints, start_year, end_year, output_format='pdf', workspace=None):
-    # TODO: maybe use result dict
-    result = {}
-    workspace = workspace or os.curdir
-
-    result['namelist'] = generate_namelist(
-        diag=name,
-        workspace=workspace,
-        constraints=constraints,
-        start_year=start_year,
-        end_year=end_year,
-        output_format=output_format,
-    )
-
-    # run diag
-    result['logfile'] = run_diag(result['namelist'], workspace)
-    # references/acknowledgements document
-    result['reference'] = os.path.join(workspace, 'work', 'namelist.txt')
-    return result
-
-
-def run_diag(namelist, workspace='.'):
+def run_diag(namelist, workdir='.'):
     # ncl path
     LOGGER.debug("NCARG_ROOT=%s", os.environ.get('NCARG_ROOT'))
 
     # build cmd
     main_py = os.path.join(config.esmval_root(), "main.py")
-    logfile = os.path.abspath(os.path.join(workspace, 'log.txt'))
+    logfile = os.path.abspath(os.path.join(workdir, 'log.txt'))
     cmd = ["python", main_py, namelist]
 
     # run cmd
@@ -59,23 +38,23 @@ def run_diag(namelist, workspace='.'):
             f.write(output)
 
     # check if data is found
-    if os.path.isfile(os.path.join(workspace, 'esgf_coupling_report.txt')):
+    if os.path.isfile(os.path.join(workdir, 'esgf_coupling_report.txt')):
         raise Exception("Could not find data in ESGF archive.")
 
     return logfile
 
 
-def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, output_format='pdf', workspace='.'):
+def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, output_format='pdf', workdir='.'):
     constraints = constraints or {}
-    workspace = os.path.abspath(workspace)
+    workdir = os.path.abspath(workdir)
 
     # write esgf_config.xml
     esgf_config_templ = mylookup.get_template('esgf_config.xml')
     rendered_esgf_config = esgf_config_templ.render_unicode(
-        workspace=workspace,
+        workdir=workdir,
         archive_root=config.archive_root(),
     )
-    esgf_config_filename = os.path.abspath(os.path.join(workspace, "esgf_config.xml"))
+    esgf_config_filename = os.path.abspath(os.path.join(workdir, "esgf_config.xml"))
     with open(esgf_config_filename, 'w') as fp:
         fp.write(rendered_esgf_config)
 
@@ -85,13 +64,13 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
     rendered_namelist = namelist_templ.render_unicode(
         diag=diag,
         prefix=config.esmval_root(),
-        workspace=workspace,
+        workdir=workdir,
         constraints=constraints,
         start_year=start_year,
         end_year=end_year,
         output_format=output_format
     )
-    outfile = os.path.abspath(os.path.join(workspace, "namelist.xml"))
+    outfile = os.path.abspath(os.path.join(workdir, "namelist.xml"))
     with open(outfile, 'w') as fp:
         fp.write(rendered_namelist)
     return outfile

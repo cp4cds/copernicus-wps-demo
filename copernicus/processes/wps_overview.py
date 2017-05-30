@@ -81,22 +81,27 @@ class Overview(Process):
             ensemble=request.inputs['ensemble'][0].data,
         )
 
-        # run diag
-        response.update_status("running diag ...", 20)
-        result = esmvaltool.diag(
-            'overview',
+        # generate namelist
+        response.update_status("generate namelist ...", 10)
+        namelist = esmvaltool.generate_namelist(
+            diag='overview',
             constraints=constraints,
             start_year=request.inputs['start_year'][0].data,
             end_year=request.inputs['end_year'][0].data,
-            output_format='pdf')
+            output_format='pdf',
+        )
+
+        # run diag
+        response.update_status("running diag ...", 20)
+        logfile = esmvaltool.run_diag(namelist)
 
         # namelist output
         response.outputs['namelist'].output_format = FORMATS.TEXT
-        response.outputs['namelist'].file = result['namelist']
+        response.outputs['namelist'].file = namelist
 
         # log output
         response.outputs['log'].output_format = FORMATS.TEXT
-        response.outputs['log'].file = result['logfile']
+        response.outputs['log'].file = logfile
 
         # result plot
         # work/temp_oV6c2J/plot/surfconplot_simple/surfconplot_simple_pr_T2Ms_ANN.pdf

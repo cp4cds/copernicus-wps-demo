@@ -34,7 +34,7 @@
     </DIAGNOSTICS>
 
     <ESGF>
-      <config_file>${workspace}/esgf_config.xml</config_file>
+      <config_file>${workdir}/esgf_config.xml</config_file>
     </ESGF>
 
 </namelist>

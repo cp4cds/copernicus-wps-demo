@@ -19,7 +19,7 @@
 
     <!-- Start of local configuration options -->
     <!-- 1. Location of report containing user advice if dataset is not on local system-->
-    <report_fullpath>${workspace}/esgf_coupling_report.txt</report_fullpath>
+    <report_fullpath>${workdir}/esgf_coupling_report.txt</report_fullpath>
     <!-- End of local search configuration options -->
 
     <DKRZ_CMIP5>
