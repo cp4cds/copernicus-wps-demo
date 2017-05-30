@@ -70,7 +70,7 @@ class TimeSeriesPlot(Process):
                      "project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=tas, model=MPI-ESM-LR, time_frequency=mon",  # noqa
             metadata=[
                 Metadata('ESMValTool', 'http://www.esmvaltool.org/'),
-                Metadata('ESGF Testdata', 'https://esgf1.dkrz.de/thredds/catalog/esgcet/7/cmip5.output1.MPI-M.MPI-ESM-LR.historical.mon.atmos.Amon.r1i1p1.v20120315.html?dataset=cmip5.output1.MPI-M.MPI-ESM-LR.historical.mon.atmos.Amon.r1i1p1.v20120315.pr_Amon_MPI-ESM-LR_historical_r1i1p1_185001-200512.nc'),  # noqa
+                Metadata('ESGF Testdata', 'https://esgf1.dkrz.de/thredds/catalog/esgcet/7/cmip5.output1.MPI-M.MPI-ESM-LR.historical.mon.atmos.Amon.r1i1p1.v20120315.html?dataset=cmip5.output1.MPI-M.MPI-ESM-LR.historical.mon.atmos.Amon.r1i1p1.v20120315.tas_Amon_MPI-ESM-LR_historical_r1i1p1_185001-200512.nc'),  # noqa
             ],
             inputs=inputs,
             outputs=outputs,
