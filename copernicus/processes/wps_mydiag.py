@@ -1,3 +1,5 @@
+import os
+
 from pywps import Process
 from pywps import LiteralInput, LiteralOutput
 from pywps import ComplexInput, ComplexOutput
@@ -59,7 +61,6 @@ class MyDiag(Process):
              " The default run uses the following CMIP5 data: "
              "project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=ta, model=MPI-ESM-LR, time_frequency=mon",  # noqa
             metadata=[
-                Metadata('Birdhouse', 'http://bird-house.github.io/'),
                 Metadata('ESMValTool', 'http://www.esmvaltool.org/'),
                 Metadata('ESGF Testdata', 'https://esgf1.dkrz.de/thredds/catalog/esgcet/7/cmip5.output1.MPI-M.MPI-ESM-LR.historical.mon.atmos.Amon.r1i1p1.v20120315.html?dataset=cmip5.output1.MPI-M.MPI-ESM-LR.historical.mon.atmos.Amon.r1i1p1.v20120315.ta_Amon_MPI-ESM-LR_historical_r1i1p1_199001-199912.nc'),  # noqa
             ],
@@ -94,7 +95,10 @@ class MyDiag(Process):
         response.outputs['log'].output_format = FORMATS.TEXT
         response.outputs['log'].file = result['logfile']
 
-        # find result plot
-        # response.outputs['output'].output_format = FORMATS.PDF
-        response.outputs['output'].file = result['output']
+        # result plot
+        # work/temp_XzZnMo/plot/tsline/tsline_tas_nomask_noanom_nodetr_-90_90_historical_2000-2005.pdf
+        response.outputs['output'].output_format = Format('application/pdf')
+        response.outputs['output'].file = runner.find_output(
+            path_filter=os.path.join('plot', 'MyDiag'),
+            output_format="pdf")
         return response
