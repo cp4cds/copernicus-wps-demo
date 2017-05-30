@@ -18,6 +18,8 @@ class TimeSeriesPlot(Process):
             LiteralInput('model', 'Model',
                          abstract='Choose a model like MPI-ESM-LR.',
                          data_type='string',
+                         min_occurs=1,
+                         max_occurs=2,
                          allowed_values=['MPI-ESM-LR', 'MPI-ESM-MR'],
                          default='MPI-ESM-LR'),
             LiteralInput('experiment', 'Experiment',
@@ -77,7 +79,7 @@ class TimeSeriesPlot(Process):
         response.update_status("starting ...", 0)
         # build esgf search constraints
         constraints = dict(
-            model=request.inputs['model'][0].data,
+            model=[item.data for item in request.inputs['model']],
             experiment=request.inputs['experiment'][0].data,
             time_frequency='mon',
             cmor_table='Amon',

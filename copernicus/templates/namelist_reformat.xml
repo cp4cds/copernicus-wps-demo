@@ -1,6 +1,6 @@
 <namelist>
     <namelist_summary>
-        namelist_reformat.xml
+        based on namelist_reformat.xml
 
         Description:
         Test namelist for the reformat routines
@@ -17,8 +17,9 @@
     <%include file="global.xml"/>
 
     <MODELS>
-      <!-- Each block below is used for testing the project classes in projects.py -->
-      <model>ESGF_CMIP5 MPI-M output1 MPI-M ${constraints['model']} ${constraints['experiment']} ${constraints['time_frequency']} atmos ${constraints['cmor_table']} ${constraints['ensemble']} latest ${start_year} ${end_year} CMIP5_template</model>
+      % for model in constraints['model']:
+      <model>ESGF_CMIP5 MPI-M output1 MPI-M ${model} ${constraints['experiment']} ${constraints['time_frequency']} atmos ${constraints['cmor_table']} ${constraints['ensemble']} latest ${start_year} ${end_year} CMIP5_template</model>
+      % endfor
     </MODELS>
 
     <DIAGNOSTICS>
