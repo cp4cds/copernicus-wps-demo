@@ -52,7 +52,7 @@ def run_diag(namelist, workspace='.'):
         output = check_output(cmd, stderr=STDOUT, cwd=config.esmval_root())
     except CalledProcessError as err:
         LOGGER.error('esmvaltool failed! %s', err.output)
-        raise Exception('esmvaltool failed')
+        raise Exception('esmvaltool failed: {0}'.format(err.output))
     else:
         # debug: show logfile
         if LOGGER.isEnabledFor(logging.DEBUG):
@@ -100,10 +100,11 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
 
 
 def find_plot(workspace='.', output_format="pdf"):
-    matches = glob.glob(os.path.join(workspace, 'work', '*', 'plots', '*', '*.{0}'.format(output_format)))
+    # work/temp_XzZnMo/plot/tsline/tsline_tas_nomask_noanom_nodetr_-90_90_historical_2000-2005.pdf
+    matches = glob.glob(os.path.join(workspace, 'work', '*', 'plot*', '*', '*.{0}'.format(output_format)))
     if len(matches) == 0:
         raise Exception("no result plot found in workspace/plots")
     elif len(matches) > 1:
-        raise Exception("more then one plot found %s", matches)
+        LOGGER.warn("more then one plot found %s", matches)
     LOGGER.debug("plot file found=%s", matches[0])
     return matches[0]
