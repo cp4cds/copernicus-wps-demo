@@ -30,6 +30,8 @@ class TimeSeriesPlot(Process):
             LiteralInput('ensemble', 'Ensemble',
                          abstract='Choose an ensemble like r1i1p1.',
                          data_type='string',
+                         min_occurs=1,
+                         max_occurs=3,
                          allowed_values=['r1i1p1', 'r2i1p1', 'r3i1p1'],
                          default='r1i1p1'),
             LiteralInput('start_year', 'Start year', data_type='integer',
@@ -83,7 +85,7 @@ class TimeSeriesPlot(Process):
             experiment=request.inputs['experiment'][0].data,
             time_frequency='mon',
             cmor_table='Amon',
-            ensemble=request.inputs['ensemble'][0].data,
+            ensemble=[item.data for item in request.inputs['ensemble']],
         )
 
         # generate namelist

@@ -18,7 +18,9 @@
 
     <MODELS>
       % for model in constraints['model']:
-      <model>ESGF_CMIP5 MPI-M output1 MPI-M ${model} ${constraints['experiment']} ${constraints['time_frequency']} atmos ${constraints['cmor_table']} ${constraints['ensemble']} latest ${start_year} ${end_year} CMIP5_template</model>
+      %     for ensemble in constraints['ensemble']:
+      <model>ESGF_CMIP5 MPI-M output1 MPI-M ${model} ${constraints['experiment']} ${constraints['time_frequency']} atmos ${constraints['cmor_table']} ${ensemble} latest ${start_year} ${end_year} CMIP5_template</model>
+      %     endfor
       % endfor
     </MODELS>
 
