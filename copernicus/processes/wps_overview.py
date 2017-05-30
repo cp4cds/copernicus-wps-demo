@@ -1,3 +1,5 @@
+import os
+
 from pywps import Process
 from pywps import LiteralInput, LiteralOutput
 from pywps import ComplexInput, ComplexOutput
@@ -94,8 +96,11 @@ class Overview(Process):
         response.outputs['log'].output_format = FORMATS.TEXT
         response.outputs['log'].file = result['logfile']
 
-        # find result plot
-        # response.outputs['output'].output_format = FORMATS.PDF
-        response.outputs['output'].file = result['output']
+        # result plot
+        # work/temp_oV6c2J/plot/surfconplot_simple/surfconplot_simple_pr_T2Ms_ANN.pdf
+        response.outputs['output'].output_format = Format('application/pdf')
+        response.outputs['output'].file = runner.find_output(
+            path_filter=os.path.join('plot', 'surfconplot_simple'),
+            output_format="pdf")
 
         return response
