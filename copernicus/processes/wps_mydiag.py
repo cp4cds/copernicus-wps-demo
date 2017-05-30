@@ -96,7 +96,7 @@ class MyDiag(Process):
         response.outputs['log'].file = result['logfile']
 
         # result plot
-        # work/temp_XzZnMo/plot/tsline/tsline_tas_nomask_noanom_nodetr_-90_90_historical_2000-2005.pdf
+        # work/temp_XzZnMo/plot/MyDiag/MyDiag_MyVar.pdf
         response.outputs['output'].output_format = Format('application/pdf')
         response.outputs['output'].file = runner.find_output(
             path_filter=os.path.join('plot', 'MyDiag'),
