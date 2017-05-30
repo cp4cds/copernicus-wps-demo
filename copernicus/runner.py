@@ -29,12 +29,8 @@ def diag(name, constraints, start_year, end_year, output_format='pdf', workspace
 
     # run diag
     result['logfile'] = run_diag(result['namelist'], workspace)
-
     # references/acknowledgements document
     result['reference'] = os.path.join(workspace, 'work', 'namelist.txt')
-
-    # plot output
-    result['output'] = find_plot(workspace, output_format)
     return result
 
 
@@ -99,12 +95,13 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
     return outfile
 
 
-def find_plot(workspace='.', output_format="pdf"):
+def find_output(workdir='.', path_filter=None, output_format="pdf"):
+    path_filter = path_filter or os.path.join('plot*', '*')
     # work/temp_XzZnMo/plot/tsline/tsline_tas_nomask_noanom_nodetr_-90_90_historical_2000-2005.pdf
-    matches = glob.glob(os.path.join(workspace, 'work', '*', 'plot*', '*', '*.{0}'.format(output_format)))
+    matches = glob.glob(os.path.join(workdir, 'work', '*', path_filter, '*.{0}'.format(output_format)))
     if len(matches) == 0:
-        raise Exception("no result plot found in workspace/plots")
+        raise Exception("no output found in workdir")
     elif len(matches) > 1:
-        LOGGER.warn("more then one plot found %s", matches)
-    LOGGER.debug("plot file found=%s", matches[0])
+        LOGGER.warn("more then one output found %s", matches)
+    LOGGER.debug("output found=%s", matches[0])
     return matches[0]

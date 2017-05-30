@@ -1,3 +1,5 @@
+import os
+
 from pywps import Process
 from pywps import LiteralInput, LiteralOutput
 from pywps import ComplexInput, ComplexOutput
@@ -48,6 +50,10 @@ class TimeSeriesPlot(Process):
                           abstract='Generated output plot of ESMValTool processing.',
                           as_reference=True,
                           supported_formats=[Format('application/pdf')]),
+            ComplexOutput('output_ds', 'Reformatted dataset',
+                          abstract='Reformatted dataset of the input files.',
+                          as_reference=True,
+                          supported_formats=[Format('application/x-netcdf')]),
         ]
 
         super(TimeSeriesPlot, self).__init__(
@@ -93,8 +99,18 @@ class TimeSeriesPlot(Process):
         response.outputs['log'].output_format = FORMATS.TEXT
         response.outputs['log'].file = result['logfile']
 
-        # find result plot
-        # response.outputs['output'].output_format = FORMATS.PDF
-        response.outputs['output'].file = result['output']
+        # result plot
+        # work/temp_XzZnMo/plot/tsline/tsline_tas_nomask_noanom_nodetr_-90_90_historical_2000-2005.pdf
+        response.outputs['output'].output_format = Format('application/pdf')
+        response.outputs['output'].file = runner.find_output(
+            path_filter=os.path.join('plot', 'tsline'),
+            output_format="pdf")
+
+        # reformatted input dataset
+        # work/temp_fqNUZN//tsline/tsline_tas_nomask_noanom_nodetr_historical__-90_90_1980-2000.nc
+        response.outputs['output_ds'].output_format = Format('application/x-netcdf')
+        response.outputs['output_ds'].file = runner.find_output(
+            path_filter=os.path.join('tsline'),
+            output_format="nc")
 
         return response
