@@ -6,7 +6,7 @@ from pywps import ComplexInput, ComplexOutput
 from pywps import Format, FORMATS
 from pywps.app.Common import Metadata
 
-from copernicus import runner
+from copernicus import esmvaltool
 
 import logging
 LOGGER = logging.getLogger("PYWPS")
@@ -55,13 +55,13 @@ class Overview(Process):
         super(Overview, self).__init__(
             self._handler,
             identifier="overview",
-            title="ESMValTool: surface contour plot for precipitation",
-            version="1.0.1",
-            abstract="Tutorial contour plot used in the doc/overview.pdf."
-                     " The default run uses the following CMIP5 data: "
-                     "project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=pr, model=MPI-ESM-LR, time_frequency=mon",  # noqa
+            title="Surface contour plot",
+            version=esmvaltool.VERSION,
+            abstract="Generates a surface contour plot for precipitation using ESMValTool."
+                     " It is a tutorial diagnostic used in the ESMValTool tutorial doc/overview.pdf."
+                     " The default run uses the following CMIP5 data:"
+                     " project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=pr, model=MPI-ESM-LR, time_frequency=mon",  # noqa
             metadata=[
-                Metadata('Birdhouse', 'http://bird-house.github.io/'),
                 Metadata('ESMValTool', 'http://www.esmvaltool.org/'),
                 Metadata('ESGF Testdata', 'https://esgf1.dkrz.de/thredds/catalog/esgcet/7/cmip5.output1.MPI-M.MPI-ESM-LR.historical.mon.atmos.Amon.r1i1p1.v20120315.html?dataset=cmip5.output1.MPI-M.MPI-ESM-LR.historical.mon.atmos.Amon.r1i1p1.v20120315.pr_Amon_MPI-ESM-LR_historical_r1i1p1_185001-200512.nc'),  # noqa
             ],
@@ -71,6 +71,7 @@ class Overview(Process):
             store_supported=True)
 
     def _handler(self, request, response):
+        response.update_status("starting ...", 0)
         # build esgf search constraints
         constraints = dict(
             model=request.inputs['model'][0].data,
@@ -80,8 +81,9 @@ class Overview(Process):
             ensemble=request.inputs['ensemble'][0].data,
         )
 
-        # generate namelist
-        result = runner.diag(
+        # run diag
+        response.update_status("running diag ...", 20)
+        result = esmvaltool.diag(
             'overview',
             constraints=constraints,
             start_year=request.inputs['start_year'][0].data,
@@ -98,9 +100,11 @@ class Overview(Process):
 
         # result plot
         # work/temp_oV6c2J/plot/surfconplot_simple/surfconplot_simple_pr_T2Ms_ANN.pdf
+        response.update_status("collect output plot ...", 90)
         response.outputs['output'].output_format = Format('application/pdf')
-        response.outputs['output'].file = runner.find_output(
+        response.outputs['output'].file = esmvaltool.find_output(
             path_filter=os.path.join('plot', 'surfconplot_simple'),
             output_format="pdf")
 
+        response.update_status("done.", 100)
         return response

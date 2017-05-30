@@ -12,6 +12,8 @@ from mako.lookup import TemplateLookup
 mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), 'templates')],
                           output_encoding='utf-8', encoding_errors='replace')
 
+VERSION = "1.1.0"
+
 
 def diag(name, constraints, start_year, end_year, output_format='pdf', workspace=None):
     # TODO: maybe use result dict

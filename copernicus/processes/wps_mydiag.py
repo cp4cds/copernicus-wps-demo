@@ -6,7 +6,7 @@ from pywps import ComplexInput, ComplexOutput
 from pywps import Format, FORMATS
 from pywps.app.Common import Metadata
 
-from copernicus import runner
+from copernicus import esmvaltool
 
 import logging
 LOGGER = logging.getLogger("PYWPS")
@@ -55,11 +55,12 @@ class MyDiag(Process):
         super(MyDiag, self).__init__(
             self._handler,
             identifier="mydiag",
-            title="ESMValTool: tutorial diagnostic.",
-            version="1.1.0",
-            abstract="Tutorial diagnostic used in the doc/toy-diagnostic-tutorial.pdf."
-             " The default run uses the following CMIP5 data: "
-             "project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=ta, model=MPI-ESM-LR, time_frequency=mon",  # noqa
+            title="Tutorial diagnostic.",
+            version=esmvaltool.VERSION,
+            abstract="Generates a plot for temperature using ESMValTool."
+             " It is a diagnostic used in the ESMValTool tutoriaal doc/toy-diagnostic-tutorial.pdf."
+             " The default run uses the following CMIP5 data:"
+             " project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=ta, model=MPI-ESM-LR, time_frequency=mon",  # noqa
             metadata=[
                 Metadata('ESMValTool', 'http://www.esmvaltool.org/'),
                 Metadata('ESGF Testdata', 'https://esgf1.dkrz.de/thredds/catalog/esgcet/7/cmip5.output1.MPI-M.MPI-ESM-LR.historical.mon.atmos.Amon.r1i1p1.v20120315.html?dataset=cmip5.output1.MPI-M.MPI-ESM-LR.historical.mon.atmos.Amon.r1i1p1.v20120315.ta_Amon_MPI-ESM-LR_historical_r1i1p1_199001-199912.nc'),  # noqa
@@ -70,6 +71,8 @@ class MyDiag(Process):
             store_supported=True)
 
     def _handler(self, request, response):
+        response.update_status("starting ...", 0)
+
         # build esgf search constraints
         constraints = dict(
             model=request.inputs['model'][0].data,
@@ -80,7 +83,8 @@ class MyDiag(Process):
         )
 
         # run diag
-        result = runner.diag(
+        response.update_status("running diag ...", 20)
+        result = esmvaltool.diag(
             'mydiag',
             constraints=constraints,
             start_year=request.inputs['start_year'][0].data,
@@ -97,8 +101,10 @@ class MyDiag(Process):
 
         # result plot
         # work/temp_XzZnMo/plot/MyDiag/MyDiag_MyVar.pdf
+        response.update_status("collect output plot ...", 90)
         response.outputs['output'].output_format = Format('application/pdf')
-        response.outputs['output'].file = runner.find_output(
+        response.outputs['output'].file = esmvaltool.find_output(
             path_filter=os.path.join('plot', 'MyDiag'),
             output_format="pdf")
+        response.update_status("done.", 100)
         return response
