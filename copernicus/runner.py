@@ -104,7 +104,7 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
 
 
 def find_plot(workspace='.', output_format="pdf"):
-    matches = glob.glob(os.path.join(workspace, 'work', 'plots', '*', '*.{0}'.format(output_format)))
+    matches = glob.glob(os.path.join(workspace, 'work', '*', 'plots', '*', '*.{0}'.format(output_format)))
     if len(matches) == 0:
         raise Exception("no result plot found in workspace/plots")
     elif len(matches) > 1:
