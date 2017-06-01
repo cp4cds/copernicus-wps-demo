@@ -26,6 +26,7 @@ dependencies:
 - libxslt=1.1.29
 # helpers
 - netcdf4
+- cdo=1.8.1
 # esmvaltool
 - esmvaltool=1.1.0
 - pip:
