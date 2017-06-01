@@ -15,40 +15,22 @@ LOGGER = logging.getLogger("PYWPS")
 class GenericTimeSeriesPlot(Process):
     def __init__(self):
         inputs = [
-            LiteralInput('model', 'Model',
-                         abstract='Choose a model like MPI-ESM-LR.',
-                         metadata=[
-                             Metadata('model',
-                                      role='https://www.earthsystemcog.org/spec/esgf_search/2.1.0/def/facet/model',
-                                      href='http://esgf-data.dkrz.de/esg-search/search?project=CMIP5&time_frequency=mon&variable=tas&distrib=false&replica=false&latest=true&limit=0&facets=model'),  # noqa
-                         ],
+            ComplexInput('dataset', 'Dataset',
+                         abstract='You may provide a URL or upload a NetCDF file.',
+                         min_occurs=0,
+                         max_occurs=100,
+                         supported_formats=[Format('application/x-netcdf')]),
+            LiteralInput('dataset_opendap', 'Remote OpenDAP Data URL',
                          data_type='string',
-                         min_occurs=1,
-                         max_occurs=2,
-                         allowed_values=['MPI-ESM-LR', 'MPI-ESM-MR'],
-                         default='MPI-ESM-LR'),
-            LiteralInput('experiment', 'Experiment',
-                         abstract='Choose an experiment like historical.',
+                         abstract="Or provide a remote OpenDAP data URL,"
+                                  " for example:"
+                                  " http://www.esrl.noaa.gov/psd/thredds/dodsC/Datasets/ncep.reanalysis2.dailyavgs/surface/mslp.2016.nc",  # noqa
                          metadata=[
-                             Metadata('experiment',
-                                      role='https://www.earthsystemcog.org/spec/esgf_search/2.1.0/def/facet/experiment',
-                                      href='http://esgf-data.dkrz.de/esg-search/search?project=CMIP5&time_frequency=mon&variable=tas&distrib=false&replica=false&latest=true&limit=0&facets=experiment'),  # noqa
-                         ],
-                         data_type='string',
-                         allowed_values=['historical', 'rcp26', 'rcp45', 'rcp85'],
-                         default='historical'),
-            LiteralInput('ensemble', 'Ensemble',
-                         abstract='Choose an ensemble like r1i1p1.',
-                         metadata=[
-                             Metadata('ensemble',
-                                      role='https://www.earthsystemcog.org/spec/esgf_search/2.1.0/def/facet/ensemble',
-                                      href='http://esgf-data.dkrz.de/esg-search/search?project=CMIP5&time_frequency=mon&variable=tas&distrib=false&replica=false&latest=true&limit=0&facets=ensemble'),  # noqa
-                         ],
-                         data_type='string',
-                         min_occurs=1,
-                         max_occurs=3,
-                         allowed_values=['r1i1p1', 'r2i1p1', 'r3i1p1'],
-                         default='r1i1p1'),
+                            Metadata(
+                                'application/x-ogc-dods',
+                                'https://www.iana.org/assignments/media-types/media-types.xhtml')],
+                         min_occurs=0,
+                         max_occurs=100),
             LiteralInput('start_year', 'Start year', data_type='integer',
                          abstract='Start year of model data.',
                          metadata=[
@@ -118,13 +100,22 @@ class GenericTimeSeriesPlot(Process):
 
     def _handler(self, request, response):
         response.update_status("starting ...", 0)
+        # collect all datasets
+        datasets = []
+        if 'dataset' in request.inputs:
+            for dataset in request.inputs['dataset']:
+                datasets.append(dataset.file)
+        # append opendap urls
+        if 'dataset_opendap' in request.inputs:
+            for dataset in request.inputs['dataset_opendap']:
+                datasets.append(dataset.data)
         # build esgf search constraints
         constraints = dict(
-            model=[item.data for item in request.inputs['model']],
-            experiment=request.inputs['experiment'][0].data,
+            model=['MPI-ESM-LR'],
+            experiment='historical',
             time_frequency='mon',
             cmor_table='Amon',
-            ensemble=[item.data for item in request.inputs['ensemble']],
+            ensemble=['r1i1p1'],
         )
 
         # generate namelist
