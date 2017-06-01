@@ -49,6 +49,18 @@ class TimeSeriesPlot(Process):
                          max_occurs=3,
                          allowed_values=['r1i1p1', 'r2i1p1', 'r3i1p1'],
                          default='r1i1p1'),
+            LiteralInput('variable', 'Variable',
+                         abstract='Choose a variable like tas.',
+                         metadata=[
+                             Metadata('variable',
+                                      role='https://www.earthsystemcog.org/spec/esgf_search/2.1.0/def/facet/ensemble',
+                                      href='http://esgf-data.dkrz.de/esg-search/search?project=CMIP5&time_frequency=mon&variable=tas&distrib=false&replica=false&latest=true&limit=0&facets=variable'),  # noqa
+                         ],
+                         data_type='string',
+                         min_occurs=1,
+                         max_occurs=1,
+                         allowed_values=['tas'],
+                         default='tas'),
             LiteralInput('start_year', 'Start year', data_type='integer',
                          abstract='Start year of model data.',
                          metadata=[
@@ -110,7 +122,7 @@ class TimeSeriesPlot(Process):
                          href='https://www.earthsystemcog.org/projects/cog/esgf_search_restful_api'),
                 Metadata('Allowed CMIP5 Datasets',
                          role='https://www.earthsystemcog.org/spec/esgf_search/2.1.0/def/query',  # noqa
-                         href='http://esgf-data.dkrz.de/esg-search/search?project=CMIP5&time_frequency=mon&variable=tas&distrib=false&replica=false&latest=true&limit=0&facets=model,experiment,ensemble'),  # noqa
+                         href='http://esgf-data.dkrz.de/esg-search/search?project=CMIP5&time_frequency=mon&variable=tas&distrib=false&replica=false&latest=true&limit=0&facets=model,experiment,ensemble,variable'),  # noqa
             ],
             inputs=inputs,
             outputs=outputs,
@@ -125,7 +137,7 @@ class TimeSeriesPlot(Process):
             experiment=request.inputs['experiment'][0].data,
             time_frequency='mon',
             cmor_table='Amon',
-            variable='tas',
+            variable=request.inputs['variable'][0].data,
             ensemble=[item.data for item in request.inputs['ensemble']],
         )
 
