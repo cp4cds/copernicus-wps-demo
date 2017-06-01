@@ -60,7 +60,7 @@ def prepare(workdir=None):
                             ignore=ignore_patterns('doc/sphinx', 'tests', '*.pdf'))
             LOGGER.debug('prepared esmvaltool in %s', home_path)
         except OSError as err:
-            raise Exception("Could not prepare esmvaltool.")
+            raise Exception("Could not prepare esmvaltool: %s", err.message)
     return home_path
 
 
