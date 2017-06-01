@@ -17,6 +17,28 @@ mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), '
 VERSION = "1.1.0"
 
 
+def _link_esmval(home_path):
+    # create esmvaltool home
+    os.makedirs(home_path)
+    # links all readonly parts of esmvaltool
+    esmval_parts = [
+        'diag_scripts',
+        'doc',
+        'interface_scripts',
+        'main.py',
+        'nml',
+        'plot_scripts',
+        'reformat_scripts',
+        'util',
+        'variable_defs']
+    for part in esmval_parts:
+        os.symlink(os.path.join(config.esmval_root(), part),
+                   os.path.join(home_path, part))
+    # copy interface_data
+    shutil.copytree(os.path.join(config.esmval_root(), 'interface_data'),
+                    os.path.join(home_path, 'interface_data'))
+
+
 def prepare(workdir=None):
     """
     Prepares the esmvaltool to run a diagnostic.
@@ -33,28 +55,9 @@ def prepare(workdir=None):
     home_path = os.path.abspath(os.path.join(workdir, 'esmvaltool'))
     if not os.path.isdir(home_path):
         try:
-            # create esmvaltool home
-            os.makedirs(home_path)
-            # links all readonly parts of esmvaltool
-            esmval_parts = [
-                'diag_scripts',
-                'doc',
-                'interface_scripts',
-                'main.py',
-                'nml',
-                'plot_scripts',
-                'reformat_scripts',
-                'util',
-                'variable_defs']
-            for part in esmval_parts:
-                os.symlink(os.path.join(config.esmval_root(), part),
-                           os.path.join(home_path, part))
-            # copy interface_data
-            shutil.copytree(os.path.join(config.esmval_root(), 'interface_data'),
-                            os.path.join(home_path, 'interface_data'))
             # copy all of esmvaltool
-            #shutil.copytree(config.esmval_root(), home_path,
-            #                ignore=ignore_patterns('doc/sphinx', 'tests', '*.pdf'))
+            shutil.copytree(config.esmval_root(), home_path,
+                            ignore=ignore_patterns('doc/sphinx', 'tests', '*.pdf'))
             LOGGER.debug('prepared esmvaltool in %s', home_path)
         except OSError as err:
             raise Exception("Could not prepare esmvaltool.")
