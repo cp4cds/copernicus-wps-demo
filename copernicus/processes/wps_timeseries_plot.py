@@ -125,13 +125,14 @@ class TimeSeriesPlot(Process):
             experiment=request.inputs['experiment'][0].data,
             time_frequency='mon',
             cmor_table='Amon',
+            variable='tas',
             ensemble=[item.data for item in request.inputs['ensemble']],
         )
 
         # generate namelist
         response.update_status("generate namelist ...", 10)
         namelist = esmvaltool.generate_namelist(
-            diag='reformat',
+            diag='ts_plot',
             constraints=constraints,
             start_year=request.inputs['start_year'][0].data,
             end_year=request.inputs['end_year'][0].data,

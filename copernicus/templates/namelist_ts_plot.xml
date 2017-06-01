@@ -28,7 +28,7 @@
         <diag>
             <description>Time series plot</description>
             <variable_def_dir>${prefix}/variable_defs/</variable_def_dir>
-            <variable>tas</variable>
+            <variable>${constraints['variable']}</variable>
             <field_type>T2Ms</field_type>
             <diag_script_cfg_dir>${prefix}/nml/cfg_generic/</diag_script_cfg_dir>
 
