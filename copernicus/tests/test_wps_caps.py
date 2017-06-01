@@ -2,7 +2,7 @@ from pywps import Service
 from pywps.tests import assert_response_success
 
 from .common import client_for
-from emu.processes import processes
+from copernicus.processes import processes
 
 
 def test_wps_caps():
@@ -13,15 +13,6 @@ def test_wps_caps():
                             '/wps:Process'
                             '/ows:Identifier')
     assert sorted(names.split()) == [
-        'bbox',
-        'binaryoperatorfornumbers',
-        'chomsky',
-        'dummyprocess',
-        'hello',
-        'inout',
-        'multiple_outputs',
-        'nap',
-        'show_error',
-        'sleep',
-        'ultimate_question',
-        'wordcounter']
+        'mydiag',
+        'overview',
+        'ts_plot']
