@@ -65,7 +65,7 @@ def create_esgf_datastore(datasets, workdir=None):
                 constraints['model'].append(ds.model_id)
             if ds.experiment_id not in constraints['experiment']:
                 constraints['experiment'].append(ds.experiment_id)
-            #if ds.parent_experiment_rip not in constraints['ensemble']:
+            # if ds.parent_experiment_rip not in constraints['ensemble']:
             #    constraints['ensemble'].append(ds.parent_experiment_rip)
     except OSError:
         msg = "Could not create esgf datastore."
