@@ -1,0 +1,45 @@
+<namelist>
+    <namelist_summary>
+        based on namelist_reformat.xml
+
+        Description:
+        Test namelist for the reformat routines
+
+        Author:
+        Mattia Righi (DLR, Germany - mattia.righi@dlr.de)
+
+        Project:
+        DLR ESMVal
+
+        This namelist is generated.
+    </namelist_summary>
+
+    <%include file="global.xml"/>
+
+    <MODELS>
+      <!--     CMIP5_ETHZ MPI-ESM-LR     Amon historical r1i1p1 2000 2005 @{MODELPATH}/ETHZ_CMIP5/ -->
+      <!--     CMIP5  CNRM-CM5   3hr   amip  r1i1p1  2004 2004  /data/crio/EMBRACE/ESMVAL/DATA/CMIP5 -->
+      % for model in constraints['model']:
+      %     for ensemble in constraints['ensemble']:
+      <model>CMIP5 ${model} ${constraints['cmor_table']} ${constraints['experiment']} ${ensemble} ${start_year} ${end_year} ${workdir}/esgf_datastore</model>
+      %     endfor
+      % endfor
+    </MODELS>
+
+    <DIAGNOSTICS>
+        <diag>
+            <description>Time series plot</description>
+            <variable_def_dir>${prefix}/variable_defs/</variable_def_dir>
+            <variable>${constraints['variable']}</variable>
+            <field_type>T2Ms</field_type>
+            <diag_script_cfg_dir>${prefix}/nml/cfg_generic/</diag_script_cfg_dir>
+
+            <diag_script cfg="cfg_generic_tsline.ncl">tsline.ncl</diag_script>
+        </diag>
+    </DIAGNOSTICS>
+
+    <ESGF>
+      <config_file>${workdir}/esgf_config.xml</config_file>
+    </ESGF>
+
+</namelist>

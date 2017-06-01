@@ -17,28 +17,6 @@ mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), '
 VERSION = "1.1.0"
 
 
-def _link_esmval(home_path):
-    # create esmvaltool home
-    os.makedirs(home_path)
-    # links all readonly parts of esmvaltool
-    esmval_parts = [
-        'diag_scripts',
-        'doc',
-        'interface_scripts',
-        'main.py',
-        'nml',
-        'plot_scripts',
-        'reformat_scripts',
-        'util',
-        'variable_defs']
-    for part in esmval_parts:
-        os.symlink(os.path.join(config.esmval_root(), part),
-                   os.path.join(home_path, part))
-    # copy interface_data
-    shutil.copytree(os.path.join(config.esmval_root(), 'interface_data'),
-                    os.path.join(home_path, 'interface_data'))
-
-
 def prepare(workdir=None):
     """
     Prepares the esmvaltool to run a diagnostic.
@@ -60,8 +38,23 @@ def prepare(workdir=None):
                             ignore=ignore_patterns('doc/sphinx', 'tests', '*.pdf'))
             LOGGER.debug('prepared esmvaltool in %s', home_path)
         except OSError as err:
-            raise Exception("Could not prepare esmvaltool: %s", err.message)
+            msg = "Could not prepare esmvaltool."
+            LOGGER.exception(msg)
+            raise Exception(msg)
     return home_path
+
+
+def create_esgf_datastore(datasets, workdir=None):
+    workdir = workdir or os.curdir
+    datastore_root = os.path.join(workdir, 'esgf_datastore')
+    try:
+        os.makedirs(datastore_root)
+        for ds in datasets:
+            os.symlink(ds, os.path.join(datastore_root, os.path.basename(ds)))
+    except OSError as err:
+        msg = "Could not create esgf datastore."
+        LOGGER.exception(msg)
+        raise Exception(msg)
 
 
 def run_diag(namelist, workdir=None):

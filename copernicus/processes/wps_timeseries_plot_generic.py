@@ -109,19 +109,21 @@ class GenericTimeSeriesPlot(Process):
         if 'dataset_opendap' in request.inputs:
             for dataset in request.inputs['dataset_opendap']:
                 datasets.append(dataset.data)
+        esmvaltool.create_esgf_datastore(datasets)
         # build esgf search constraints
         constraints = dict(
             model=['MPI-ESM-LR'],
             experiment='historical',
             time_frequency='mon',
             cmor_table='Amon',
+            variable='tas',
             ensemble=['r1i1p1'],
         )
 
         # generate namelist
         response.update_status("generate namelist ...", 10)
         namelist = esmvaltool.generate_namelist(
-            diag='reformat',
+            diag='ts_plot_generic',
             constraints=constraints,
             start_year=request.inputs['start_year'][0].data,
             end_year=request.inputs['end_year'][0].data,
