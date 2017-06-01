@@ -17,6 +17,11 @@ class TimeSeriesPlot(Process):
         inputs = [
             LiteralInput('model', 'Model',
                          abstract='Choose a model like MPI-ESM-LR.',
+                         metadata=[
+                             Metadata('model',
+                                      role='https://www.earthsystemcog.org/spec/esgf_search/2.1.0/def/facet/model',
+                                      href='http://esgf-data.dkrz.de/esg-search/search?project=CMIP5&time_frequency=mon&variable=tas&distrib=false&replica=false&latest=true&limit=0&facets=model'),  # noqa
+                         ],
                          data_type='string',
                          min_occurs=1,
                          max_occurs=2,
@@ -24,11 +29,21 @@ class TimeSeriesPlot(Process):
                          default='MPI-ESM-LR'),
             LiteralInput('experiment', 'Experiment',
                          abstract='Choose an experiment like historical.',
+                         metadata=[
+                             Metadata('experiment',
+                                      role='https://www.earthsystemcog.org/spec/esgf_search/2.1.0/def/facet/experiment',
+                                      href='http://esgf-data.dkrz.de/esg-search/search?project=CMIP5&time_frequency=mon&variable=tas&distrib=false&replica=false&latest=true&limit=0&facets=experiment'),  # noqa
+                         ],
                          data_type='string',
                          allowed_values=['historical', 'rcp26', 'rcp45', 'rcp85'],
                          default='historical'),
             LiteralInput('ensemble', 'Ensemble',
                          abstract='Choose an ensemble like r1i1p1.',
+                         metadata=[
+                             Metadata('ensemble',
+                                      role='https://www.earthsystemcog.org/spec/esgf_search/2.1.0/def/facet/ensemble',
+                                      href='http://esgf-data.dkrz.de/esg-search/search?project=CMIP5&time_frequency=mon&variable=tas&distrib=false&replica=false&latest=true&limit=0&facets=ensemble'),  # noqa
+                         ],
                          data_type='string',
                          min_occurs=1,
                          max_occurs=3,
@@ -36,9 +51,19 @@ class TimeSeriesPlot(Process):
                          default='r1i1p1'),
             LiteralInput('start_year', 'Start year', data_type='integer',
                          abstract='Start year of model data.',
+                         metadata=[
+                             Metadata('start',
+                                      role='https://www.earthsystemcog.org/spec/esgf_search/2.1.0/def/coverage/year/start',  # noqa
+                                      href='http://esgf-data.dkrz.de/esg-search/search?project=CMIP5&time_frequency=mon&variable=tas&distrib=false&replica=false&latest=true&limit=0&start=1990-01-01T00:00:00Z'),  # noqa
+                         ],
                          default="1990"),
             LiteralInput('end_year', 'End year', data_type='integer',
                          abstract='End year of model data.',
+                         metadata=[
+                             Metadata('end',
+                                      role='https://www.earthsystemcog.org/spec/esgf_search/2.1.0/def/coverage/year/end',  # noqa
+                                      href='http://esgf-data.dkrz.de/esg-search/search?project=CMIP5&time_frequency=mon&variable=tas&distrib=false&replica=false&latest=true&limit=0&end=2000-12-31T00:00:00Z'),  # noqa
+                         ],
                          default="2000"),
         ]
         outputs = [
@@ -79,7 +104,10 @@ class TimeSeriesPlot(Process):
                 Metadata('Freva Example with MURCSS',
                          'https://freva.met.fu-berlin.de/plugins/murcss/setup/'),
                 Metadata('Example WPS Process Description',
-                         'http://docs.opengeospatial.org/is/14-065/14-065.html#103')
+                         'http://docs.opengeospatial.org/is/14-065/14-065.html#103'),
+                Metadata('Allowed CMIP5 Datasets',
+                         role='https://www.earthsystemcog.org/spec/esgf_search/2.1.0/def/query',  # noqa
+                         href='http://esgf-data.dkrz.de/esg-search/search?project=CMIP5&time_frequency=mon&variable=tas&distrib=false&replica=false&latest=true&limit=0&facets=model,experiment,ensemble'),  # noqa
             ],
             inputs=inputs,
             outputs=outputs,
