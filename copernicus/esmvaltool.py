@@ -5,6 +5,7 @@ from shutil import ignore_patterns
 import glob
 from subprocess import check_output, STDOUT, CalledProcessError
 from netCDF4 import Dataset
+from cdo import Cdo
 
 from copernicus import config
 
@@ -57,9 +58,15 @@ def create_esgf_datastore(datasets, workdir=None):
         ensemble=['r1i1p1'],
     )
     try:
+        cdo = Cdo()
         os.makedirs(datastore_root)
         for ds_path in datasets:
-            os.symlink(ds_path, os.path.join(datastore_root, os.path.basename(ds_path)))
+            dest = os.path.join(datastore_root, os.path.basename(ds_path))
+            if ds_path.startswith('http'):
+                # copy opendap dataset
+                cdo.copy(input=ds_path, output=dest)
+            else:
+                os.symlink(ds_path, dest)
             ds = Dataset(ds_path)
             if ds.model_id not in constraints['model']:
                 constraints['model'].append(ds.model_id)
