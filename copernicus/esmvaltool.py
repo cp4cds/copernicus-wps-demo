@@ -4,6 +4,7 @@ import shutil
 from shutil import ignore_patterns
 import glob
 from subprocess import check_output, STDOUT, CalledProcessError
+from netCDF4 import Dataset
 
 from copernicus import config
 
@@ -37,7 +38,7 @@ def prepare(workdir=None):
             shutil.copytree(config.esmval_root(), home_path,
                             ignore=ignore_patterns('doc/sphinx', 'tests', '*.pdf'))
             LOGGER.debug('prepared esmvaltool in %s', home_path)
-        except OSError as err:
+        except OSError:
             msg = "Could not prepare esmvaltool."
             LOGGER.exception(msg)
             raise Exception(msg)
@@ -47,14 +48,30 @@ def prepare(workdir=None):
 def create_esgf_datastore(datasets, workdir=None):
     workdir = workdir or os.curdir
     datastore_root = os.path.join(workdir, 'esgf_datastore')
+    constraints = dict(
+        model=[],
+        experiment=[],
+        time_frequency='mon',
+        cmor_table='Amon',
+        variable='tas',
+        ensemble=['r1i1p1'],
+    )
     try:
         os.makedirs(datastore_root)
-        for ds in datasets:
-            os.symlink(ds, os.path.join(datastore_root, os.path.basename(ds)))
-    except OSError as err:
+        for ds_path in datasets:
+            os.symlink(ds_path, os.path.join(datastore_root, os.path.basename(ds_path)))
+            ds = Dataset(ds_path)
+            if ds.model_id not in constraints['model']:
+                constraints['model'].append(ds.model_id)
+            if ds.experiment_id not in constraints['experiment']:
+                constraints['experiment'].append(ds.experiment_id)
+            #if ds.parent_experiment_rip not in constraints['ensemble']:
+            #    constraints['ensemble'].append(ds.parent_experiment_rip)
+    except OSError:
         msg = "Could not create esgf datastore."
         LOGGER.exception(msg)
         raise Exception(msg)
+    return constraints
 
 
 def run_diag(namelist, workdir=None):

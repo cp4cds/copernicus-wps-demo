@@ -101,6 +101,7 @@ class GenericTimeSeriesPlot(Process):
     def _handler(self, request, response):
         response.update_status("starting ...", 0)
         # collect all datasets
+        response.update_status("prepare input data ...", 5)
         datasets = []
         if 'dataset' in request.inputs:
             for dataset in request.inputs['dataset']:
@@ -109,17 +110,8 @@ class GenericTimeSeriesPlot(Process):
         if 'dataset_opendap' in request.inputs:
             for dataset in request.inputs['dataset_opendap']:
                 datasets.append(dataset.data)
-        esmvaltool.create_esgf_datastore(datasets)
-        # build esgf search constraints
-        constraints = dict(
-            model=['MPI-ESM-LR'],
-            experiment='historical',
-            time_frequency='mon',
-            cmor_table='Amon',
-            variable='tas',
-            ensemble=['r1i1p1'],
-        )
-
+        # build datastore and esgf search constraints
+        constraints = esmvaltool.create_esgf_datastore(datasets)
         # generate namelist
         response.update_status("generate namelist ...", 10)
         namelist = esmvaltool.generate_namelist(
