@@ -1,8 +1,8 @@
 # vim:set ft=dockerfile:
 FROM birdhouse/bird-base:latest
-MAINTAINER https://github.com/bird-house/emu
+MAINTAINER https://github.com/cehbrecht/copernicus-wps-demo
 
-LABEL Description="emu application" Vendor="Birdhouse" Version="0.5"
+LABEL Description="copernicus-wps-demo application" Vendor="Birdhouse" Version="0.1"
 
 # Configure hostname and ports for services
 ENV HTTP_PORT 8080
@@ -14,10 +14,10 @@ ENV HOSTNAME localhost
 ENV HOME /root
 
 # Copy application sources
-COPY . /opt/birdhouse/src/emu
+COPY . /opt/birdhouse/src/copernicus-wps-demo
 
 # cd into application
-WORKDIR /opt/birdhouse/src/emu
+WORKDIR /opt/birdhouse/src/copernicus-wps-demo
 
 # Provide custom.cfg with settings for docker image
 RUN printf "[buildout]\nextends=profiles/docker.cfg" > custom.cfg
