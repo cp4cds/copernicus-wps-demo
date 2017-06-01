@@ -27,6 +27,7 @@ dependencies:
 # helpers
 - netcdf4
 - cdo=1.8.1
+- python-cdo
 # esmvaltool
 - esmvaltool=1.1.0
 - pip:
