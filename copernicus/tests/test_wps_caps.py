@@ -15,4 +15,5 @@ def test_wps_caps():
     assert sorted(names.split()) == [
         'mydiag',
         'overview',
-        'ts_plot']
+        'ts_plot',
+        'ts_plot_generic']
