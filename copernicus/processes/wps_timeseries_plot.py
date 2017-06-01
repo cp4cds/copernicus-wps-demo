@@ -105,6 +105,9 @@ class TimeSeriesPlot(Process):
                          'https://freva.met.fu-berlin.de/plugins/murcss/setup/'),
                 Metadata('Example WPS Process Description',
                          'http://docs.opengeospatial.org/is/14-065/14-065.html#103'),
+                Metadata('The ESGF Search RESTful API',
+                         role='http://www.opengis.net/spec/wps/2.0/def/process/description/documentation',
+                         href='https://www.earthsystemcog.org/projects/cog/esgf_search_restful_api'),
                 Metadata('Allowed CMIP5 Datasets',
                          role='https://www.earthsystemcog.org/spec/esgf_search/2.1.0/def/query',  # noqa
                          href='http://esgf-data.dkrz.de/esg-search/search?project=CMIP5&time_frequency=mon&variable=tas&distrib=false&replica=false&latest=true&limit=0&facets=model,experiment,ensemble'),  # noqa
