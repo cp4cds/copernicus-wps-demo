@@ -15,18 +15,24 @@ mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), '
 VERSION = "1.1.0"
 
 
+def prepare(workdir="."):
+    return config.esmval_root()
+
+
 def run_diag(namelist, workdir='.'):
     # ncl path
     LOGGER.debug("NCARG_ROOT=%s", os.environ.get('NCARG_ROOT'))
 
+    home_path = prepare(workdir=workdir)
+
     # build cmd
-    main_py = os.path.join(config.esmval_root(), "main.py")
+    main_py = os.path.join(home_path, "main.py")
     logfile = os.path.abspath(os.path.join(workdir, 'log.txt'))
     cmd = ["python", main_py, namelist]
 
     # run cmd
     try:
-        output = check_output(cmd, stderr=STDOUT, cwd=config.esmval_root())
+        output = check_output(cmd, stderr=STDOUT, cwd=home_path)
     except CalledProcessError as err:
         LOGGER.error('esmvaltool failed! %s', err.output)
         raise Exception('esmvaltool failed: {0}'.format(err.output))
@@ -48,6 +54,8 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
     constraints = constraints or {}
     workdir = os.path.abspath(workdir)
 
+    home_path = prepare(workdir=workdir)
+
     # write esgf_config.xml
     esgf_config_templ = mylookup.get_template('esgf_config.xml')
     rendered_esgf_config = esgf_config_templ.render_unicode(
@@ -63,7 +71,7 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
     namelist_templ = mylookup.get_template(namelist)
     rendered_namelist = namelist_templ.render_unicode(
         diag=diag,
-        prefix=config.esmval_root(),
+        prefix=home_path,
         workdir=workdir,
         constraints=constraints,
         start_year=start_year,
