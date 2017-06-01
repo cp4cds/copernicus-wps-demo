@@ -1,5 +1,7 @@
 import os
 import os.path
+import shutil
+from shutil import ignore_patterns
 import glob
 from subprocess import check_output, STDOUT, CalledProcessError
 
@@ -15,11 +17,32 @@ mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), '
 VERSION = "1.1.0"
 
 
-def prepare(workdir="."):
-    return config.esmval_root()
+def prepare(workdir=None):
+    """
+    Prepares the esmvaltool to run a diagnostic.
+
+    Due to a ESMValTool bug with the interface_data a complete instance
+    of ESMValTool is prepared in workdir/esmvaltool.
+
+    See issue:
+    https://github.com/ESMValGroup/ESMValTool/issues/3
+
+    :return: HOME path of ESMValTool
+    """
+    workdir = workdir or os.curdir
+    home_path = os.path.abspath(os.path.join(workdir, 'esmvaltool'))
+    if not os.path.isdir(home_path):
+        try:
+            shutil.copytree(config.esmval_root(), home_path,
+                            ignore=ignore_patterns('doc/sphinx', 'tests', '*.pdf'))
+            LOGGER.debug('prepared esmvaltool in %s', home_path)
+        except OSError as err:
+            raise Exception("Could not prepare esmvaltool.")
+    return home_path
 
 
-def run_diag(namelist, workdir='.'):
+def run_diag(namelist, workdir=None):
+    workdir = workdir or os.curdir
     # ncl path
     LOGGER.debug("NCARG_ROOT=%s", os.environ.get('NCARG_ROOT'))
 
@@ -50,8 +73,9 @@ def run_diag(namelist, workdir='.'):
     return logfile
 
 
-def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, output_format='pdf', workdir='.'):
+def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, output_format='pdf', workdir=None):
     constraints = constraints or {}
+    workdir = workdir or os.curdir
     workdir = os.path.abspath(workdir)
 
     home_path = prepare(workdir=workdir)
@@ -84,7 +108,8 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
     return outfile
 
 
-def find_output(workdir='.', path_filter=None, output_format="pdf"):
+def find_output(workdir=None, path_filter=None, output_format="pdf"):
+    workdir = workdir or os.curdir
     path_filter = path_filter or os.path.join('plot*', '*')
     # work/temp_XzZnMo/plot/tsline/tsline_tas_nomask_noanom_nodetr_-90_90_historical_2000-2005.pdf
     matches = glob.glob(os.path.join(workdir, 'work', '*', path_filter, '*.{0}'.format(output_format)))
