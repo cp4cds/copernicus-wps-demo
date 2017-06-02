@@ -1,5 +1,5 @@
-emu:
-  image: birdhouse/copernicus-wps-demo
+wps:
+  image: cehbrecht/copernicus-wps-demo
   environment:
     HOSTNAME: $HOSTNAME
     HTTP_PORT: $HTTP_PORT
