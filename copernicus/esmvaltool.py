@@ -4,6 +4,7 @@ import shutil
 from shutil import ignore_patterns
 import glob
 from subprocess import check_output, STDOUT, CalledProcessError
+from copernicus._compat import urlparse
 from netCDF4 import Dataset
 from cdo import Cdo
 
@@ -58,15 +59,22 @@ def create_esgf_datastore(datasets, workdir=None):
         ensemble=['r1i1p1'],
     )
     try:
+        LOGGER.info("Creating datastore with %s datasets ...", len(datasets))
         cdo = Cdo()
         os.makedirs(datastore_root)
         for ds_path in datasets:
             dest = os.path.join(datastore_root, os.path.basename(ds_path))
-            if ds_path.startswith('http'):
+            parsed_url = urlparse(ds_path)
+            if not parsed_url.scheme:
+                LOGGER.info("Linking dataset %s", ds_path)
+                os.symlink(ds_path, dest)
+            elif parsed_url.scheme in ['http', 'https']:
                 # copy opendap dataset
+                LOGGER.info("Downloading OpenDAP dataset %s ...", ds_path)
                 cdo.copy(input=ds_path, output=dest)
             else:
-                os.symlink(ds_path, dest)
+                LOGGER.warn("Skipping dataset %s", ds_path)
+                continue
             ds = Dataset(ds_path)
             if ds.model_id not in constraints['model']:
                 constraints['model'].append(ds.model_id)
