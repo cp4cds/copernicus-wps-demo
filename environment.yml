@@ -1,4 +1,4 @@
-name: emu
+name: copernicus-wps-demo
 channels:
 - birdhouse
 - conda-forge
