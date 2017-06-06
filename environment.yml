@@ -29,6 +29,9 @@ dependencies:
 - netcdf4
 - cdo=1.8.1
 - python-cdo
+# python wrapper for ncl
+- pyngl
+- pynio
 # esmvaltool
 - esmvaltool=1.1.0
 - pip:
