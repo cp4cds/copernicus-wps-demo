@@ -73,6 +73,7 @@ class SimplePlot(Process):
         if 'dataset_opendap' in request.inputs:
             for dataset in request.inputs['dataset_opendap']:
                 datasets.append(dataset.data)
+        LOGGER.debug("plotting dataset %s", datasets[0])
         # generate plot ...
         response.update_status("generate plot ...", 10)
         ds = Nio.open_file(datasets[0])
@@ -95,9 +96,8 @@ class SimplePlot(Process):
         resources.sfYCStartV = lat.min()
         resources.sfYCEndV = lat.max()
         # caption
-        caption = os.path.basename(datasets[0])
         resources.pmTickMarkDisplayMode = "Never"  # Turn off map tickmarks.
-        resources.tiMainString = caption    # Set a title.
+        resources.tiMainString = "Simple Plot"    # Set a title.
         plot = Ngl.contour_map(wks, data[0, :, :], resources)
         # clean up
         del resources
