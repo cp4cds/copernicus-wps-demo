@@ -1,6 +1,6 @@
 # vim:set ft=dockerfile:
 FROM birdhouse/bird-base:latest
-MAINTAINER https://github.com/cehbrecht/copernicus-wps-demo
+MAINTAINER https://github.com/cp4cds/copernicus-wps-demo
 
 LABEL Description="copernicus-wps-demo application" Vendor="Birdhouse" Version="0.1"
 
