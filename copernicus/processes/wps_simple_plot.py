@@ -6,6 +6,8 @@ from pywps import ComplexInput, ComplexOutput
 from pywps import Format, FORMATS
 from pywps.app.Common import Metadata
 
+import Ngl
+import Nio
 
 import logging
 LOGGER = logging.getLogger("PYWPS")
@@ -71,10 +73,39 @@ class SimplePlot(Process):
         if 'dataset_opendap' in request.inputs:
             for dataset in request.inputs['dataset_opendap']:
                 datasets.append(dataset.data)
+        # generate plot ...
+        response.update_status("generate plot ...", 10)
+        ds = Nio.open_file(datasets[0])
+        if 'variable' in request.inputs:
+            variable = request.inputs['variable'][0].data
+        else:
+            variable = 'tas'
+        data = ds.variables[variable]
+        lon = ds.variables["lon"][:]
+        lat = ds.variables["lat"][:]
+        wks = Ngl.open_wks("pdf", "plot")
+        resources = Ngl.Resources()
+        resources.cnFillOn = True
+        resources.cnLineLabelsOn = False    # Turn off line labels.
+        resources.cnInfoLabelOn = False
+        resources.nglSpreadColorEnd = -2    # Don't include gray in contours.
+        # bbox extend
+        resources.sfXCStartV = lon.min()
+        resources.sfXCEndV = lon.max()
+        resources.sfYCStartV = lat.min()
+        resources.sfYCEndV = lat.max()
+        # caption
+        caption = os.path.basename(datasets[0])
+        resources.pmTickMarkDisplayMode = "Never"  # Turn off map tickmarks.
+        resources.tiMainString = caption    # Set a title.
+        plot = Ngl.contour_map(wks, data[0, :, :], resources)
+        # clean up
+        del resources
+        del plot
         # result plot
         response.outputs['output'].output_format = Format('application/pdf')
-        response.outputs['output'].file = ""
-
+        response.outputs['output'].file = "plot.pdf"
+        Ngl.end()
         # done
         response.update_status("done.", 100)
         return response
