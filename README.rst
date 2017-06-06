@@ -84,6 +84,12 @@ ESGF search facets::
 
     project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=pr, model=MPI-ESM-LR, time_frequency=mon
 
+* Timeservices Plot
+
+ESGF search facets::
+
+    project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=tas, model=MPI-ESM-LR, time_frequency=mon
+
 You can use wget to download ESGF NetCDF files (``-x`` option to create directories)::
 
     $ wget --certificate cert.pem --private-key cert.pem --ca-certificate cert.pem -N -x -P /path/to/esgf/cmip5/archive
