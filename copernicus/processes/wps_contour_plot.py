@@ -13,7 +13,7 @@ import logging
 LOGGER = logging.getLogger("PYWPS")
 
 
-class SimplePlot(Process):
+class ContourPlot(Process):
     def __init__(self):
         inputs = [
             ComplexInput('dataset', 'Dataset',
@@ -40,16 +40,16 @@ class SimplePlot(Process):
         ]
         outputs = [
             ComplexOutput('output', 'Output plot',
-                          abstract='Generated output plot of ESMValTool processing.',
+                          abstract='Generated output plot by NCL.',
                           as_reference=True,
                           supported_formats=[Format('application/pdf')]),
         ]
 
-        super(SimplePlot, self).__init__(
+        super(ContourPlot, self).__init__(
             self._handler,
-            identifier="simple_plot",
-            title="Simple Plot",
-            version="0.1",
+            identifier="contour_plot",
+            title="Contour Plot (NCL)",
+            version="6.4.0",
             abstract="Generates a simple contour plot using NCL."
                      " Input data is provided as NetCDF or OpenDAP datasets.",
             metadata=[
@@ -97,7 +97,7 @@ class SimplePlot(Process):
         resources.sfYCEndV = lat.max()
         # caption
         resources.pmTickMarkDisplayMode = "Never"  # Turn off map tickmarks.
-        resources.tiMainString = "Simple Plot"    # Set a title.
+        resources.tiMainString = "Contour Plot"    # Set a title.
         plot = Ngl.contour_map(wks, data[0, :, :], resources)
         # clean up
         del resources
