@@ -1,7 +1,7 @@
 Changes
 *******
 
-current
+0.1.0 (2017-06-06)
 ==================
 
 * added tutorial diagnostics from esmvaltool (MyDiag, Overview, timeseriesplot).
