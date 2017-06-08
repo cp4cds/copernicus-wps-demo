@@ -5,7 +5,16 @@ copernicus-wps-demo
    :target: https://travis-ci.org/cp4cds/copernicus-wps-demo
    :alt: Travis Build
 
-Demo with WPS processes for copernicus
+Demo with WPS processes for copernicus.
+
+Overview
+********
+
+In `Copernicus`_ we want to provide processing capabilities next to a climate data store.
+The processing capabilities are exposed using the Web Processing Service standard interface with
+the PyWPS implementation. This demo contains several example processes implemented with
+`ESMValTool`_ and `NCL`_. The processes are defined with different WPS profiles
+mainly to show ways how the input data of the tools can be described and restricted.
 
 Installation
 ************
@@ -70,7 +79,7 @@ Testdata
 ********
 
 For the demo processes you can fetch CMIP5 test-data from the ESGF archive.
-You need a valid ESGF credentials which you can fetch for example with ``esgf-pyclient``.
+You need a valid ESGF credentials which you can fetch for example with `esgf-pyclient`_.
 
 * Tutorial Diagnostic MyDiag
 
@@ -95,14 +104,8 @@ You can use wget to download ESGF NetCDF files (``-x`` option to create director
     $ wget --certificate cert.pem --private-key cert.pem --ca-certificate cert.pem -N -x -P /path/to/esgf/cmip5/archive
 
 
-Further Readings
-****************
 
-ESMValTool Home:
-http://www.esmvaltool.org/
-
-ESGF PyClient:
-http://esgf-pyclient.readthedocs.io/en/latest/index.html
-
-Using the Phoenix web-client for WPS:
-http://pyramid-phoenix.readthedocs.org/en/latest/
+.. _Copernicus: http://climate.copernicus.eu/
+.. _ESMValTool: http://www.esmvaltool.org/
+.. _NCL: http://www.ncl.ucar.edu/
+.. _esgf-pyclient: http://esgf-pyclient.readthedocs.io/en/latest/index.html
