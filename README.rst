@@ -48,7 +48,8 @@ Check the log files for errors::
    $ tail -f  var/log/pywps/copernicus.log
    $ tail -f  var/log/supervisor/copernicus.log
 
-For other install options run ``make help`` and read the documention for the `Makefile <http://birdhousebuilderbootstrap.readthedocs.org/en/latest/>`_.
+For other install options run ``make help`` and read the documention of the
+`Makefile <http://birdhousebuilderbootstrap.readthedocs.org/en/latest/>`_.
 
 
 Configuration
@@ -64,8 +65,6 @@ If you want to run on a different hostname or port then change the default value
    http-port = 8096
    archive-root = /path/to/esgf/cmip5/archive
 
-
-The demo service uses the ncl package (version 6.4.0) from conda.
 
 The path to ESGF archive is configured in ``custom.cfg`` with the ``archive-root`` option.
 The configuration file ``esgf_config.xml`` for the ESGF coupling module will be generated.
