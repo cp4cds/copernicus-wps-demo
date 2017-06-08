@@ -91,9 +91,13 @@ Start the demo with docker-compose::
     $ docker-compose up -d  # runs with -d in the background
     $ docker-compose logs -f  # check the logs if running in background
 
-By default the WPS service should be available on port 8096::
+By default the WPS service should be available on port 8080::
 
-    $ firefox "http://localhost:8096/wps?service=wps&request=GetCapabilities"
+    $ firefox "http://localhost:8080/wps?service=wps&request=GetCapabilities"
+
+Alternatively you can change the port by using environment variables, for example::
+
+    $ HTTP_PORT=8096 docker-compose up  # wps service will be available on port 8096
 
 Use docker-compose to stop the containers::
 
