@@ -77,6 +77,28 @@ and restart the ``supervisor`` service::
   $ make restart
   $ make status
 
+
+Using Docker
+************
+
+Get docker images using docker-compose::
+
+    $ docker-compose pull
+
+
+Start the demo with docker-compose::
+
+    $ docker-compose up -d  # runs with -d in the background
+    $ docker-compose logs -f  # check the logs if running in background
+
+By default the WPS service should be available on port 8096::
+
+    $ firefox "http://localhost:8096/wps?service=wps&request=GetCapabilities"
+
+Use docker-compose to stop the containers::
+
+    $ docker-compose down
+
 Testdata
 ********
 
