@@ -19,12 +19,14 @@ mainly to show ways how the input data of the tools can be described and restric
 Installation
 ************
 
-The installation is done with `Buildout <http://www.buildout.org/>`_.
-It is using the Python distribution system `Anaconda <http://www.continuum.io/>`_ to maintain software dependencies.
+The installation is done with `Buildout`_. It is using the Python distribution
+system `Anaconda`_ to maintain software dependencies.
 
-If Anaconda is not available then a minimal Anaconda will be installed during the installation process in your home directory ``~/anaconda``.
+If Anaconda is not available then a minimal Anaconda will be installed during
+the installation process in your home directory ``~/anaconda``.
 
-The installation process setups a conda environment named ``copernicus``. All additional packages are going into this conda environment.
+The installation process setups a conda environment named ``copernicus``. All
+additional packages are going into this conda environment.
 The location is ``~/.conda/envs/copernicus``.
 
 Now, check out the code from the GitHub repo and start the installation::
@@ -38,7 +40,7 @@ After successful installation you need to start the services. All installed file
    $ make start  # starts supervisor services
    $ make status # shows supervisor status
 
-The depolyed WPS service is available on http://localhost:8096/wps?service=WPS&version=1.0.0&request=GetCapabilities.
+The deployed WPS service is available on http://localhost:8096/wps?service=WPS&version=1.0.0&request=GetCapabilities.
 
 Check the log files for errors::
 
@@ -109,3 +111,5 @@ You can use wget to download ESGF NetCDF files (``-x`` option to create director
 .. _ESMValTool: http://www.esmvaltool.org/
 .. _NCL: http://www.ncl.ucar.edu/
 .. _esgf-pyclient: http://esgf-pyclient.readthedocs.io/en/latest/index.html
+.. _Buildout: http://www.buildout.org/
+.. _Anaconda: http://www.continuum.io/
