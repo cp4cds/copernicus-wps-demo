@@ -12,7 +12,7 @@ Overview
 
 In `Copernicus`_ we want to provide processing capabilities next to a climate data store.
 The processing capabilities are exposed using the Web Processing Service standard interface with
-the PyWPS implementation. This demo contains several example processes implemented with
+the `PyWPS`_ implementation. This demo contains several example processes implemented with
 `ESMValTool`_ and `NCL`_. The processes are defined with different WPS profiles
 mainly to show ways how the input data of the tools can be described and restricted.
 
@@ -104,8 +104,8 @@ You can use wget to download ESGF NetCDF files (``-x`` option to create director
     $ wget --certificate cert.pem --private-key cert.pem --ca-certificate cert.pem -N -x -P /path/to/esgf/cmip5/archive
 
 
-
 .. _Copernicus: http://climate.copernicus.eu/
+.. _PyWPS: http://pywps.org/
 .. _ESMValTool: http://www.esmvaltool.org/
 .. _NCL: http://www.ncl.ucar.edu/
 .. _esgf-pyclient: http://esgf-pyclient.readthedocs.io/en/latest/index.html
