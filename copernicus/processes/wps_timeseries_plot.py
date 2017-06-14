@@ -53,7 +53,7 @@ class TimeSeriesPlot(Process):
                          abstract='Choose a variable like tas.',
                          metadata=[
                              Metadata('variable',
-                                      role='https://www.earthsystemcog.org/spec/esgf_search/2.1.0/def/facet/ensemble',
+                                      role='https://www.earthsystemcog.org/spec/esgf_search/2.1.0/def/facet/variable',
                                       href='http://esgf-data.dkrz.de/esg-search/search?project=CMIP5&time_frequency=mon&variable=tas&distrib=false&replica=false&latest=true&limit=0&facets=variable'),  # noqa
                          ],
                          data_type='string',
