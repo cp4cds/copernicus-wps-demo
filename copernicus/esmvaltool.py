@@ -130,9 +130,10 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
 
     # write esgf_config.xml
     esgf_config_templ = mylookup.get_template('esgf_config.xml')
+    LOGGER.debug('obs root: %s', config.obs_root())
     rendered_esgf_config = esgf_config_templ.render_unicode(
         workdir=workdir,
-        archive_root=config.archive_root(),
+        archive_root=config.archive_root()
     )
     esgf_config_filename = os.path.abspath(os.path.join(workdir, "esgf_config.xml"))
     with open(esgf_config_filename, 'w') as fp:
@@ -142,6 +143,7 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
     namelist = 'namelist_{0}.xml'.format(diag)
     namelist_templ = mylookup.get_template(namelist)
     rendered_namelist = namelist_templ.render_unicode(
+        obs_root=config.obs_root(),
         diag=diag,
         prefix=home_path,
         workdir=workdir,
