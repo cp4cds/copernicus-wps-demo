@@ -1,11 +1,11 @@
 <namelist>
   <namelist_summary>
     This namelist is based on namelist_overview from the tutorial.
-    It is adapted for the ESGF coupling test case. It uses the CMIP5 data from the ESGF archive:
+    It is adapted for the ESGF coupling test case. It uses the CMIP5 data from the ESGF archive.
 
-    project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=pr, model=MPI-ESM-LR, time_frequency=mon
+    project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=tas, model=MPI-ESM-LR, time_frequency=mon
 
-    Variable "pr" and time frequency "mon" are fixed.
+    Variable "tas" and time frequency "mon" are fixed.
 
     This namelist is generated.
   </namelist_summary>

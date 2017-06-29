@@ -56,15 +56,17 @@ class Taylor(Process):
 
         super(Taylor, self).__init__(
             self._handler,
-            identifier="taylor",
-            title="Taylor Diagram",
+            identifier="cloud_taylor",
+            title="Cloud Taylor Diagram",
             version=esmvaltool.VERSION,
-            abstract="Create a Taylor diagram using ESMValTool (takes about 30 seconds)."
+            abstract="Creates a cloud Taylor diagram using ESMValTool."
+                     " Expected execution time: 30 seconds."
                      " The default run uses the following CMIP5 data:"
-                     " project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=pr, model=MPI-ESM-LR, time_frequency=mon",  # noqa
+                     " project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=tas, model=MPI-ESM-LR, time_frequency=mon."  # noqa
+                     " In addition the calculation needs observation data from Tier2/NCEP and Tier3/ERA-Interim.",
             metadata=[
                 Metadata('ESMValTool', 'http://www.esmvaltool.org/'),
-                Metadata('ESGF Testdata', 'https://esgf1.dkrz.de/thredds/catalog/esgcet/7/cmip5.output1.MPI-M.MPI-ESM-LR.historical.mon.atmos.Amon.r1i1p1.v20120315.html?dataset=cmip5.output1.MPI-M.MPI-ESM-LR.historical.mon.atmos.Amon.r1i1p1.v20120315.pr_Amon_MPI-ESM-LR_historical_r1i1p1_185001-200512.nc'),  # noqa
+                Metadata('ESGF Testdata', 'http://esgf1.dkrz.de/thredds/fileServer/cmip5/cmip5/output1/MPI-M/MPI-ESM-LR/historical/mon/atmos/Amon/r1i1p1/v20120315/tas/tas_Amon_MPI-ESM-LR_historical_r1i1p1_185001-200512.nc'),  # noqa
             ],
             inputs=inputs,
             outputs=outputs,
