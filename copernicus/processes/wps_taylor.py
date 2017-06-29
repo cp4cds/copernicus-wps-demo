@@ -19,6 +19,8 @@ class Taylor(Process):
                          abstract='Choose a model like MPI-ESM-LR.',
                          data_type='string',
                          allowed_values=['MPI-ESM-LR', 'MPI-ESM-MR'],
+                         min_occurs=1,
+                         max_occurs=2,
                          default='MPI-ESM-LR'),
             LiteralInput('experiment', 'Experiment',
                          abstract='Choose an experiment like historical.',
@@ -107,7 +109,8 @@ class Taylor(Process):
         response.update_status("collect output plot ...", 90)
         response.outputs['output'].output_format = Format('application/pdf')
         response.outputs['output'].file = esmvaltool.find_output(
-            path_filter=os.path.join('plot', 'surfconplot_simple'),
+            path_filter=os.path.join('plot', 'clouds_taylor'),
+            name_filter="clouds_taylor_tas",
             output_format="pdf")
 
         response.update_status("done.", 100)
