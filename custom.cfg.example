@@ -14,4 +14,5 @@ hostname = localhost
 #user = www-data
 #etc-user = root
 
-
+# data archive
+# archive-root = /path/to/esgf/cmip5/archive
