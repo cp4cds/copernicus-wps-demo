@@ -14,5 +14,7 @@ hostname = localhost
 #user = www-data
 #etc-user = root
 
-# data archive
+# cmip5 data archive
 # archive-root = /path/to/esgf/cmip5/archive
+# observation data
+# obs-root = /path/to/obs
