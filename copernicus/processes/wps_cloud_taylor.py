@@ -12,7 +12,7 @@ import logging
 LOGGER = logging.getLogger("PYWPS")
 
 
-class Taylor(Process):
+class CloudTaylor(Process):
     def __init__(self):
         inputs = [
             LiteralInput('model', 'Model',
@@ -54,7 +54,7 @@ class Taylor(Process):
                           supported_formats=[Format('application/pdf')]),
         ]
 
-        super(Taylor, self).__init__(
+        super(CloudTaylor, self).__init__(
             self._handler,
             identifier="cloud_taylor",
             title="Cloud Taylor Diagram",
