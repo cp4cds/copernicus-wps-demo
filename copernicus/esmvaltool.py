@@ -9,7 +9,7 @@ from netCDF4 import Dataset
 from cdo import Cdo
 
 from copernicus import config
-from copernicus._compat import escape
+# from copernicus._compat import escape
 
 import logging
 LOGGER = logging.getLogger("PYWPS")
