@@ -17,5 +17,6 @@ def test_wps_caps():
         # 'contour_plot',
         'mydiag',
         'overview',
+        'portrait',
         'ts_plot',
         'ts_plot_generic']
