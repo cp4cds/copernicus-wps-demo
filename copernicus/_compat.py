@@ -17,6 +17,7 @@ if PY2:
     from urlparse import urlparse
     from urlparse import urljoin
     from urllib2 import urlopen
+    from cgi import escape
 else:
     LOGGER.debug('Python 3.x')
     text_type = str
@@ -24,3 +25,4 @@ else:
     from urllib.parse import urlparse
     from urllib.parse import urljoin
     from urllib.request import urlopen
+    from html import escape
