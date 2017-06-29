@@ -27,8 +27,8 @@
       % for model in constraints['models']:
       <model>ESGF_CMIP5 MPI-M output1 MPI-M ${model} ${constraints['experiment']} ${constraints['time_frequency']} atmos ${constraints['cmor_table']} ${constraints['ensemble']} latest ${start_year} ${end_year} CMIP5_template</model>
       % endfor
-      <model>          OBS NCEP                reanaly      1             2003 2005  ${obs_root}/Tier2/NCEP            </model>
-      <model id="ERA"> OBS ERA-Interim         reanaly      1             2003 2005  ${obs_root}/Tier3/ERA-Interim     </model>
+      <model>          OBS NCEP                reanaly      1             ${start_year} ${end_year}  ${obs_root}/Tier2/NCEP            </model>
+      <model id="ERA"> OBS ERA-Interim         reanaly      1             ${start_year} ${end_year}  ${obs_root}/Tier3/ERA-Interim     </model>
     </diag>
   </DIAGNOSTICS>
 
