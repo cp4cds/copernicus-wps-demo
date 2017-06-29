@@ -24,16 +24,18 @@
         <variable ref_model="ERA-Interim,NCEP">ta</variable>
         <field_type>T3M</field_type>
         <diag_script_cfg_dir>${prefix}/nml/cfg_lauer17rse/</diag_script_cfg_dir>
-        <diag_script cfg="cfg_perfmetrics_grading_RMSD_850_glob.ncl">perfmetrics_main.ncl</diag_script>
-        <diag_script cfg="cfg_perfmetrics_grading_RMSD_850_glob.ncl">perfmetrics_grading.ncl</diag_script>
         % for model in constraints['models']:
         <model>ESGF_CMIP5 MPI-M output1 MPI-M ${model} ${constraints['experiment']} ${constraints['time_frequency']} atmos ${constraints['cmor_table']} ${constraints['ensemble']} latest ${start_year} ${end_year} CMIP5_template</model>
         % endfor
         <model>  OBS         ERA-Interim         reanaly      1             ${start_year} ${end_year}   ${obs_root}/Tier3/ERA-Interim  </model>
         <model>  OBS         NCEP                reanaly      1             ${start_year} ${end_year}   ${obs_root}/Tier2/NCEP         </model>
+        <diag_script cfg="cfg_perfmetrics_grading_RMSD_850_glob.ncl">perfmetrics_main.ncl</diag_script>
+        <diag_script cfg="cfg_perfmetrics_grading_RMSD_200_glob.ncl">perfmetrics_main.ncl</diag_script>
+        <diag_script cfg="cfg_perfmetrics_grading_RMSD_850_glob.ncl">perfmetrics_grading.ncl</diag_script>
+        <diag_script cfg="cfg_perfmetrics_grading_RMSD_200_glob.ncl">perfmetrics_grading.ncl</diag_script>
     </diag>
 
-    <diag>
+    <!-- diag>
         <description>EASTWARD WIND: grading precalculations</description>
         <variable_def_dir>${prefix}/variable_defs/</variable_def_dir>
         <variable ref_model="ERA-Interim,NCEP">ua</variable>
@@ -46,9 +48,9 @@
         % endfor
         <model>  OBS         ERA-Interim         reanaly      1             ${start_year} ${end_year}   ${obs_root}/Tier3/ERA-Interim  </model>
         <model>  OBS         NCEP                reanaly      1             ${start_year} ${end_year}   ${obs_root}/Tier2/NCEP         </model>
-    </diag>
+    </diag -->
 
-    <diag>
+    <!-- diag>
         <description>COLLECT AND PLOT PREVIOUSLY CALCULATED GRADINGS (Portrait diagram)</description>
         <variable_def_dir>${prefix}/variable_defs/</variable_def_dir>
         <variable>ta</variable>
@@ -58,7 +60,7 @@
         % for model in constraints['models']:
         <model>ESGF_CMIP5 MPI-M output1 MPI-M ${model} ${constraints['experiment']} ${constraints['time_frequency']} atmos ${constraints['cmor_table']} ${constraints['ensemble']} latest ${start_year} ${end_year} CMIP5_template</model>
         % endfor
-    </diag>
+    </diag -->
 
   </DIAGNOSTICS>
 

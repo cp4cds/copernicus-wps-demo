@@ -62,11 +62,10 @@ class Portrait(Process):
             abstract="Creates a portrait grading diagram using ESMValTool."
                      " Expected execution time: 10 minutes."
                      " The default run uses the following CMIP5 data:"
-                     " project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=tas, model=MPI-ESM-LR, time_frequency=mon."  # noqa
+                     " project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=ta,ua, model=MPI-ESM-LR, time_frequency=mon."  # noqa
                      " In addition the calculation needs observation data from Tier2/NCEP and Tier3/ERA-Interim.",
             metadata=[
                 Metadata('ESMValTool', 'http://www.esmvaltool.org/'),
-                Metadata('ESGF Testdata', 'http://esgf1.dkrz.de/thredds/fileServer/cmip5/cmip5/output1/MPI-M/MPI-ESM-LR/historical/mon/atmos/Amon/r1i1p1/v20120315/tas/tas_Amon_MPI-ESM-LR_historical_r1i1p1_185001-200512.nc'),  # noqa
             ],
             inputs=inputs,
             outputs=outputs,
