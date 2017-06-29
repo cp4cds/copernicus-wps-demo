@@ -9,6 +9,7 @@ from netCDF4 import Dataset
 from cdo import Cdo
 
 from copernicus import config
+from copernicus._compat import escape
 
 import logging
 LOGGER = logging.getLogger("PYWPS")
@@ -106,7 +107,8 @@ def run_diag(namelist, workdir=None):
         output = check_output(cmd, stderr=STDOUT, cwd=home_path)
     except CalledProcessError as err:
         LOGGER.error('esmvaltool failed! %s', err.output)
-        raise Exception('esmvaltool failed: {0}'.format(err.output))
+        raise Exception('ESMValTool diag failed! Check the logs.')
+        # raise Exception('esmvaltool failed: {0}'.format(escape(err.output)))
     else:
         # debug: show logfile
         if LOGGER.isEnabledFor(logging.DEBUG):
