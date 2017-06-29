@@ -49,6 +49,9 @@ def prepare(workdir=None):
 
 
 def create_esgf_datastore(datasets, workdir=None):
+    """
+    Prepares an ESGF datastore from datasets (files or opendap) for ESMValTool ESGF coupling module.
+    """
     workdir = workdir or os.curdir
     datastore_root = os.path.join(workdir, 'esgf_datastore')
     constraints = dict(
@@ -164,8 +167,8 @@ def find_output(workdir=None, path_filter=None, name_filter=None, output_format=
     workdir = workdir or os.curdir
     path_filter = path_filter or os.path.join('plot*', '*')
     name_filter = name_filter or "*"
-    # work/temp_XzZnMo/plot/tsline/tsline_tas_nomask_noanom_nodetr_-90_90_historical_2000-2005.pdf
-    matches = glob.glob(os.path.join(workdir, 'work', '*', path_filter, '{0}.{1}'.format(name_filter, output_format)))
+    # work/plot/tsline/tsline_tas_nomask_noanom_nodetr_-90_90_historical_2000-2005.pdf
+    matches = glob.glob(os.path.join(workdir, 'work', path_filter, '{0}.{1}'.format(name_filter, output_format)))
     if len(matches) == 0:
         raise Exception("no output found in workdir")
     elif len(matches) > 1:
