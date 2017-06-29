@@ -107,7 +107,6 @@ class Portrait(Process):
         response.outputs['log'].file = logfile
 
         # result plot
-        # work/temp_oV6c2J/plot/surfconplot_simple/surfconplot_simple_pr_T2Ms_ANN.pdf
         response.update_status("collect output plot ...", 90)
         response.outputs['output'].output_format = Format('application/pdf')
         response.outputs['output'].file = esmvaltool.find_output(
