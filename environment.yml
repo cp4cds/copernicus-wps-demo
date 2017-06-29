@@ -27,7 +27,7 @@ dependencies:
 - libxslt=1.1.29
 # helpers
 - netcdf4
-- cdo=1.8.1
+- cdo=1.8.2
 - python-cdo
 # python wrapper for ncl
 - pyngl
