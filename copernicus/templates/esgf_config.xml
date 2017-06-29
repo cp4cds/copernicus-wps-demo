@@ -32,7 +32,7 @@
     <!-- Location of user downloaded files on local machine
          (this element is optional and can be omitted) -->
     <USER_CACHE>
-        <cache_root> /work/bd0854/b309070/puc_esgf </cache_root>
+        <cache_root> /tmp </cache_root>
         <cache_template id='CMIP5_template'>cmip5/[product]/[institute]/[model]/[experiment]/[time_freq]/[realm]/[mip]/[ensemble]/[version]/[variable]
         </cache_template>
     </USER_CACHE>
