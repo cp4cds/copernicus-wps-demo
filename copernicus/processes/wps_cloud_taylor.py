@@ -25,7 +25,7 @@ class CloudTaylor(Process):
             LiteralInput('experiment', 'Experiment',
                          abstract='Choose an experiment like historical.',
                          data_type='string',
-                         allowed_values=['historical', 'rcp26', 'rcp45', 'rcp85'],
+                         allowed_values=['historical', 'decadal1995'],
                          default='historical'),
             LiteralInput('ensemble', 'Ensemble',
                          abstract='Choose an ensemble like r1i1p1.',
