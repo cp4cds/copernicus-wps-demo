@@ -34,3 +34,6 @@ dependencies:
 # esmvaltool
 - esmvaltool=1.1.0
 - mako
+# drmaa scheduler
+- drmaa
+- dill
