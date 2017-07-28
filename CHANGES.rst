@@ -1,6 +1,12 @@
 Changes
 *******
 
+current
+=======
+
+* added pscopg2 for postgres
+* updated pywps recipe 0.9.2
+
 0.1.0 (2017-06-06)
 ==================
 
