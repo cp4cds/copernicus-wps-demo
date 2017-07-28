@@ -24,6 +24,8 @@ dependencies:
 - lxml=3.7
 - libxslt=1.1.29
 - genshi=0.7
+# postgres
+- psycopg2
 # helpers
 - netcdf4
 - cdo=1.8.2
