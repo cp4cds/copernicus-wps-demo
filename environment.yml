@@ -5,6 +5,7 @@ channels:
 - defaults
 dependencies:
 - python=2.7
+- setuptools=27.2
 - pyopenssl=0.16
 - cryptography=1.4
 - pyyaml=3.11
@@ -12,7 +13,7 @@ dependencies:
 - icu=58.1
 # tests
 - pytest
-- flake8
+- flake8=3.3
 - ipython
 # wps
 - pywps=4.0.0
