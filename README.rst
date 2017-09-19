@@ -96,14 +96,14 @@ By default the WPS service should be available on port 8080::
 
 Alternatively you can change the port by using environment variables, for example::
 
-    $ HTTP_PORT=8096 docker-compose up  # wps service will be available on port 8096
+    $ HTTP_PORT=8096 docker-compose up -d # wps service will be available on port 8096
 
 Run docker exec to watch logs::
 
     $ docker ps     # find container name
-    myapp_wps_1
-    $ docker exec myapp_myapp_1 tail -f /opt/birdhouse/var/log/supervisor/myapp.log
-    $ docker exec myapp_myapp_1 tail -f /opt/birdhouse/var/log/pywps/myapp.log
+    copernicuswpsdemo_wps_1
+    $ docker exec copernicuswpsdemo_wps_1 tail -f /opt/birdhouse/var/log/supervisor/copernicus.log
+    $ docker exec copernicuswpsdemo_wps_1 tail -f /opt/birdhouse/var/log/pywps/copernicus.log
 
 Use docker-compose to stop the containers::
 
