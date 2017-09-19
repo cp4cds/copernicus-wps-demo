@@ -4,6 +4,7 @@ Changes
 current
 =======
 
+* cleaned up Dockerfile
 * added pscopg2 for postgres
 * updated pywps recipe 0.9.2
 
