@@ -5,7 +5,7 @@ channels:
 - defaults
 dependencies:
 - python=2.7
-- setuptools=27.2
+- setuptools=36.4.0
 - pyopenssl=0.16
 - cryptography=1.4
 - pyyaml=3.11
