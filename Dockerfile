@@ -1,5 +1,5 @@
 # vim:set ft=dockerfile:
-FROM birdhouse/bird-base:latest
+FROM debian:latest
 MAINTAINER https://github.com/cp4cds/copernicus-wps-demo
 
 LABEL Description="copernicus-wps-demo application" Vendor="CP4CDS" Version="0.1"
@@ -39,7 +39,7 @@ VOLUME /opt/birdhouse/var/log
 VOLUME /opt/birdhouse/etc
 
 # Ports used in birdhouse
-EXPOSE 9001 $HTTP_PORT $HTTPS_PORT $OUTPUT_PORT
+EXPOSE $HTTP_PORT $OUTPUT_PORT
 
 # Start supervisor in foreground
 ENV DAEMON_OPTS --nodaemon
