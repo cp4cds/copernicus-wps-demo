@@ -98,6 +98,13 @@ Alternatively you can change the port by using environment variables, for exampl
 
     $ HTTP_PORT=8096 docker-compose up  # wps service will be available on port 8096
 
+Run docker exec to watch logs::
+
+    $ docker ps     # find container name
+    myapp_wps_1
+    $ docker exec myapp_myapp_1 tail -f /opt/birdhouse/var/log/supervisor/myapp.log
+    $ docker exec myapp_myapp_1 tail -f /opt/birdhouse/var/log/pywps/myapp.log
+
 Use docker-compose to stop the containers::
 
     $ docker-compose down
