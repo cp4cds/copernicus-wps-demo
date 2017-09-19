@@ -6,7 +6,7 @@ LABEL Description="copernicus-wps-demo application" Vendor="CP4CDS" Version="0.1
 
 # Configure hostname and ports for services
 ENV HTTP_PORT 8080
-ENV HTTPS_PORT 8443
+#ENV HTTPS_PORT 8443
 ENV OUTPUT_PORT 8000
 ENV HOSTNAME localhost
 
@@ -33,10 +33,10 @@ ENV CONDA_ENVS_DIR /opt/conda/envs
 RUN make clean install && chmod 755 /opt/birdhouse/etc && chmod 755 /opt/birdhouse/var/run
 
 # Volume for data, cache, logfiles, ...
-VOLUME /opt/birdhouse/var/lib
-VOLUME /opt/birdhouse/var/log
+#VOLUME /opt/birdhouse/var/lib
+#VOLUME /opt/birdhouse/var/log
 # Volume for configs
-VOLUME /opt/birdhouse/etc
+#VOLUME /opt/birdhouse/etc
 
 # Ports used in birdhouse
 EXPOSE $HTTP_PORT $OUTPUT_PORT
