@@ -1,4 +1,4 @@
-VERSION := 0.3.12
+VERSION := 0.3.14
 RELEASE := master
 
 # Include custom config if it is available
@@ -13,9 +13,9 @@ OS_NAME := $(shell uname -s 2>/dev/null || echo "unknown")
 CPU_ARCH := $(shell uname -m 2>/dev/null || uname -p 2>/dev/null || echo "unknown")
 
 # Python
-SETUPTOOLS_VERSION := 36.4.0
-CONDA_VERSION := 4.3
-BUILDOUT_VERSION := 2.9.4
+SETUPTOOLS_VERSION := 36.5.0
+CONDA_VERSION := 4.4
+BUILDOUT_VERSION := 2.10.0
 
 # Anaconda
 ANACONDA_HOME ?= $(HOME)/anaconda
