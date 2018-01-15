@@ -2,10 +2,11 @@ name: copernicus-wps-demo
 channels:
 - birdhouse
 - conda-forge
+- conda-forge/label/broken
 - defaults
 dependencies:
 - python=2.7
-- setuptools=36.4.0
+- setuptools=36.5.0
 - pyopenssl=0.16
 - cryptography=1.4
 - pyyaml=3.11
@@ -36,6 +37,10 @@ dependencies:
 #- pynio
 # esmvaltool
 - esmvaltool=1.1.0
+- ncl
+- poppler=0.52 
+- xerces-c=3.1 
+- gsl
 - mako
 # drmaa scheduler
 - drmaa
