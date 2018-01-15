@@ -41,6 +41,12 @@ dependencies:
 - poppler=0.52 
 - xerces-c=3.1 
 - gsl
+- xorg-imake
+- xorg-libx11
+- xorg-libxaw
+- xorg-libxmu
+- xorg-libxrender
+- xorg-makedepend
 - mako
 # drmaa scheduler
 - drmaa
