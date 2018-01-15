@@ -36,7 +36,7 @@ dependencies:
 #- pyngl
 #- pynio
 # esmvaltool
-- esmvaltool=1.1.0
+- esmvaltool=1.1.0=py27_3
 - ncl
 - poppler=0.52 
 - xerces-c=3.1 
