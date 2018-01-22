@@ -1,11 +1,15 @@
-copernicus-wps-demo
+Copernicus WPS Demo
 ===================
 
 .. image:: https://travis-ci.org/cp4cds/copernicus-wps-demo.svg?branch=master
    :target: https://travis-ci.org/cp4cds/copernicus-wps-demo
    :alt: Travis Build
 
-Demo with WPS processes for copernicus.
+.. image:: https://img.shields.io/github/license/cp4cds/copernicus-wps-demo.svg
+   :target: https://github.com/cp4cds/copernicus-wps-demo/raw/master/LICENSE.txt
+   :alt: GitHub license
+
+Demo with WPS processes for Copernicus.
 
 Overview
 ********
