@@ -76,6 +76,43 @@ and restart the ``supervisor`` service::
   $ make restart
   $ make status
 
+Use Birdy WPS command line client
+*********************************
+
+Install birdy::
+
+  $ conda install -c birdhouse -c conda-forge birdhouse-birdy
+
+
+Set WPS service:
+
+  $ export WPS_SERVICE=http://localhost:8096/wps
+
+See what processes are available::
+
+  $ birdy -h
+
+Run *mydiag*::
+
+  $ birdy mydiag -h
+  $ birdy mydiag --model MPI-ESM-LR --experiment historical --ensemble r1i1p1 --start_year 2000 --end_year 2001
+
+Run *overview*::
+
+  $ birdy overview -h
+  $ birdy overview --model MPI-ESM-LR --experiment historical --ensemble r1i1p1 --start_year 2000 --end_year 2001
+
+Run *cloud_taylor*::
+
+  $ birdy cloud_taylor -h
+  $ birdy cloud_taylor --model MPI-ESM-LR --experiment historical --ensemble r1i1p1 --start_year 2000 --end_year 2001
+
+Run *ts_plot*::
+
+  $ birdy ts_plot -h
+  $ birdy ts_plot --model MPI-ESM-LR --experiment historical --ensemble r1i1p1 --start_year 2000 --end_year 2001 --variable tas
+
+
 
 Using Docker
 ************
