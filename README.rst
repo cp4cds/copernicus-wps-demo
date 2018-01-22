@@ -76,8 +76,10 @@ and restart the ``supervisor`` service::
   $ make restart
   $ make status
 
-Use Birdy WPS command line client
-*********************************
+Examples with Birdy
+*******************
+
+Birdy is a WPS command line client.
 
 Install birdy::
 
