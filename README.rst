@@ -89,8 +89,7 @@ Install birdy::
 
   $ conda install -c birdhouse -c conda-forge birdhouse-birdy
 
-
-Set WPS service:
+Set WPS service::
 
   $ export WPS_SERVICE=http://localhost:8096/wps
 
