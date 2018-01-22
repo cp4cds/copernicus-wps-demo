@@ -154,23 +154,15 @@ Testdata
 For the demo processes you can fetch CMIP5 test-data from the ESGF archive.
 You need a valid ESGF credentials which you can fetch for example with `esgf-pyclient`_.
 
-* Tutorial Diagnostic MyDiag
+For the examples you need CMIP5 data with the following facets:
 
-ESGF search facets::
+* project=CMIP5
+* experiment=historical
+* ensemble=r1i1p1
+* variable=ta, tas, or pr
+* model=MPI-ESM-LR
+* time_frequency=mon
 
-    project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=ta, model=MPI-ESM-LR, time_frequency=mon
-
-* Surface Contour Plot for Precipitation
-
-ESGF search facets::
-
-    project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=pr, model=MPI-ESM-LR, time_frequency=mon
-
-* Timeservices Plot
-
-ESGF search facets::
-
-    project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=tas, model=MPI-ESM-LR, time_frequency=mon
 
 You can use wget to download ESGF NetCDF files (``-x`` option to create directories)::
 
