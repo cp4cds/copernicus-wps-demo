@@ -1,12 +1,14 @@
 Changes
 *******
 
-current
-=======
+0.1.1 (2017-01-29)
+==================
 
-* cleaned up Dockerfile
-* added pscopg2 for postgres
-* updated pywps recipe 0.9.2
+* cleaned up Dockerfile.
+* added pscopg2 for postgres.
+* updated pywps recipe 0.9.3.
+* added workaround for broken ncl conda package.
+* updated Readme with birdy examples.
 
 0.1.0 (2017-06-06)
 ==================
