@@ -9,7 +9,7 @@ dependencies:
 - setuptools=36.5.0
 - pyopenssl=0.16
 - cryptography=1.4
-- pyyaml=3.11
+#- pyyaml=3.11
 - curl=7.45.0
 - icu=58.1
 # tests
@@ -29,25 +29,48 @@ dependencies:
 # postgres
 - psycopg2
 # helpers
-- netcdf4
+#- netcdf4
 - cdo=1.8.2
-- python-cdo
+#- python-cdo
 # python wrapper for ncl
 #- pyngl
 #- pynio
+# Needed by main, preprocessor, workflow, one or more diagnostics, shared diagnostic code.
+- basemap
+- cartopy
+- cf_units
+- cython
+- flask
+- iris
 # esmvaltool
-- esmvaltool=1.1.0=py27_3
+#- esmvaltool=1.1.0=py27_3
 - ncl
-- poppler=0.52 
-- xerces-c=3.1 
+# ncl patch
+- poppler=0.52
+- xerces-c=3.1
 - gsl
-- xorg-imake
-- xorg-libx11
-- xorg-libxaw
-- xorg-libxmu
-- xorg-libxrender
-- xorg-makedepend
+# ncl patch end
+- netcdf4
+- numba=0.35.0
+- numpy
+- pillow # providing PIL package
+- python-cdo
+- python-stratify
+- pyyaml
+- scipy
+- shapely
+- six
+#- xorg-imake
+#- xorg-libx11
+#- xorg-libxaw
+#- xorg-libxmu
+#- xorg-libxrender
+#- xorg-makedepend
 - mako
 # drmaa scheduler
 - drmaa
 - dill
+- pip:
+  - esgf-pyclient
+  - geoval
+  - yamale
