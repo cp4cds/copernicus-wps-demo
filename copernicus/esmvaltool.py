@@ -14,11 +14,11 @@ from copernicus import config
 import logging
 LOGGER = logging.getLogger("PYWPS")
 
-from mako.lookup import TemplateLookup
-mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), 'templates')],
-                          output_encoding='utf-8', encoding_errors='replace')
+# from mako.lookup import TemplateLookup
+# mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), 'templates')],
+#                          output_encoding='utf-8', encoding_errors='replace')
 
-VERSION = "1.1.0"
+VERSION = "2.0.0"
 
 
 def prepare(workdir=None):
@@ -93,6 +93,19 @@ def create_esgf_datastore(datasets, workdir=None):
     return constraints
 
 
+def run_demo():
+    # esmvaltool -c esmvaltool/config-user_demo.yml -n esmvaltool/namelists/namelist_MyVar_demo.yml
+    root_path = "/home/pingu/sandbox/macpingu/ESMValTool/esmvaltool"
+    cmd = ["esmvaltool",
+           "-c", os.path.join(root_path, 'config-user_demo.yml'),
+           "-n", os.path.join(root_path, 'namelists', 'namelist_MyVar_demo.yml')]
+    output = check_output(cmd, stderr=STDOUT)
+    logfile = os.path.abspath(os.path.join('.', 'log.txt'))
+    with open(logfile, 'w') as f:
+        f.write(output)
+    return logfile
+
+
 def run_diag(namelist, workdir=None):
     workdir = workdir or os.curdir
     # ncl path
@@ -164,6 +177,10 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
 
 
 def find_output(workdir=None, path_filter=None, name_filter=None, output_format="pdf"):
+    # /tmp/test_output/namelist_MyVar_demo_20180129_143445/plots/ta_diagnostics/test_ta/ta.ps
+    matches = glob.glob("/tmp/test_output/namelist_MyVar_demo_*/plots/ta_diagnostics/test_ta/ta.ps")
+    return matches[0]
+
     workdir = workdir or os.curdir
     path_filter = path_filter or os.path.join('plot*', '*')
     name_filter = name_filter or "*"

@@ -84,21 +84,23 @@ class MyDiag(Process):
 
         # generate namelist
         response.update_status("generate namelist ...", 10)
-        namelist = esmvaltool.generate_namelist(
-            diag='mydiag',
-            constraints=constraints,
-            start_year=request.inputs['start_year'][0].data,
-            end_year=request.inputs['end_year'][0].data,
-            output_format='pdf',
-        )
+        # namelist = esmvaltool.generate_namelist(
+        #     diag='mydiag',
+        #     constraints=constraints,
+        #     start_year=request.inputs['start_year'][0].data,
+        #     end_year=request.inputs['end_year'][0].data,
+        #     output_format='pdf',
+        # )
 
         # run diag
         response.update_status("running diag ...", 20)
-        logfile = esmvaltool.run_diag(namelist)
+        # logfile = esmvaltool.run_diag(namelist)
+        logfile = esmvaltool.run_demo()
 
         # namelist output
         response.outputs['namelist'].output_format = FORMATS.TEXT
-        response.outputs['namelist'].file = namelist
+        # response.outputs['namelist'].file = namelist
+        response.outputs['namelist'].data = "no namelist"
 
         # log output
         response.outputs['log'].output_format = FORMATS.TEXT
@@ -108,8 +110,9 @@ class MyDiag(Process):
         # work/temp_XzZnMo/plot/MyDiag/MyDiag_MyVar.pdf
         response.update_status("collect output plot ...", 90)
         response.outputs['output'].output_format = Format('application/pdf')
-        response.outputs['output'].file = esmvaltool.find_output(
-            path_filter=os.path.join('plot', 'MyDiag'),
-            output_format="pdf")
+        response.outputs['output'].file = esmvaltool.find_output()
+        # response.outputs['output'].file = esmvaltool.find_output(
+        #    path_filter=os.path.join('plot', 'MyDiag'),
+        #    output_format="pdf")
         response.update_status("done.", 100)
         return response
