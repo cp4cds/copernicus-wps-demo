@@ -3,7 +3,7 @@ from pywps.app.Service import Service
 
 from copernicus.processes import processes
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 
 def application(environ, start_response):
