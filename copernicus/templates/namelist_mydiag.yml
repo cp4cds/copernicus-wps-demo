@@ -37,6 +37,6 @@ diagnostics:
         styleset: CMIP5
         colormap: WhiteBlueGreenYellowRed
         ncdf: default
-      test_ta_no2:
-        <<: *settings
-        script: MyDiag_test_ta_no2.ncl
+      # test_ta_no2:
+      #   <<: *settings
+      #   script: MyDiag_test_ta_no2.ncl
