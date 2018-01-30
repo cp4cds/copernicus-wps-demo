@@ -67,36 +67,19 @@ def create_esgf_datastore(datasets, workdir=None):
     return constraints
 
 
-def run_demo(workdir=None):
-    LOGGER.debug("run esmvaltool ...")
+def run_diag(workdir=None):
     workdir = workdir or os.curdir
+    # ncl path
+    LOGGER.debug("NCARG_ROOT=%s", os.environ.get('NCARG_ROOT'))
+    # build cmd
     # esmvaltool -c esmvaltool/config-user_demo.yml -n esmvaltool/namelists/namelist_MyVar_demo.yml
     cmd = ["esmvaltool",
            "-c", os.path.join(workdir, 'config.yml'),
            "-n", os.path.join(workdir, 'namelist.yml')]
-    output = check_output(cmd, stderr=STDOUT)
-    LOGGER.debug("... done")
     logfile = os.path.abspath(os.path.join(workdir, 'log.txt'))
-    with open(logfile, 'w') as f:
-        f.write(output)
-    return logfile
-
-
-def run_diag(namelist, workdir=None):
-    workdir = workdir or os.curdir
-    # ncl path
-    LOGGER.debug("NCARG_ROOT=%s", os.environ.get('NCARG_ROOT'))
-
-    home_path = prepare(workdir=workdir)
-
-    # build cmd
-    main_py = os.path.join(home_path, "main.py")
-    logfile = os.path.abspath(os.path.join(workdir, 'log.txt'))
-    cmd = ["python", main_py, namelist]
-
     # run cmd
     try:
-        output = check_output(cmd, stderr=STDOUT, cwd=home_path)
+        output = check_output(cmd, stderr=STDOUT)
     except CalledProcessError as err:
         LOGGER.error('esmvaltool failed! %s', err.output)
         raise Exception('ESMValTool diag failed! Check the logs.')
@@ -107,11 +90,9 @@ def run_diag(namelist, workdir=None):
             LOGGER.debug(output)
         with open(logfile, 'w') as f:
             f.write(output)
-
     # check if data is found
-    if os.path.isfile(os.path.join(workdir, 'esgf_coupling_report.txt')):
-        raise Exception("Could not find data in ESGF archive.")
-
+    # if os.path.isfile(os.path.join(workdir, 'esgf_coupling_report.txt')):
+    #    raise Exception("Could not find data in ESGF archive.")
     return logfile
 
 
@@ -149,15 +130,12 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
 
 
 def find_output(workdir=None, path_filter=None, name_filter=None, output_format="pdf"):
-    # /tmp/test_output/namelist_MyVar_demo_20180129_143445/plots/ta_diagnostics/test_ta/ta.ps
-    matches = glob.glob("/tmp/test_output/namelist_MyVar_demo_*/plots/ta_diagnostics/test_ta/ta.ps")
-    return matches[0]
-
     workdir = workdir or os.curdir
-    path_filter = path_filter or os.path.join('plot*', '*')
+    path_filter = path_filter or os.path.join('*', '*')
     name_filter = name_filter or "*"
-    # work/plot/tsline/tsline_tas_nomask_noanom_nodetr_-90_90_historical_2000-2005.pdf
-    matches = glob.glob(os.path.join(workdir, 'work', path_filter, '{0}.{1}'.format(name_filter, output_format)))
+    # output/namelist_20180130_111116/plots/ta_diagnostics/test_ta/ta.pdf
+    matches = glob.glob(os.path.join(
+        workdir, 'output', 'namelist_*', 'plots', path_filter, '{0}.{1}'.format(name_filter, output_format)))
     if len(matches) == 0:
         raise Exception("no output found in workdir")
     elif len(matches) > 1:
