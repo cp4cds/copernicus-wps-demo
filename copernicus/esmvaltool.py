@@ -22,33 +22,6 @@ mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), '
 VERSION = "2.0.0"
 
 
-def prepare(workdir=None):
-    """
-    Prepares the esmvaltool to run a diagnostic.
-
-    Due to a ESMValTool bug with the interface_data a complete instance
-    of ESMValTool is prepared in workdir/esmvaltool.
-
-    See issue:
-    https://github.com/ESMValGroup/ESMValTool/issues/3
-
-    :return: HOME path of ESMValTool
-    """
-    workdir = workdir or os.curdir
-    home_path = os.path.abspath(os.path.join(workdir, 'esmvaltool'))
-    if not os.path.isdir(home_path):
-        try:
-            # copy all of esmvaltool
-            shutil.copytree(config.esmval_root(), home_path,
-                            ignore=ignore_patterns('doc/sphinx', 'tests', '*.pdf'))
-            LOGGER.debug('prepared esmvaltool in %s', home_path)
-        except OSError:
-            msg = "Could not prepare esmvaltool."
-            LOGGER.exception(msg)
-            raise Exception(msg)
-    return home_path
-
-
 def create_esgf_datastore(datasets, workdir=None):
     """
     Prepares an ESGF datastore from datasets (files or opendap) for ESMValTool ESGF coupling module.
@@ -146,20 +119,6 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
     constraints = constraints or {}
     workdir = workdir or os.curdir
     workdir = os.path.abspath(workdir)
-
-    # home_path = prepare(workdir=workdir)
-
-    # write esgf_config.xml
-    # esgf_config_templ = mylookup.get_template('esgf_config.xml')
-    # LOGGER.debug('obs root: %s', config.obs_root())
-    # rendered_esgf_config = esgf_config_templ.render_unicode(
-    #     workdir=workdir,
-    #     archive_root=config.archive_root()
-    # )
-    # esgf_config_filename = os.path.abspath(os.path.join(workdir, "esgf_config.xml"))
-    # with open(esgf_config_filename, 'w') as fp:
-    #     fp.write(rendered_esgf_config)
-
     output_dir = os.path.join(workdir, 'output')
     # write config.yml
     config_templ = mylookup.get_template('config.yml')
