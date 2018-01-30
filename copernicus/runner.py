@@ -44,17 +44,22 @@ def run(workdir=None):
 
     # log header
     # LOGGER.info(__doc__)
-    LOGGER.info("Using config file %s", config_file)
+    LOGGER.debug("Using config file %s", config_file)
 
     # check NCL version
     # ncl_version_check()
 
     cfg['synda_download'] = False
 
+    LOGGER.info("run esmvaltool ...")
     process_namelist(namelist_file=namelist_file, config_user=cfg)
-    logfile = os.path.abspath(os.path.join(workdir, 'log.txt'))
-    with open(logfile, 'w') as f:
-        f.write("no log")
+    LOGGER.info("esmvaltool ... done.")
+    # find the log
+    # output/namelist_20180130_122750/run/main_log.txt
+    matches = glob.glob(os.path.join(workdir, 'output', 'namelist_*', 'run', 'main_log.txt'))
+    if len(matches) == 0:
+        raise Exception("no logfile found")
+    logfile = matches[0]
     return logfile
 
 
