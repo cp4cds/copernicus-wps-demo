@@ -22,6 +22,33 @@ mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), '
 VERSION = "2.0.0"
 
 
+def run_cmd(namelist_file, config_file):
+    # ncl path
+    LOGGER.debug("NCARG_ROOT=%s", os.environ.get('NCARG_ROOT'))
+
+    # build cmd
+    cmd = ["esmvaltool",
+           "-c", config_file,
+           "-n", namelist_file]
+
+    # run cmd
+    try:
+        LOGGER.info("run esmvaltool ...")
+        output = check_output(cmd, stderr=STDOUT)
+        LOGGER.info("esmvaltool ... done.")
+    except CalledProcessError as err:
+        LOGGER.error('esmvaltool failed! %s', err.output)
+        # raise Exception('esmvaltool failed: {0}'.format(err.output))
+    # debug: show logfile
+    output = "no output"
+    if LOGGER.isEnabledFor(logging.DEBUG):
+        LOGGER.debug(output)
+    logfile = "log.txt"
+    with open(logfile, 'w') as f:
+        f.write(output)
+    return logfile
+
+
 def run(namelist_file, config_file):
     """Run esmvaltool"""
     from esmvaltool.main import configure_logging, read_config_file, process_namelist, ncl_version_check
