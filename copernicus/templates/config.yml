@@ -10,6 +10,7 @@ output_file_type: ${output_format}
 output_dir: ${output_dir}
 
 save_intermediary_cubes: false
+max_parallel_tasks: 1
 
 rootpath:
   CMIP5: ${archive_root}
