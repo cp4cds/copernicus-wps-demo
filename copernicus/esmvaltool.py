@@ -14,6 +14,8 @@ from copernicus import config
 import logging
 LOGGER = logging.getLogger("PYWPS")
 
+TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), 'templates')
+
 # from mako.lookup import TemplateLookup
 # mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), 'templates')],
 #                          output_encoding='utf-8', encoding_errors='replace')
@@ -96,10 +98,9 @@ def create_esgf_datastore(datasets, workdir=None):
 def run_demo():
     LOGGER.debug("run esmvaltool ...")
     # esmvaltool -c esmvaltool/config-user_demo.yml -n esmvaltool/namelists/namelist_MyVar_demo.yml
-    root_path = "/home/pingu/sandbox/macpingu/ESMValTool/esmvaltool"
     cmd = ["esmvaltool",
-           "-c", os.path.join(root_path, 'config-user_demo.yml'),
-           "-n", os.path.join(root_path, 'namelists', 'namelist_MyVar_demo.yml')]
+           "-c", os.path.join(TEMPLATE_PATH, 'config-demo.yml'),
+           "-n", os.path.join(TEMPLATE_PATH, 'namelist_MyVar_demo.yml')]
     output = check_output(cmd, stderr=STDOUT)
     LOGGER.debug("... done")
     logfile = os.path.abspath(os.path.join('.', 'log.txt'))
