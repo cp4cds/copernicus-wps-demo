@@ -22,6 +22,38 @@ mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), '
 VERSION = "2.0.0"
 
 
+def run(namelist_file=None, config_file=None):
+    """Run esmvaltool"""
+    from esmvaltool.main import configure_logging, read_config_file, process_namelist
+    workdir = workdir or os.curdir
+    config_file = os.path.join(workdir, 'config.yml')
+    namelist_file = os.path.join(workdir, 'namelist.yml')
+
+    namelist_name = os.path.splitext(os.path.basename(namelist_file))[0]
+    cfg = read_config_file(config_file, namelist_name)
+
+    # Create run dir
+    if os.path.exists(cfg['run_dir']):
+        print("ERROR: run_dir {} already exists, aborting to "
+              "prevent data loss".format(cfg['output_dir']))
+    os.makedirs(cfg['run_dir'])
+
+    # configure logging
+    configure_logging(
+        output=cfg['run_dir'], console_log_level=cfg['log_level'])
+
+    # log header
+    # LOGGER.info(__doc__)
+    LOGGER.info("Using config file %s", config_file)
+
+    # check NCL version
+    # ncl_version_check()
+
+    # cfg['synda_download'] = args.synda_download
+
+    process_namelist(namelist_file=namelist_file, config_user=cfg)
+
+
 def create_esgf_datastore(datasets, workdir=None):
     """
     Prepares an ESGF datastore from datasets (files or opendap) for ESMValTool ESGF coupling module.
