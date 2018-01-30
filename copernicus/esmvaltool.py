@@ -8,17 +8,16 @@ from copernicus._compat import urlparse
 from netCDF4 import Dataset
 from cdo import Cdo
 
+from mako.lookup import TemplateLookup
+
 from copernicus import config
 # from copernicus._compat import escape
 
 import logging
 LOGGER = logging.getLogger("PYWPS")
 
-TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), 'templates')
-
-# from mako.lookup import TemplateLookup
-# mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), 'templates')],
-#                          output_encoding='utf-8', encoding_errors='replace')
+mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), 'templates')],
+                          output_encoding='utf-8', encoding_errors='replace')
 
 VERSION = "2.0.0"
 
@@ -95,15 +94,16 @@ def create_esgf_datastore(datasets, workdir=None):
     return constraints
 
 
-def run_demo():
+def run_demo(workdir=None):
     LOGGER.debug("run esmvaltool ...")
+    workdir = workdir or os.curdir
     # esmvaltool -c esmvaltool/config-user_demo.yml -n esmvaltool/namelists/namelist_MyVar_demo.yml
     cmd = ["esmvaltool",
-           "-c", os.path.join(TEMPLATE_PATH, 'config-demo.yml'),
-           "-n", os.path.join(TEMPLATE_PATH, 'namelist_MyVar_demo.yml')]
+           "-c", os.path.join(workdir, 'config.yml'),
+           "-n", os.path.join(workdir, 'namelist.yml')]
     output = check_output(cmd, stderr=STDOUT)
     LOGGER.debug("... done")
-    logfile = os.path.abspath(os.path.join('.', 'log.txt'))
+    logfile = os.path.abspath(os.path.join(workdir, 'log.txt'))
     with open(logfile, 'w') as f:
         f.write(output)
     return logfile
@@ -147,33 +147,43 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
     workdir = workdir or os.curdir
     workdir = os.path.abspath(workdir)
 
-    home_path = prepare(workdir=workdir)
+    # home_path = prepare(workdir=workdir)
 
     # write esgf_config.xml
-    esgf_config_templ = mylookup.get_template('esgf_config.xml')
-    LOGGER.debug('obs root: %s', config.obs_root())
-    rendered_esgf_config = esgf_config_templ.render_unicode(
-        workdir=workdir,
-        archive_root=config.archive_root()
+    # esgf_config_templ = mylookup.get_template('esgf_config.xml')
+    # LOGGER.debug('obs root: %s', config.obs_root())
+    # rendered_esgf_config = esgf_config_templ.render_unicode(
+    #     workdir=workdir,
+    #     archive_root=config.archive_root()
+    # )
+    # esgf_config_filename = os.path.abspath(os.path.join(workdir, "esgf_config.xml"))
+    # with open(esgf_config_filename, 'w') as fp:
+    #     fp.write(rendered_esgf_config)
+
+    output_dir = os.path.join(workdir, 'output')
+    # write config.yml
+    config_templ = mylookup.get_template('config.yml')
+    rendered_config = config_templ.render_unicode(
+        archive_root=config.archive_root(),
+        obs_root=config.obs_root(),
+        output_dir=output_dir,
+        output_format=output_format,
     )
-    esgf_config_filename = os.path.abspath(os.path.join(workdir, "esgf_config.xml"))
-    with open(esgf_config_filename, 'w') as fp:
-        fp.write(rendered_esgf_config)
+    config_filename = os.path.abspath(os.path.join(workdir, "config.yml"))
+    with open(config_filename, 'w') as fp:
+        fp.write(rendered_config)
 
     # write namelist.xml
-    namelist = 'namelist_{0}.xml'.format(diag)
+    namelist = 'namelist_{0}.yml'.format(diag)
     namelist_templ = mylookup.get_template(namelist)
     rendered_namelist = namelist_templ.render_unicode(
-        obs_root=config.obs_root(),
         diag=diag,
-        prefix=home_path,
         workdir=workdir,
         constraints=constraints,
         start_year=start_year,
         end_year=end_year,
-        output_format=output_format
     )
-    outfile = os.path.abspath(os.path.join(workdir, "namelist.xml"))
+    outfile = os.path.abspath(os.path.join(workdir, "namelist.yml"))
     with open(outfile, 'w') as fp:
         fp.write(rendered_namelist)
     return outfile
