@@ -6,7 +6,7 @@ from pywps import ComplexInput, ComplexOutput
 from pywps import Format, FORMATS
 from pywps.app.Common import Metadata
 
-from copernicus import esmvaltool
+from copernicus import runner
 
 import logging
 LOGGER = logging.getLogger("PYWPS")
@@ -56,7 +56,7 @@ class MyDiag(Process):
             self._handler,
             identifier="mydiag",
             title="Simple plot",
-            version=esmvaltool.VERSION,
+            version=runner.VERSION,
             abstract="Generates a plot for temperature using ESMValTool."
              " It is a diagnostic used in the ESMValTool tutoriaal doc/toy-diagnostic-tutorial.pdf."
              " The default run uses the following CMIP5 data:"
@@ -84,7 +84,7 @@ class MyDiag(Process):
 
         # generate namelist
         response.update_status("generate namelist ...", 10)
-        namelist = esmvaltool.generate_namelist(
+        namelist = runner.generate_namelist(
              diag='mydiag',
              constraints=constraints,
              start_year=request.inputs['start_year'][0].data,
@@ -94,7 +94,7 @@ class MyDiag(Process):
 
         # run diag
         response.update_status("running diag ...", 20)
-        logfile = esmvaltool.run_diag()
+        logfile = runner.run()
 
         # namelist output
         response.outputs['namelist'].output_format = FORMATS.TEXT
@@ -108,7 +108,7 @@ class MyDiag(Process):
         # work/temp_XzZnMo/plot/MyDiag/MyDiag_MyVar.pdf
         response.update_status("collect output plot ...", 90)
         response.outputs['output'].output_format = Format('application/pdf')
-        response.outputs['output'].file = esmvaltool.find_output(
+        response.outputs['output'].file = runner.find_output(
             path_filter=os.path.join('ta_diagnostics', 'test_ta'),
             output_format="pdf")
         response.update_status("done.", 100)

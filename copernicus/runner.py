@@ -22,12 +22,12 @@ mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), '
 VERSION = "2.0.0"
 
 
-def run(namelist_file=None, config_file=None):
+def run(workdir=None):
     """Run esmvaltool"""
     from esmvaltool.main import configure_logging, read_config_file, process_namelist
     workdir = workdir or os.curdir
-    config_file = os.path.join(workdir, 'config.yml')
-    namelist_file = os.path.join(workdir, 'namelist.yml')
+    config_file = os.path.abspath(os.path.join(workdir, 'config.yml'))
+    namelist_file = os.path.abspath(os.path.join(workdir, 'namelist.yml'))
 
     namelist_name = os.path.splitext(os.path.basename(namelist_file))[0]
     cfg = read_config_file(config_file, namelist_name)
@@ -49,9 +49,13 @@ def run(namelist_file=None, config_file=None):
     # check NCL version
     # ncl_version_check()
 
-    # cfg['synda_download'] = args.synda_download
+    cfg['synda_download'] = False
 
     process_namelist(namelist_file=namelist_file, config_user=cfg)
+    logfile = os.path.abspath(os.path.join(workdir, 'log.txt'))
+    with open(logfile, 'w') as f:
+        f.write("no log")
+    return logfile
 
 
 def create_esgf_datastore(datasets, workdir=None):
@@ -97,35 +101,6 @@ def create_esgf_datastore(datasets, workdir=None):
         LOGGER.exception(msg)
         raise Exception(msg)
     return constraints
-
-
-def run_diag(workdir=None):
-    workdir = workdir or os.curdir
-    # ncl path
-    LOGGER.debug("NCARG_ROOT=%s", os.environ.get('NCARG_ROOT'))
-    # build cmd
-    # esmvaltool -c esmvaltool/config-user_demo.yml -n esmvaltool/namelists/namelist_MyVar_demo.yml
-    cmd = ["esmvaltool",
-           "-c", os.path.join(workdir, 'config.yml'),
-           "-n", os.path.join(workdir, 'namelist.yml')]
-    logfile = os.path.abspath(os.path.join(workdir, 'log.txt'))
-    # run cmd
-    try:
-        output = check_output(cmd, stderr=STDOUT)
-    except CalledProcessError as err:
-        LOGGER.error('esmvaltool failed! %s', err.output)
-        raise Exception('ESMValTool diag failed! Check the logs.')
-        # raise Exception('esmvaltool failed: {0}'.format(escape(err.output)))
-    else:
-        # debug: show logfile
-        if LOGGER.isEnabledFor(logging.DEBUG):
-            LOGGER.debug(output)
-        with open(logfile, 'w') as f:
-            f.write(output)
-    # check if data is found
-    # if os.path.isfile(os.path.join(workdir, 'esgf_coupling_report.txt')):
-    #    raise Exception("Could not find data in ESGF archive.")
-    return logfile
 
 
 def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, output_format='pdf', workdir=None):
