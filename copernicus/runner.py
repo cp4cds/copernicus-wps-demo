@@ -3,7 +3,7 @@ import os.path
 import shutil
 from shutil import ignore_patterns
 import glob
-from subprocess import check_output, STDOUT, CalledProcessError
+from subprocess import check_output, call, STDOUT, CalledProcessError
 from copernicus._compat import urlparse
 from netCDF4 import Dataset
 from cdo import Cdo
@@ -34,7 +34,8 @@ def run_cmd(namelist_file, config_file):
     # run cmd
     try:
         LOGGER.info("run esmvaltool ...")
-        output = check_output(cmd, stderr=STDOUT)
+        # output = check_output(cmd, stderr=STDOUT)
+        call(cmd)
         LOGGER.info("esmvaltool ... done.")
     except CalledProcessError as err:
         LOGGER.error('esmvaltool failed! %s', err.output)
