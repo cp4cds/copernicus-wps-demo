@@ -34,6 +34,7 @@ def run(namelist_file, config_file):
               "prevent data loss".format(cfg['output_dir']))
     os.makedirs(cfg['run_dir'])
 
+    # os.chdir("/home/pingu/sandbox/macpingu/ESMValTool")
     # configure logging
     configure_logging(
         output=cfg['run_dir'], console_log_level=cfg['log_level'])
@@ -43,7 +44,7 @@ def run(namelist_file, config_file):
     LOGGER.debug("Using config file %s", config_file)
 
     # check NCL version
-    ncl_version_check()
+    # ncl_version_check()
 
     cfg['synda_download'] = False
 
