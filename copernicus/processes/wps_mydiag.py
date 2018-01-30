@@ -84,7 +84,7 @@ class MyDiag(Process):
 
         # generate namelist
         response.update_status("generate namelist ...", 10)
-        namelist = runner.generate_namelist(
+        namelist_file, config_file = runner.generate_namelist(
              diag='mydiag',
              constraints=constraints,
              start_year=request.inputs['start_year'][0].data,
@@ -94,11 +94,11 @@ class MyDiag(Process):
 
         # run diag
         response.update_status("running diag ...", 20)
-        logfile = runner.run()
+        logfile = runner.run(namelist_file, config_file)
 
         # namelist output
         response.outputs['namelist'].output_format = FORMATS.TEXT
-        response.outputs['namelist'].file = namelist
+        response.outputs['namelist'].file = namelist_file
 
         # log output
         response.outputs['log'].output_format = FORMATS.TEXT

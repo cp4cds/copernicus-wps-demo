@@ -22,13 +22,9 @@ mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), '
 VERSION = "2.0.0"
 
 
-def run(workdir=None):
+def run(namelist_file, config_file):
     """Run esmvaltool"""
     from esmvaltool.main import configure_logging, read_config_file, process_namelist
-    workdir = workdir or os.curdir
-    config_file = os.path.abspath(os.path.join(workdir, 'config.yml'))
-    namelist_file = os.path.abspath(os.path.join(workdir, 'namelist.yml'))
-
     namelist_name = os.path.splitext(os.path.basename(namelist_file))[0]
     cfg = read_config_file(config_file, namelist_name)
 
@@ -56,7 +52,7 @@ def run(workdir=None):
     LOGGER.info("esmvaltool ... done.")
     # find the log
     # output/namelist_20180130_122750/run/main_log.txt
-    matches = glob.glob(os.path.join(workdir, 'output', 'namelist_*', 'run', 'main_log.txt'))
+    matches = glob.glob(os.path.join(cfg['run_dir'], 'namelist_*', 'run', 'main_log.txt'))
     if len(matches) == 0:
         raise Exception("no logfile found")
     logfile = matches[0]
@@ -121,8 +117,8 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
         output_dir=output_dir,
         output_format=output_format,
     )
-    config_filename = os.path.abspath(os.path.join(workdir, "config.yml"))
-    with open(config_filename, 'w') as fp:
+    config_file = os.path.abspath(os.path.join(workdir, "config.yml"))
+    with open(config_file, 'w') as fp:
         fp.write(rendered_config)
 
     # write namelist.xml
@@ -135,10 +131,10 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
         start_year=start_year,
         end_year=end_year,
     )
-    outfile = os.path.abspath(os.path.join(workdir, "namelist.yml"))
-    with open(outfile, 'w') as fp:
+    namelist_file = os.path.abspath(os.path.join(workdir, "namelist.yml"))
+    with open(namelist_file, 'w') as fp:
         fp.write(rendered_namelist)
-    return outfile
+    return namelist_file, config_file
 
 
 def find_output(workdir=None, path_filter=None, name_filter=None, output_format="pdf"):
