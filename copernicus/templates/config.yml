@@ -5,16 +5,16 @@ write_plots: true
 write_netcdf: true
 log_level: info
 exit_on_warning: false
-output_file_type: ps
+output_file_type: ${output_format}
 
-output_dir: /tmp/test_output/
+output_dir: ${output_dir}
 
 save_intermediary_cubes: false
 
 rootpath:
-  CMIP5: /media/psf/Home/Data/cmip5/esgf1.dkrz.de/thredds/fileServer/cmip5/cmip5/output1
-  OBS: /media/psf/Home/Data/obs/demo/esmvaltool/ESMValTool_OBS
-  default: /tmp/data
+  CMIP5: ${archive_root}
+  OBS: ${obs_root}
+  default: /tmp
 
 drs:
   CMIP5: DKRZ
