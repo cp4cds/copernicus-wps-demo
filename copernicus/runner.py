@@ -24,7 +24,7 @@ VERSION = "2.0.0"
 
 def run(namelist_file, config_file):
     """Run esmvaltool"""
-    from esmvaltool.main import configure_logging, read_config_file, process_namelist
+    from esmvaltool.main import configure_logging, read_config_file, process_namelist, ncl_version_check
     namelist_name = os.path.splitext(os.path.basename(namelist_file))[0]
     cfg = read_config_file(config_file, namelist_name)
 
@@ -43,16 +43,19 @@ def run(namelist_file, config_file):
     LOGGER.debug("Using config file %s", config_file)
 
     # check NCL version
-    # ncl_version_check()
+    ncl_version_check()
 
     cfg['synda_download'] = False
 
     LOGGER.info("run esmvaltool ...")
-    process_namelist(namelist_file=namelist_file, config_user=cfg)
+    try:
+        process_namelist(namelist_file=namelist_file, config_user=cfg)
+    except Exception as err:
+        LOGGER.exception("esmvaltool failed!")
     LOGGER.info("esmvaltool ... done.")
     # find the log
     # output/namelist_20180130_122750/run/main_log.txt
-    matches = glob.glob(os.path.join(cfg['run_dir'], 'namelist_*', 'run', 'main_log.txt'))
+    matches = glob.glob(os.path.join(cfg['run_dir'], 'main_log.txt'))
     if len(matches) == 0:
         raise Exception("no logfile found")
     logfile = matches[0]
