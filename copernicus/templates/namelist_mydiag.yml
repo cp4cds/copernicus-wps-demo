@@ -1,10 +1,8 @@
 ---
 
 models:
-#  - {model: bcc-csm1-1,  project: CMIP5,  mip: Amon,  exp: historical,  ensemble: r1i1p1,  start_year: 2000,  end_year: 2002}
-#  - {model: GFDL-ESM2G,  project: CMIP5,  mip: Amon,  exp: historical,  ensemble: r1i1p1,  start_year: 2000,  end_year: 2002}
-  - {model: MPI-ESM-LR,  project: CMIP5,  mip: Amon,  exp: historical,  ensemble: r1i1p1,  start_year: 2000,  end_year: 2001}
-  - {model: ERA-Interim, project: OBS,    tier: 3,    type: reanaly,    version: 1,        start_year: 2000,  end_year: 2001}
+  - {model: ${constraints['model']}, project: CMIP5,  mip: ${constraints['cmor_table']},  exp: ${constraints['experiment']},  ensemble: ${constraints['ensemble']},  start_year: ${start_year},  end_year: ${end_year}}
+  - {model: ERA-Interim, project: OBS, tier: 3, type: reanaly, version: 1, start_year: ${start_year}, end_year: ${end_year}}
 
 preprocessors:
   preprocessor_1:
@@ -31,7 +29,7 @@ diagnostics:
         preprocessor: preprocessor_1
         field: T3M
     additional_models:
-      - {model: NCEP,        project: OBS,    tier: 2,    type: reanaly,    version: 1,        start_year: 2000,  end_year: 2001}
+      - {model: NCEP, project: OBS, tier: 2, type: reanaly, version: 1, start_year: ${start_year}, end_year: ${end_year}}
     scripts:
       test_ta: &settings
         script: MyDiag_test_ta.ncl
@@ -42,15 +40,3 @@ diagnostics:
       test_ta_no2:
         <<: *settings
         script: MyDiag_test_ta_no2.ncl
-
-  # pr_diagnostic:
-  #   description: Precipitation tutorial diagnostic.
-  #   variables:
-  #     pr:
-  #       preprocessor: preprocessor_2
-  #       field: T2Ms
-  #   additional_models: []
-  #   scripts:
-  #     test_pr:
-  #       <<: *settings
-  #       script: MyDiag_test_pr.ncl
