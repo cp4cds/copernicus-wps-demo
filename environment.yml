@@ -67,6 +67,7 @@ dependencies:
 #- xorg-libxrender
 #- xorg-makedepend
 - mako
+- jinja2
 # drmaa scheduler
 - drmaa
 - dill
