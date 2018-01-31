@@ -15,7 +15,7 @@ dependencies:
 # tests
 - pytest
 - flake8=3.3
-- ipython
+#- ipython
 # wps
 - pywps=4.0.0
 - nginx=1.10.3
