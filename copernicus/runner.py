@@ -3,7 +3,7 @@ import os.path
 import shutil
 from shutil import ignore_patterns
 import glob
-from subprocess import check_output, call, Popen, STDOUT, CalledProcessError
+from subprocess import check_output, STDOUT, CalledProcessError
 from copernicus._compat import urlparse
 from netCDF4 import Dataset
 from cdo import Cdo
@@ -22,9 +22,11 @@ mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), '
 VERSION = "2.0.0"
 
 
-def run_cmd(namelist_file, config_file):
+def run_cmd(namelist_file, config_file, workdir=None):
+    workdir = workdir or '.'
     # ncl path
     LOGGER.debug("NCARG_ROOT=%s", os.environ.get('NCARG_ROOT'))
+    logfile = os.path.abspath(os.path.join(workdir, 'log.txt'))
 
     # build cmd
     cmd = ["esmvaltool",
@@ -34,21 +36,17 @@ def run_cmd(namelist_file, config_file):
     # run cmd
     try:
         LOGGER.info("run esmvaltool ...")
-        # output = check_output(cmd, stderr=STDOUT)
-        # call(cmd)
-        p = Popen(cmd)
-        p.wait()
+        output = check_output(cmd, stderr=STDOUT)
         LOGGER.info("esmvaltool ... done.")
     except CalledProcessError as err:
         LOGGER.error('esmvaltool failed! %s', err.output)
-        # raise Exception('esmvaltool failed: {0}'.format(err.output))
-    # debug: show logfile
-    output = "no output"
-    if LOGGER.isEnabledFor(logging.DEBUG):
-        LOGGER.debug(output)
-    logfile = "log.txt"
-    with open(logfile, 'w') as f:
-        f.write(output)
+        raise Exception('esmvaltool failed: {0}'.format(err.output))
+    else:
+        # debug: show logfile
+        if LOGGER.isEnabledFor(logging.DEBUG):
+            LOGGER.debug(output)
+        with open(logfile, 'w') as f:
+            f.write(output)
     return logfile
 
 
