@@ -49,7 +49,7 @@ class PyDemo(Process):
             ComplexOutput('output', 'Output plot',
                           abstract='Generated output plot of ESMValTool processing.',
                           as_reference=True,
-                          supported_formats=[Format('application/pdf')]),
+                          supported_formats=[Format('image/png')]),
         ]
 
         super(PyDemo, self).__init__(
@@ -105,11 +105,11 @@ class PyDemo(Process):
 
         # result plot
         response.update_status("collect output plot ...", 90)
-        response.outputs['output'].output_format = Format('application/pdf')
+        response.outputs['output'].output_format = Format('image/pngf')
         response.outputs['output'].file = runner.get_output(
             output_dir,
-            path_filter=os.path.join('ta_diagnostics', 'test_ta'),
-            name_filter="*",
+            path_filter=os.path.join('ta_diagnostic', 'test_ta'),
+            name_filter="CMIP5*",
             output_format="png")
         response.update_status("done.", 100)
         return response
