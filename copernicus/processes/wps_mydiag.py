@@ -94,7 +94,7 @@ class MyDiag(Process):
 
         # run diag
         response.update_status("running diag ...", 20)
-        logfile = runner.run_cmd(namelist_file, config_file)
+        logfile = runner.run(namelist_file, config_file)
 
         # namelist output
         response.outputs['namelist'].output_format = FORMATS.TEXT
