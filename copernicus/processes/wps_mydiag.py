@@ -94,7 +94,7 @@ class MyDiag(Process):
 
         # run diag
         response.update_status("running diag ...", 20)
-        logfile = runner.run(namelist_file, config_file)
+        logfile, output_dir = runner.run(namelist_file, config_file)
 
         # namelist output
         response.outputs['namelist'].output_format = FORMATS.TEXT
@@ -105,11 +105,12 @@ class MyDiag(Process):
         response.outputs['log'].file = logfile
 
         # result plot
-        # work/temp_XzZnMo/plot/MyDiag/MyDiag_MyVar.pdf
         response.update_status("collect output plot ...", 90)
         response.outputs['output'].output_format = Format('application/pdf')
-        response.outputs['output'].file = runner.find_output(
+        response.outputs['output'].file = runner.get_output(
+            output_dir,
             path_filter=os.path.join('ta_diagnostics', 'test_ta'),
+            name_filter="ta",
             output_format="pdf")
         response.update_status("done.", 100)
         return response
