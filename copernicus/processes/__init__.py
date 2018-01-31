@@ -1,4 +1,5 @@
 from .wps_mydiag import MyDiag
+from .wps_pydemo import PyDemo
 # from .wps_overview import Overview
 # from .wps_cloud_taylor import CloudTaylor
 # from .wps_portrait import Portrait
@@ -8,6 +9,7 @@ from .wps_mydiag import MyDiag
 
 processes = [
     MyDiag(),
+    PyDemo(),
     # Overview(),
     # CloudTaylor(),
     # Portrait(),
