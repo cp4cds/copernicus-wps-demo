@@ -109,7 +109,7 @@ class PyDemo(Process):
         response.outputs['output'].file = runner.get_output(
             output_dir,
             path_filter=os.path.join('ta_diagnostics', 'test_ta'),
-            name_filter="ta",
-            output_format="pdf")
+            name_filter="*",
+            output_format="png")
         response.update_status("done.", 100)
         return response
