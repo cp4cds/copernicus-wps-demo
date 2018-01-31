@@ -1,6 +1,5 @@
 import os
 import glob
-from subprocess import check_output, STDOUT, CalledProcessError
 
 from mako.lookup import TemplateLookup
 
@@ -17,6 +16,7 @@ VERSION = "2.0.0"
 
 
 def run_cmd(namelist_file, config_file, workdir=None):
+    from subprocess import check_output, STDOUT, CalledProcessError
     workdir = workdir or '.'
     # ncl path
     LOGGER.debug("NCARG_ROOT=%s", os.environ.get('NCARG_ROOT'))
@@ -78,7 +78,7 @@ def run(namelist_file, config_file):
         raise Exception('esmvaltool failed: {0}'.format(err.output))
     # find the log
     logfile = os.path.join(cfg['run_dir'], 'main_log.txt')
-    return logfile
+    return logfile, cfg['plot_dir']
 
 
 def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, output_format='pdf', workdir=None):
@@ -114,13 +114,13 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
     return namelist_file, config_file
 
 
-def find_output(workdir=None, path_filter=None, name_filter=None, output_format="pdf"):
-    workdir = workdir or os.curdir
-    path_filter = path_filter or os.path.join('*', '*')
-    name_filter = name_filter or "*"
+def get_output(output_dir, path_filter, name_filter=None, output_format='pdf'):
+    name_filter = name_filter or '*'
     # output/namelist_20180130_111116/plots/ta_diagnostics/test_ta/ta.pdf
-    matches = glob.glob(os.path.join(
-        workdir, 'output', 'namelist_*', 'plots', path_filter, '{0}.{1}'.format(name_filter, output_format)))
+    output_filter = os.path.join(
+        output_dir, path_filter, '{0}.{1}'.format(name_filter, output_format))
+    LOGGER.debug("output_fitler %s", output_filter)
+    matches = glob.glob(output_filter)
     if len(matches) == 0:
         raise Exception("no output found in workdir")
     elif len(matches) > 1:
