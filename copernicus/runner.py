@@ -4,7 +4,6 @@ import glob
 from jinja2 import Environment, PackageLoader, select_autoescape
 
 from copernicus import config
-# from copernicus._compat import escape
 
 import logging
 LOGGER = logging.getLogger("PYWPS")
@@ -15,35 +14,6 @@ template_env = Environment(
 )
 
 VERSION = "2.0.0"
-
-
-def run_cmd(namelist_file, config_file, workdir=None):
-    from subprocess import check_output, STDOUT, CalledProcessError
-    workdir = workdir or '.'
-    # ncl path
-    LOGGER.debug("NCARG_ROOT=%s", os.environ.get('NCARG_ROOT'))
-    logfile = os.path.abspath(os.path.join(workdir, 'log.txt'))
-
-    # build cmd
-    cmd = ["esmvaltool",
-           "-c", config_file,
-           "-n", namelist_file]
-
-    # run cmd
-    try:
-        LOGGER.info("run esmvaltool ...")
-        output = check_output(cmd, stderr=STDOUT)
-        LOGGER.info("esmvaltool ... done.")
-    except CalledProcessError as err:
-        LOGGER.error('esmvaltool failed! %s', err.output)
-        raise Exception('esmvaltool failed: {0}'.format(err.output))
-    else:
-        # debug: show logfile
-        if LOGGER.isEnabledFor(logging.DEBUG):
-            LOGGER.debug(output)
-        with open(logfile, 'w') as f:
-            f.write(output)
-    return logfile
 
 
 def run(namelist_file, config_file):
