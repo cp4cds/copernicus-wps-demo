@@ -1,7 +1,7 @@
 import os
 import glob
 
-from jinja2 import Environment, PackageLoader
+from jinja2 import Environment, PackageLoader, select_autoescape
 
 from copernicus import config
 # from copernicus._compat import escape
@@ -11,7 +11,7 @@ LOGGER = logging.getLogger("PYWPS")
 
 template_env = Environment(
     loader=PackageLoader('copernicus', 'templates'),
-    # autoescape=select_autoescape(['html', 'xml'])
+    autoescape=select_autoescape(['yml', 'xml'])
 )
 
 VERSION = "2.0.0"
