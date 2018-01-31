@@ -52,7 +52,7 @@ def run_cmd(namelist_file, config_file, workdir=None):
 
 def run(namelist_file, config_file):
     """Run esmvaltool"""
-    from esmvaltool.main import configure_logging, read_config_file, process_namelist, ncl_version_check
+    from esmvaltool.main import configure_logging, read_config_file, process_namelist
     namelist_name = os.path.splitext(os.path.basename(namelist_file))[0]
     cfg = read_config_file(config_file, namelist_name)
 
@@ -62,7 +62,6 @@ def run(namelist_file, config_file):
               "prevent data loss".format(cfg['output_dir']))
     os.makedirs(cfg['run_dir'])
 
-    # os.chdir("/home/pingu/sandbox/macpingu/ESMValTool")
     # configure logging
     configure_logging(
         output=cfg['run_dir'], console_log_level=cfg['log_level'])
@@ -76,18 +75,15 @@ def run(namelist_file, config_file):
 
     cfg['synda_download'] = False
 
-    LOGGER.info("run esmvaltool ...")
     try:
+        LOGGER.info("run esmvaltool ...")
         process_namelist(namelist_file=namelist_file, config_user=cfg)
+        LOGGER.info("esmvaltool ... done.")
     except Exception as err:
-        LOGGER.exception("esmvaltool failed!")
-    LOGGER.info("esmvaltool ... done.")
+        LOGGER.exception('esmvaltool failed!')
+        raise Exception('esmvaltool failed: {0}'.format(err.output))
     # find the log
-    # output/namelist_20180130_122750/run/main_log.txt
-    matches = glob.glob(os.path.join(cfg['run_dir'], 'main_log.txt'))
-    if len(matches) == 0:
-        raise Exception("no logfile found")
-    logfile = matches[0]
+    logfile = os.path.join(cfg['run_dir'], 'main_log.txt')
     return logfile
 
 
