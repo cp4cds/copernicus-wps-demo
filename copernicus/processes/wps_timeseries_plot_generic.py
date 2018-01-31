@@ -6,7 +6,8 @@ from pywps import ComplexInput, ComplexOutput
 from pywps import Format, FORMATS
 from pywps.app.Common import Metadata
 
-from copernicus import esmvaltool
+from copernicus import runner
+from copernicus import util
 
 import logging
 LOGGER = logging.getLogger("PYWPS")
@@ -71,7 +72,7 @@ class GenericTimeSeriesPlot(Process):
             self._handler,
             identifier="ts_plot_generic",
             title="Generic Timeseries Plot",
-            version=esmvaltool.VERSION,
+            version=runner.VERSION,
             abstract="Generates a timeseries plot using ESMValTool."
                      " Input data is provided as NetCDF or OpenDAP datasets."
                      " It works only on the following CMIP5 data:"
@@ -111,10 +112,10 @@ class GenericTimeSeriesPlot(Process):
             for dataset in request.inputs['dataset_opendap']:
                 datasets.append(dataset.data)
         # build datastore and esgf search constraints
-        constraints = esmvaltool.create_esgf_datastore(datasets)
+        constraints = util.create_esgf_datastore(datasets)
         # generate namelist
         response.update_status("generate namelist ...", 10)
-        namelist = esmvaltool.generate_namelist(
+        namelist = runner.generate_namelist(
             diag='ts_plot_generic',
             constraints=constraints,
             start_year=request.inputs['start_year'][0].data,
@@ -124,7 +125,7 @@ class GenericTimeSeriesPlot(Process):
 
         # run diag
         response.update_status("running diag ...", 20)
-        logfile = esmvaltool.run_diag(namelist)
+        logfile = runner.run_diag(namelist)
 
         # namelist output
         response.outputs['namelist'].output_format = FORMATS.TEXT
@@ -138,14 +139,14 @@ class GenericTimeSeriesPlot(Process):
         # work/temp_XzZnMo/plot/tsline/tsline_tas_nomask_noanom_nodetr_-90_90_historical_2000-2005.pdf
         response.update_status("collect output plot ...", 90)
         response.outputs['output'].output_format = Format('application/pdf')
-        response.outputs['output'].file = esmvaltool.find_output(
+        response.outputs['output'].file = runner.find_output(
             path_filter=os.path.join('plot', 'tsline'),
             output_format="pdf")
 
         # reformatted input dataset
         # work/temp_fqNUZN//tsline/tsline_tas_nomask_noanom_nodetr_historical__-90_90_1980-2000.nc
         response.outputs['output_ds'].output_format = Format('application/x-netcdf')
-        response.outputs['output_ds'].file = esmvaltool.find_output(
+        response.outputs['output_ds'].file = runner.find_output(
             path_filter=os.path.join('tsline'),
             output_format="nc")
         # done
