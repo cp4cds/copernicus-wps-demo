@@ -1,7 +1,7 @@
 import os
 import glob
 
-from mako.lookup import TemplateLookup
+from jinja2 import Environment, PackageLoader
 
 from copernicus import config
 # from copernicus._compat import escape
@@ -9,8 +9,10 @@ from copernicus import config
 import logging
 LOGGER = logging.getLogger("PYWPS")
 
-mylookup = TemplateLookup(directories=[os.path.join(os.path.dirname(__file__), 'templates')],
-                          output_encoding='utf-8', encoding_errors='replace')
+template_env = Environment(
+    loader=PackageLoader('copernicus', 'templates'),
+    # autoescape=select_autoescape(['html', 'xml'])
+)
 
 VERSION = "2.0.0"
 
@@ -87,8 +89,8 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
     workdir = os.path.abspath(workdir)
     output_dir = os.path.join(workdir, 'output')
     # write config.yml
-    config_templ = mylookup.get_template('config.yml')
-    rendered_config = config_templ.render_unicode(
+    config_templ = template_env.get_template('config.yml')
+    rendered_config = config_templ.render(
         archive_root=config.archive_root(),
         obs_root=config.obs_root(),
         output_dir=output_dir,
@@ -100,8 +102,8 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
 
     # write namelist.xml
     namelist = 'namelist_{0}.yml'.format(diag)
-    namelist_templ = mylookup.get_template(namelist)
-    rendered_namelist = namelist_templ.render_unicode(
+    namelist_templ = template_env.get_template(namelist)
+    rendered_namelist = namelist_templ.render(
         diag=diag,
         workdir=workdir,
         constraints=constraints,

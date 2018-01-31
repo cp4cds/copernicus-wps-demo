@@ -1,8 +1,8 @@
 ---
 
 models:
-  - {model: ${constraints['model']}, project: CMIP5,  mip: ${constraints['cmor_table']},  exp: ${constraints['experiment']},  ensemble: ${constraints['ensemble']},  start_year: ${start_year},  end_year: ${end_year}}
-  - {model: ERA-Interim, project: OBS, tier: 3, type: reanaly, version: 1, start_year: ${start_year}, end_year: ${end_year}}
+  - {model: {{constraints['model']}}, project: CMIP5,  mip: {{constraints['cmor_table']}},  exp: {{constraints['experiment']}},  ensemble: {{constraints['ensemble']}},  start_year: {{start_year}},  end_year: {{end_year}}}
+  - {model: ERA-Interim, project: OBS, tier: 3, type: reanaly, version: 1, start_year: {{ start_year }}, end_year: {{ end_year }}}
 
 preprocessors:
   preprocessor_1:
@@ -29,7 +29,7 @@ diagnostics:
         preprocessor: preprocessor_1
         field: T3M
     additional_models:
-      - {model: NCEP, project: OBS, tier: 2, type: reanaly, version: 1, start_year: ${start_year}, end_year: ${end_year}}
+      - {model: NCEP, project: OBS, tier: 2, type: reanaly, version: 1, start_year: {{ start_year }}, end_year: {{ end_year }}}
     scripts:
       test_ta: &settings
         script: MyDiag_test_ta.ncl
@@ -37,4 +37,3 @@ diagnostics:
         styleset: CMIP5
         colormap: WhiteBlueGreenYellowRed
         ncdf: default
-  

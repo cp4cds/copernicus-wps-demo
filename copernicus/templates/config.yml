@@ -5,16 +5,16 @@ write_plots: true
 write_netcdf: true
 log_level: info
 exit_on_warning: false
-output_file_type: ${output_format}
+output_file_type: {{ output_format }}
 
-output_dir: ${output_dir}
+output_dir: {{ output_dir }}
 
 save_intermediary_cubes: false
 max_parallel_tasks: 1
 
 rootpath:
-  CMIP5: ${archive_root}
-  OBS: ${obs_root}
+  CMIP5: {{ archive_root }}
+  OBS: {{ obs_root }}
   default: /tmp
 
 drs:
