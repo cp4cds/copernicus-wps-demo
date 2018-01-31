@@ -60,12 +60,6 @@ dependencies:
 - scipy
 - shapely
 - six
-# - xorg-imake
-# - xorg-libx11
-# - xorg-libxaw
-# - xorg-libxmu
-# - xorg-libxrender
-# - xorg-makedepend
 - mako
 - jinja2
 # drmaa scheduler
