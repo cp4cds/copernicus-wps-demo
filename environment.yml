@@ -43,7 +43,7 @@ dependencies:
 - flask
 - iris
 # esmvaltool
-#- esmvaltool=1.1.0=py27_3
+- esmvaltool=2.0.0
 - ncl
 # ncl patch
 - poppler=0.52
