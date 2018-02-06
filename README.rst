@@ -80,6 +80,63 @@ and restart the ``supervisor`` service::
   $ make restart
   $ make status
 
+Running WPS service in test environment
+---------------------------------------
+
+For development purposes you can run the WPS service without Nginx and supervisor.
+Use the following instructions:
+
+.. code-block:: sh
+
+    # get the source code
+    $ git clone https://github.com/cp4cds/copernicus-wps-demo.git
+    $ cd copernicus-wps-demo
+
+    # create conda environment
+    $ conda env create -f environment.yml
+
+    # activate conda environment
+    $ source activate copernicus-wps-demo
+
+    # install copernicus code into conda environment
+    $ python setup.py develop
+
+    # start the WPS service
+    $ copernicus
+
+    # open your browser on the default service url
+    $ firefox http://localhost:5000/wps
+
+    # ... and service capabilities url
+    $ firefox http://localhost:5000/wps?service=WPS&request=GetCapabilities
+
+The ``copernicus`` service command-line has more options:
+
+.. code-block:: sh
+
+    $ copernicus -h
+
+For example you can start the WPS with enabled debug logging mode:
+
+.. code-block:: sh
+
+    $ copernicus --debug
+
+Or you can overwrite the default `PyWPS`_ configuration by providing your own
+PyWPS configuration file (just modifiy the options you want to change):
+
+.. code-block:: sh
+
+    # edit your local pywps configuration file
+    $ cat mydev.cfg
+    [logging]
+    level = WARN
+    file = /tmp/mydev.log
+
+    # start the service with this configuration
+    $ copernicus -c mydev.cfg
+
+
 Examples with Birdy
 *******************
 
