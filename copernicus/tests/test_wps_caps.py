@@ -13,10 +13,12 @@ def test_wps_caps():
                             '/wps:Process'
                             '/ows:Identifier')
     assert sorted(names.split()) == [
-        'cloud_taylor',
-        # 'contour_plot',
         'mydiag',
-        'overview',
-        'portrait',
-        'ts_plot',
-        'ts_plot_generic']
+        'py_demo',
+        # 'cloud_taylor',
+        # 'contour_plot',
+        # 'overview',
+        # 'portrait',
+        # 'ts_plot',
+        # 'ts_plot_generic'
+        ]
