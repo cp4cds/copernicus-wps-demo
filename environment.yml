@@ -9,13 +9,11 @@ dependencies:
 - setuptools=36.5.0
 - pyopenssl=0.16
 - cryptography=1.4
-#- pyyaml=3.11
 - curl=7.45.0
 - icu=58.1
 # tests
 - pytest
 - flake8=3.3
-#- ipython
 # wps
 - pywps=4.0.0
 - nginx=1.10.3
@@ -26,22 +24,11 @@ dependencies:
 - lxml=3.7
 - libxslt=1.1.29
 - genshi=0.7
-# postgres
-#- psycopg2
+- mako
+- jinja2
 # helpers
-#- netcdf4
 #- cdo=1.8.2
 #- python-cdo
-# python wrapper for ncl
-#- pyngl
-#- pynio
-# Needed by main, preprocessor, workflow, one or more diagnostics, shared diagnostic code.
-#- basemap
-#- cartopy
-#- cf_units
-#- cython
-#- flask
-#- iris
 # esmvaltool
 - esmvaltool=2.0.0
 #- ncl
@@ -50,18 +37,3 @@ dependencies:
 - xerces-c=3.1
 - gsl
 # ncl patch end
-#- netcdf4
-#- numba=0.35.0
-#- numpy
-#- pillow # providing PIL package
-#- python-cdo
-#- python-stratify
-#- pyyaml
-#- scipy
-#- shapely
-#- six
-- mako
-- jinja2
-# drmaa scheduler
-#- drmaa
-#- dill
