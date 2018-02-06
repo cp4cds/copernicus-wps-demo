@@ -85,11 +85,11 @@ class MyDiag(Process):
         # generate namelist
         response.update_status("generate namelist ...", 10)
         namelist_file, config_file = runner.generate_namelist(
-             diag='mydiag',
-             constraints=constraints,
-             start_year=request.inputs['start_year'][0].data,
-             end_year=request.inputs['end_year'][0].data,
-             output_format='pdf',
+            diag='mydiag',
+            constraints=constraints,
+            start_year=request.inputs['start_year'][0].data,
+            end_year=request.inputs['end_year'][0].data,
+            output_format='pdf',
         )
 
         # run diag
