@@ -35,7 +35,7 @@ setup(name='copernicus',
       install_requires=reqs,
       entry_points={
           'console_scripts': [
-            'copernicus=copernicus:main'
+              'copernicus=copernicus:main'
           ]
       },
 
