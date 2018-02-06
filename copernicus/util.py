@@ -4,6 +4,10 @@ from cdo import Cdo
 from copernicus._compat import urlparse
 
 
+import logging
+LOGGER = logging.getLogger("PYWPS")
+
+
 def create_esgf_datastore(datasets, workdir=None):
     """
     Prepares an ESGF datastore from datasets (files or opendap) for ESMValTool ESGF coupling module.
