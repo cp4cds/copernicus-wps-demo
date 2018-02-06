@@ -14,7 +14,7 @@ Demo with WPS processes for Copernicus.
 Overview
 ********
 
-In `Copernicus`_ we want to provide processing capabilities next to a climate data store.
+In `Copernicus`_ we want to provide processing capabilities for a climate data store.
 The processing capabilities are exposed using the Web Processing Service standard interface with
 the `PyWPS`_ implementation. This demo contains several example processes implemented with
 `ESMValTool`_ and `NCL`_. The processes are defined with different WPS profiles
@@ -102,21 +102,11 @@ Run *mydiag*::
   $ birdy mydiag -h
   $ birdy mydiag --model MPI-ESM-LR --experiment historical --ensemble r1i1p1 --start_year 2000 --end_year 2001
 
-Run *overview*::
 
-  $ birdy overview -h
-  $ birdy overview --model MPI-ESM-LR --experiment historical --ensemble r1i1p1 --start_year 2000 --end_year 2001
+Run *py_demo*::
 
-Run *cloud_taylor*::
-
-  $ birdy cloud_taylor -h
-  $ birdy cloud_taylor --model MPI-ESM-LR --experiment historical --ensemble r1i1p1 --start_year 2000 --end_year 2001
-
-Run *ts_plot*::
-
-  $ birdy ts_plot -h
-  $ birdy ts_plot --model MPI-ESM-LR --experiment historical --ensemble r1i1p1 --start_year 2000 --end_year 2001 --variable tas
-
+  $ birdy py_demo -h
+  $ birdy py_demo --model MPI-ESM-LR --experiment historical --ensemble r1i1p1 --start_year 2000 --end_year 2001
 
 
 Using Docker
