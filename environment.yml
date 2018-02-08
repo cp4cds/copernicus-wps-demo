@@ -2,14 +2,13 @@ name: copernicus-wps-demo
 channels:
 - birdhouse
 - conda-forge
-- conda-forge/label/broken
 - defaults
 dependencies:
 - python=2.7
 - setuptools=36.5.0
 - pyopenssl=0.16
 - cryptography=1.4
-- curl=7.45.0
+- curl=7.54.1
 - icu=58.1
 # tests
 - pytest
@@ -31,9 +30,7 @@ dependencies:
 #- python-cdo
 # esmvaltool
 - esmvaltool=2.0.0
-#- ncl
 # ncl patch
-- poppler=0.52
-- xerces-c=3.1
-- gsl
+- ncl
+- libgdal=2.2.3
 # ncl patch end
