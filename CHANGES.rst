@@ -1,6 +1,12 @@
 Changes
 *******
 
+0.2.1 (2018-02-08)
+==================
+
+* fixed ncl installation.
+* added demo service using werkzeug.
+
 0.2.0 (2018-02-06)
 ==================
 
