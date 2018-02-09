@@ -32,10 +32,10 @@ class MyDiag(Process):
                          default='r1i1p1'),
             LiteralInput('start_year', 'Start year', data_type='integer',
                          abstract='Start year of model data.',
-                         default="1990"),
+                         default="2000"),
             LiteralInput('end_year', 'End year', data_type='integer',
                          abstract='End year of model data.',
-                         default="2000"),
+                         default="2001"),
         ]
         outputs = [
             ComplexOutput('namelist', 'namelist',
