@@ -137,18 +137,138 @@ PyWPS configuration file (just modifiy the options you want to change):
     $ copernicus -c mydev.cfg
 
 
-Examples with Birdy
+WPS Client Examples
 *******************
+
+The examples for the WPS clients are using a demo WPS serivce on the bovec test machine at DKRZ.
+
+https://bovec.dkrz.de/ows/proxy/copernicus?Service=WPS&Request=GetCapabilities&Version=1.0.0
+
+There is currently not much data attached (especially for oberstation data).
+Please use the default data selection parameters, otherwise no result might be returned.
+
+
+CURL with HTTP Get requests
+---------------------------
+
+GetCapabilities
++++++++++++++++
+
+Run ``GetCapabilities`` request to see which processes are available::
+
+  $ curl -s -o caps.xml \
+    "https://bovec.dkrz.de/ows/proxy/copernicus?Service=WPS&Request=GetCapabilities&Version=1.0.0"
+
+
+DescribeProcess
++++++++++++++++
+
+Run ``DescribeProcess`` request to see input/output parameters of the ``mydiag`` process::
+
+  $ curl -s -o describe.xml \
+    "https://bovec.dkrz.de/ows/proxy/copernicus?Service=WPS&Request=DescribeProcess&Version=1.0.0&identifier=mydiag"
+
+Execute (sync mode)
++++++++++++++++++++
+
+Run ``Exceute`` in synchronous mode for ``mydiag`` with default input parameters:
+
+.. code-block:: bash
+
+  $ curl -s -o execute.xml \
+    "https://bovec.dkrz.de/ows/proxy/copernicus?Service=WPS&Request=Execute&Version=1.0.0&identifier=mydiag&DataInputs=model=MPI-ESM-LR;experiment=historical;ensemble=r1i1p1;start_year=2000;end_year=2001"
+
+.. warning::
+
+  The execution request my have a time-out. Please use the *asynchronous* mode for real testing.
+
+A status document is returned. Open the URL with the reference to the output plot:
+
+.. code-block:: xml
+
+  <wps:Output>
+    <ows:Identifier>output</ows:Identifier>
+    <wps:Reference xlink:href="https://bovec.dkrz.de/download/wpsoutputs/copernicus/75ad4c42-207b-11e8-9a75-109836a7cf3a/ta_u_y2we.pdf" mimeType="application/pdf"/>
+  </wps:Output>
+
+Execute (async mode)
++++++++++++++++++++
+
+Run ``Exceute`` in asynchronous mode for ``mydiag``:
+
+.. code-block:: bash
+
+    $ curl -s -o execute.xml \
+      "https://bovec.dkrz.de/ows/proxy/copernicus?Service=WPS&Request=Execute&Version=1.0.0&identifier=mydiag&DataInputs=model=MPI-ESM-LR;experiment=historical;ensemble=r1i1p1;start_year=2000;end_year=2001&storeExecuteResponse=true&status=true"
+
+A status document is returned.
+
+.. code-block:: xml
+
+    <wps:ExecuteResponse
+      statusLocation="https://bovec.dkrz.de/download/wpsoutputs/copernicus/621d8f28-207d-11e8-99d0-109836a7cf3a.xml">
+      <wps:Process wps:processVersion="2.0.0">
+        <ows:Identifier>mydiag</ows:Identifier>
+        <ows:Title>Simple plot</ows:Title>
+        <ows:Abstract>Generates a plot for temperature using ESMValTool. It is a diagnostic used in the ESMValTool tutoriaal doc/toy-diagnostic-tutorial.pdf. The default run uses the following CMIP5 data: project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=ta, model=MPI-ESM-LR, time_frequency=mon</ows:Abstract>
+      </wps:Process>
+      <wps:Status creationTime="2018-03-05T14:59:12Z">
+        <wps:ProcessAccepted>PyWPS Process mydiag accepted</wps:ProcessAccepted>
+      </wps:Status>
+    </wps:ExecuteResponse>
+
+Check the status document given by the ``statusLoction`` URL until the job has finished:
+
+.. code-block:: bash
+
+  $ curl -s -o status.xml \
+    "https://bovec.dkrz.de/download/wpsoutputs/copernicus/621d8f28-207d-11e8-99d0-109836a7cf3a.xml"
+
+The final status document should similar to this one:
+
+.. code-block:: xml
+
+    <wps:ExecuteResponse
+      statusLocation="https://bovec.dkrz.de/download/wpsoutputs/copernicus/621d8f28-207d-11e8-99d0-109836a7cf3a.xml">
+    <wps:Process wps:processVersion="2.0.0">
+     <ows:Identifier>mydiag</ows:Identifier>
+    </wps:Process>
+    <wps:Status creationTime="2018-03-05T14:59:27Z">
+     <wps:ProcessSucceeded>PyWPS Process Simple plot finished</wps:ProcessSucceeded>
+    </wps:Status>
+    <wps:ProcessOutputs>
+     <wps:Output>
+       <ows:Identifier>output</ows:Identifier>
+       <wps:Reference xlink:href="https://bovec.dkrz.de/download/wpsoutputs/copernicus/621d8f28-207d-11e8-99d0-109836a7cf3a/ta_ZqKo5r.pdf" mimeType="application/pdf"/>
+     </wps:Output>
+    </wps:ProcessOutputs>
+    </wps:ExecuteResponse>
+
+Open the URL pointing to the plot output.
+
+
+OWSLib Python module
+--------------------
+
+.. todo::
+  Add IPython notebook.
+
+http://birdhouse-workshop.readthedocs.io/en/latest/advanced/owslib.html
+
+Birdy Command line client
+-------------------------
 
 Birdy is a WPS command line client.
 
-Install birdy::
+Install birdy (Linux, macOS)::
 
   $ conda install -c birdhouse -c conda-forge birdhouse-birdy
 
 Set WPS service::
 
-  $ export WPS_SERVICE=http://localhost:8096/wps
+  $ export WPS_SERVICE=https://bovec.dkrz.de/ows/proxy/copernicus # demo service on bovec
+  # OR
+  $ export WPS_SERVICE=http://localhost:8096/wps  # your local WPS service
 
 See what processes are available::
 
@@ -159,11 +279,28 @@ Run *mydiag*::
   $ birdy mydiag -h
   $ birdy mydiag --model MPI-ESM-LR --experiment historical --ensemble r1i1p1 --start_year 2000 --end_year 2001
 
+Check the process status. The processes should finish after 10 seconds with a response simliar to this one::
 
-Run *py_demo*::
+  [ProcessSucceeded 100/100] PyWPS Process Simple plot finished
+  Output:
+  namelist=https://bovec.dkrz.de/download/wpsoutputs/copernicus/eceb7ef8-2078-11e8-acba-109836a7cf3a/namelist_sr0bYf.yml (text/plain)
+  log=https://bovec.dkrz.de/download/wpsoutputs/copernicus/eceb7ef8-2078-11e8-acba-109836a7cf3a/main_log_fXjRR1.txt (text/plain)
+  output=https://bovec.dkrz.de/download/wpsoutputs/copernicus/eceb7ef8-2078-11e8-acba-109836a7cf3a/ta_XWGYZt.pdf (application/pdf)
 
-  $ birdy py_demo -h
-  $ birdy py_demo --model MPI-ESM-LR --experiment historical --ensemble r1i1p1 --start_year 2000 --end_year 2001
+Open the ouptut URL in Browser to see the plot.
+
+
+Phoenix Web Client
+------------------
+
+You can run the demo processes directly without log-in on Phoenix.
+
+* GetCapabilites: https://bovec.dkrz.de/processes/list?wps=copernicus
+* DescribeProcess: https://bovec.dkrz.de/processes/execute?wps=copernicus&process=mydiag
+* Execute: press ``Submit`` button.
+
+Job status is monitored. When job has finished you can either show the output directly or show the output details:
+https://bovec.dkrz.de/monitor/details/79eb1c39-e6a3-4944-b90d-00cc71addcaf/outputs
 
 
 Using Docker
