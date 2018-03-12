@@ -179,7 +179,6 @@ Run ``Exceute`` in synchronous mode for ``mydiag`` with default input parameters
     "https://bovec.dkrz.de/ows/proxy/copernicus?Service=WPS&Request=Execute&Version=1.0.0&identifier=mydiag&DataInputs=model=MPI-ESM-LR;experiment=historical;ensemble=r1i1p1;start_year=2000;end_year=2001"
 
 .. warning::
-
   The execution request my have a time-out. Please use the *asynchronous* mode for real testing.
 
 A status document is returned. Open the URL with the reference to the output plot:
@@ -303,6 +302,77 @@ Job status is monitored. When job has finished you can either show the output di
 https://bovec.dkrz.de/monitor/details/79eb1c39-e6a3-4944-b90d-00cc71addcaf/outputs
 
 
+WPS Client Examples with x509 Certificate
+*****************************************
+
+A WPS service can be secured with x509 certificates by using the `Twitcher`_ OWS security proxy.
+A WPS ``Execute`` request can only be run when the WPS client provides a valid x509 proxy certificate.
+
+In the following examples we will use a Copernicus WPS demo service which is protected by a Twitcher security proxy.
+It will only accept x509 proxy certificates from `ESGF`_ to execute a process. The ``GetCapabilites`` and ``DescribeProcess``
+requests are public.
+
+The following examples are using ``curl``. You may also like to use the Firefox `RestClient`_ plugin.
+
+GetCapabilities
++++++++++++++++
+
+Run ``GetCapabilities`` request to see which processes are available::
+
+  $ curl -s -o caps.xml \
+    "https://bovec.dkrz.de:5000/ows/proxy/copernicus?Service=WPS&Request=GetCapabilities&Version=1.0.0"
+
+
+DescribeProcess
++++++++++++++++
+
+Run ``DescribeProcess`` request to see input/output parameters of the ``mydiag`` process::
+
+  $ curl -s -o describe.xml \
+    "https://bovec.dkrz.de:5000/ows/proxy/copernicus?Service=WPS&Request=DescribeProcess&Version=1.0.0&identifier=mydiag"
+
+Execute (sync mode)
++++++++++++++++++++
+
+Run ``Exceute`` in synchronous mode for ``mydiag`` with default input parameters:
+
+.. code-block:: bash
+
+  $ curl -s -o execute.xml \
+    "https://bovec.dkrz.de:5000/ows/proxy/copernicus?Service=WPS&Request=Execute&Version=1.0.0&identifier=mydiag&DataInputs=model=MPI-ESM-LR;experiment=historical;ensemble=r1i1p1;start_year=2000;end_year=2001"
+
+You should get an exception report asking you to provide a x509 certificate:
+
+.. code-block:: xml
+
+   <ExceptionReport>
+     <Exception exceptionCode="NoApplicableCode" locator="AccessForbidden">
+       <ExceptionText>A valid X.509 client certificate is needed.</ExceptionText>
+     </Exception>
+   </ExceptionReport>
+
+Get a valid x509 certifcate from `ESGF`_, for example using the `espf-pyclient`_.
+See the `logon example`_.
+Let's say your proxy certificate is in the file `cert.pem`_.
+Run the curl example above with this certificate:
+
+.. code-block:: bash
+
+  $ curl -s -o execute.xml --cert cert.pem --key cert.pem \
+    "https://bovec.dkrz.de:5000/ows/proxy/copernicus?Service=WPS&Request=Execute&Version=1.0.0&identifier=mydiag&DataInputs=model=MPI-ESM-LR;experiment=historical;ensemble=r1i1p1;start_year=2000;end_year=2001"
+
+If your certificate is valid then your process will be executed (sync mode) and you will get a XML result document
+providing you with URL references to a generated plot:
+
+.. code-block:: xml
+
+  <wps:Output>
+    <ows:Identifier>output</ows:Identifier>
+    <wps:Reference xlink:href="http://bovec.dkrz.de:8000/wpsoutputs/copernicus/3c0eb52e-2608-11e8-b551-dea873cae3fc/ta_P9MhKW.pdf" mimeType="application/pdf"/>
+  </wps:Output>
+
+Try more examples as shown in the examples above using a x509 certificate.
+
 Using Docker
 ************
 
@@ -357,9 +427,13 @@ You can use wget to download ESGF NetCDF files (``-x`` option to create director
 
 
 .. _Copernicus: http://climate.copernicus.eu/
+.. _ESGF: https://esgf.llnl.gov/
 .. _PyWPS: http://pywps.org/
 .. _ESMValTool: http://www.esmvaltool.org/
 .. _NCL: http://www.ncl.ucar.edu/
 .. _esgf-pyclient: http://esgf-pyclient.readthedocs.io/en/latest/index.html
 .. _Buildout: http://www.buildout.org/
 .. _Anaconda: http://www.continuum.io/
+.. _Twitcher: http://twitcher.readthedocs.io/en/latest/
+.. _RestClient: http://birdhouse-workshop.readthedocs.io/en/latest/pywps/testing.html?highlight=rest#restclient-firefox-only
+.. _logon example: http://esgf-pyclient.readthedocs.io/en/latest/examples.html
