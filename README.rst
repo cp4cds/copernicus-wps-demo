@@ -191,7 +191,7 @@ A status document is returned. Open the URL with the reference to the output plo
   </wps:Output>
 
 Execute (async mode)
-+++++++++++++++++++
+++++++++++++++++++++
 
 Run ``Exceute`` in asynchronous mode for ``mydiag``:
 
@@ -315,7 +315,7 @@ requests are public.
 The following examples are using ``curl``. You may also like to use the Firefox `RestClient`_ plugin.
 
 GetCapabilities
-+++++++++++++++
+---------------
 
 Run ``GetCapabilities`` request to see which processes are available::
 
@@ -324,7 +324,7 @@ Run ``GetCapabilities`` request to see which processes are available::
 
 
 DescribeProcess
-+++++++++++++++
+---------------
 
 Run ``DescribeProcess`` request to see input/output parameters of the ``mydiag`` process::
 
@@ -332,7 +332,7 @@ Run ``DescribeProcess`` request to see input/output parameters of the ``mydiag``
     "https://bovec.dkrz.de:5000/ows/proxy/copernicus?Service=WPS&Request=DescribeProcess&Version=1.0.0&identifier=mydiag"
 
 Execute (sync mode)
-+++++++++++++++++++
+-------------------
 
 Run ``Exceute`` in synchronous mode for ``mydiag`` with default input parameters:
 
@@ -353,7 +353,7 @@ You should get an exception report asking you to provide a x509 certificate:
 
 Get a valid x509 certifcate from `ESGF`_, for example using the `esgf-pyclient`_.
 See the `logon example`_.
-Let's say your proxy certificate is in the file `cert.pem`_.
+Let's say your proxy certificate is in the file ``cert.pem``.
 Run the curl example above with this certificate:
 
 .. code-block:: bash
