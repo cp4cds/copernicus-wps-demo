@@ -351,7 +351,7 @@ You should get an exception report asking you to provide a x509 certificate:
      </Exception>
    </ExceptionReport>
 
-Get a valid x509 certifcate from `ESGF`_, for example using the `espf-pyclient`_.
+Get a valid x509 certifcate from `ESGF`_, for example using the `esgf-pyclient`_.
 See the `logon example`_.
 Let's say your proxy certificate is in the file `cert.pem`_.
 Run the curl example above with this certificate:
