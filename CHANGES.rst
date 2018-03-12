@@ -1,10 +1,16 @@
 Changes
 *******
 
+Current
+=======
+
+* Added WPS client examples (#7).
+* Added WPS client examples with x509 certificate (#10). 
+
 0.2.1 (2018-02-08)
 ==================
 
-* fixed ncl installation.
+* fixed ncl installation (#3).
 * added demo service using werkzeug.
 
 0.2.0 (2018-02-06)
