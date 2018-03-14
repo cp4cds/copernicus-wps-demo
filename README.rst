@@ -249,6 +249,9 @@ Open the URL pointing to the plot output.
 OWSLib Python module
 --------------------
 
+`OWSLib`_ is a Python library to interact with OWS/OGC services like WPS, WMS, etc.
+It is using the Python `requests`_ library.
+
 .. todo::
   Add IPython notebook.
 
@@ -397,6 +400,32 @@ In this example we show how you can use the Python `requests`_ library to run WP
 
 See the `requests documentation`_ for details.
 
+Using OWSLib Python library
+---------------------------
+
+An example with `OWSLib`_.
+
+Make sure you have the latest version from the conda birdhouse channel:
+
+.. code-block:: sh
+
+    $ conda install -c birdhouse -c conda-forge owslib
+
+Run the *hello* process with a client certificate:
+
+
+.. code-block:: python
+
+  from owslib.wps import WebProcessingService
+  wps = WebProcessingService(url="https://bovec.dkrz.de:5000/ows/proxy/emu",
+                             verify=True, cert="cert.pem")
+
+  exc = wps.execute(identifier='hello', inputs=[('name', 'tux')])
+  exc.checkStatus()
+  exc.getStatus()
+  exc.isSucceded()
+  exc.processOutputs[0].data
+
 
 Using Docker
 ************
@@ -464,3 +493,4 @@ You can use wget to download ESGF NetCDF files (``-x`` option to create director
 .. _logon example: http://esgf-pyclient.readthedocs.io/en/latest/examples.html
 .. _requests: http://docs.python-requests.org/en/master/
 .. _requests documentation: http://docs.python-requests.org/en/master/user/advanced/?highlight=ssl#client-side-certificates
+.. _OWSLib: http://geopython.github.io/OWSLib/
