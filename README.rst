@@ -379,7 +379,7 @@ Try more examples as shown in the examples above using a x509 certificate.
 Using Python requests library
 -----------------------------
 
-In this example we show how you can use the Python `requests`_ library to run WPS requests as with ``curl``.
+In this example we show how you can use the Python `requests`_ library to run WPS requests.
 
 .. code-block:: python
 
