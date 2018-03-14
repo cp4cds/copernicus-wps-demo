@@ -260,7 +260,7 @@ http://birdhouse-workshop.readthedocs.io/en/latest/advanced/owslib.html
 Birdy Command line client
 -------------------------
 
-Birdy is a WPS command line client.
+`Birdy`_ is a WPS command line client.
 
 Install birdy (Linux, macOS)::
 
@@ -426,6 +426,23 @@ Run the *hello* process with a client certificate:
   exc.isSucceded()
   exc.processOutputs[0].data
 
+Using Birdy
+-----------
+
+An example with `Birdy`_
+
+Install latest birdy (Linux, macOS) from conda birdhouse channel:
+
+.. code-block:: sh
+
+    $ conda install -c birdhouse -c conda-forge birdhouse-birdy owslib
+
+.. code-block:: sh
+
+    $ export WPS_SERVICE=https://bovec.dkrz.de:5000/ows/proxy/emu
+    $ birdy -h
+    $ birdy hello -h
+    $ birdy --cert cert.pem hello --name Copernicus
 
 Using Docker
 ************
@@ -494,3 +511,4 @@ You can use wget to download ESGF NetCDF files (``-x`` option to create director
 .. _requests: http://docs.python-requests.org/en/master/
 .. _requests documentation: http://docs.python-requests.org/en/master/user/advanced/?highlight=ssl#client-side-certificates
 .. _OWSLib: http://geopython.github.io/OWSLib/
+.. _Birdy: http://birdy.readthedocs.io/en/latest/
