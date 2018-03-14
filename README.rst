@@ -312,10 +312,13 @@ In the following examples we will use a Copernicus WPS demo service which is pro
 It will only accept x509 proxy certificates from `ESGF`_ to execute a process. The ``GetCapabilites`` and ``DescribeProcess``
 requests are public.
 
+CURL with HTTP Get requests
+---------------------------
+
 The following examples are using ``curl``. You may also like to use the Firefox `RestClient`_ plugin.
 
 GetCapabilities
----------------
++++++++++++++++
 
 Run ``GetCapabilities`` request to see which processes are available::
 
@@ -324,7 +327,7 @@ Run ``GetCapabilities`` request to see which processes are available::
 
 
 DescribeProcess
----------------
++++++++++++++++
 
 Run ``DescribeProcess`` request to see input/output parameters of the ``mydiag`` process::
 
@@ -332,7 +335,7 @@ Run ``DescribeProcess`` request to see input/output parameters of the ``mydiag``
     "https://bovec.dkrz.de:5000/ows/proxy/copernicus?Service=WPS&Request=DescribeProcess&Version=1.0.0&identifier=mydiag"
 
 Execute (sync mode)
--------------------
++++++++++++++++++++
 
 Run ``Exceute`` in synchronous mode for ``mydiag`` with default input parameters:
 
@@ -372,6 +375,28 @@ providing you with URL references to a generated plot:
   </wps:Output>
 
 Try more examples as shown in the examples above using a x509 certificate.
+
+Using Python requests library
+-----------------------------
+
+In this example we show how you can use the Python `requests`_ library to run WPS requests as with ``curl``.
+
+.. code-block:: python
+
+    import requests
+
+    # GetCapabilites
+    url = "https://bovec.dkrz.de:5000/ows/proxy/emu?request=GetCapabilities&service=WPS"
+    requests.get(url, verify=True).text
+    # DescribeProcess
+    url = "https://bovec.dkrz.de:5000/ows/proxy/emu?request=DescribeProcess&service=WPS&version=1.0.0&identifier=hello"
+    requests.get(url, verify=True).text
+    # Execute with client certifcate cert.pem
+    url = "https://bovec.dkrz.de:5000/ows/proxy/emu?request=Execute&service=WPS&version=1.0.0&identifier=hello&DataInputs=name=Copernicus"
+    requests.get(url, cert="cert.pem" verify=True).text
+
+See the `requests documentation`_ for details.
+
 
 Using Docker
 ************
@@ -437,3 +462,5 @@ You can use wget to download ESGF NetCDF files (``-x`` option to create director
 .. _Twitcher: http://twitcher.readthedocs.io/en/latest/
 .. _RestClient: http://birdhouse-workshop.readthedocs.io/en/latest/pywps/testing.html?highlight=rest#restclient-firefox-only
 .. _logon example: http://esgf-pyclient.readthedocs.io/en/latest/examples.html
+.. _requests: http://docs.python-requests.org/en/master/
+.. _requests documentation: http://docs.python-requests.org/en/master/user/advanced/?highlight=ssl#client-side-certificates
