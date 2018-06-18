@@ -2,7 +2,7 @@
 FROM debian:latest
 MAINTAINER https://github.com/cp4cds/copernicus-wps-demo
 
-LABEL Description="copernicus-wps-demo application" Vendor="CP4CDS" Version="0.1"
+LABEL Description="copernicus-wps-demo application" Vendor="CP4CDS" Version="0.2.2"
 
 # Configure hostname and ports for services
 ENV HTTP_PORT 8080
