@@ -1,11 +1,11 @@
 Changes
 *******
 
-Current
-=======
+0.2.2 (2018-06-18)
+==================
 
 * Added WPS client examples (#7).
-* Added WPS client examples with x509 certificate (#10). 
+* Added WPS client examples with x509 certificate (#10).
 
 0.2.1 (2018-02-08)
 ==================
