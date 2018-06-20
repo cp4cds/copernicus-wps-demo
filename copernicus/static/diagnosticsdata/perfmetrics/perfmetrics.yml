@@ -1,0 +1,82 @@
+---
+name: Performance metrics 
+partner: DLR
+authors:
+  - Veronika Eyring
+  - Axel Lauer
+  - Mattia Righi
+  - Birgit Hassler
+contact:
+  - Veronika Eyring @veyring 
+  - Mattia Righi @mattiarighi
+description_short: The goal is to create a standard namelist for the calculation of performance metrics to quantify the ability of the models to reproduce the climatological mean annual cycle for selected "Essential Climate Variables" (ECVs) plus some additional corresponding diagnostics and plots to better understand and interpret the results. The namelist can be used to calculate performance metrics at different vertical levels (e.g., 5, 30, 200, 850 hPa as in Gleckler et al., 2008) and in four regions (global, tropics 20°N-20°S, northern extratropics 20°-90°N, southern extratropics 20°-90°S). As an additional reference, we consider the Righi et al. (2015) paper.
+description_file: 'perfmetrics/description.md'
+report_file:
+media: diagnosticsdata/perfmetrics/Portait.png
+references:
+  - 'Gleckler, P. J., K. E. Taylor, and C. Doutriaux, Performance metrics for climate models, J. Geophys. Res., 113, D06104, doi: 10.1029/2007JD008972 (2008).'
+  - 'Righi, M., Eyring, V., Klinger, C., Frank, F., Gottschaldt, K.-D., Jöckel, P., and Cionni, I.: Quantitative evaluation of oone and selected climate parameters in a set of EMAC simulations, Geosci. Model Dev., 8, 733, doi: 10.5194/gmd-8-733-2015 (2015).'
+settings:
+  - Models:
+      - MIROC4h
+      - NSIDC-NT
+      - ACCESS1-0
+      - ACCESS1-3
+      - CESM1-CAM5-1-FV2
+      - FGOALS-g2
+      - MIROC5
+      - GFDL-ESM2M
+      - multi-model-mean
+      - CMCC-CMS
+      - MPI-ESM-LR
+      - HadCM3
+      - IPSL-CM5B-LR
+      - MIROC-ESM
+      - ESACCI-SSMI
+      - HadGEM2-AO
+      - CanESM2
+      - FGOALS-s2
+      - multi-model-median
+      - HadGEM2-CC
+      - MPI-ESM-P
+      - MRI-ESM1
+      - MPI-ESM-MR
+      - CSIRO-Mk3-6-0
+      - CESM1-BGC
+      - inmcm4
+      - CESM1-FASTCHEM
+      - GISS-E2-R-CC
+      - BNU-ESM
+      - CNRM-CM5-2
+      - CCSM4
+      - GFDL-CM2p1
+      - GFDL-ESM2G
+      - EC-EARTH
+      - CanCM4
+      - NorESM1-M
+      - CESM1-WACCM
+      - IPSL-CM5A-MR
+      - IPSL-CM5A-LR
+      - GFDL-CM3
+      - CNRM-CM5
+      - GISS-E2-H
+      - MIROC-ESM-CHEM
+      - MRI-CGCM3
+      - NorESM1-ME
+      - CMCC-CM
+      - GISS-E2-R
+      - FIO-ESM
+      - GISS-E2-H-CC
+      - CMCC-CESM
+      - bcc-csm1-1-m
+      - HadGEM2-ES
+      - bcc-csm1-1
+      - CESM1-CAM5 
+  - start_reference: "1980-01-01"
+  - end_reference: "2012-12-01"
+  - start_projection: "1980-01-01"
+  - end_projection: "2012-12-01"
+  - Experiment: historical
+title: Performance metrics
+
+youtube: 

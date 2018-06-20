@@ -1,0 +1,27 @@
+---
+name: Single and multi-model indices based on area averages
+partner: BSC
+authors:
+  - Alasdair Hunter
+  - Nicolau Manubens
+  - Louis-Philippe Caron
+  - Javier Vegas.
+contact:
+  - Alasdair Hunter @alasdairhunter
+  - Nicolau Manubens @nmanuben
+description_short: Tool to compute single and multi model indices based on area averages.
+description_file: 'combine_indices/description.md'
+media: diagnosticsdata/combine_indices/single_and_multi_model_indices.png
+report_file: report.pdf
+references:
+  - 'Manubens, Nicolau, Louis-Philippe Caron, Alasdair Hunter, Omar Bellprat, Eleftheria Exarchou, Neven S. Fučkar, Javier Garcia-Serrano et al. "An R package for climate forecast verification." Environmental Modelling & Software 103 (2018): 29-42.'
+settings:
+  - Models:
+      - IPSL
+  - start_projection: "2020-01-01"
+  - end_projection: "2040-12-31"
+  - Indices: tx90p, tx10p, cdd, rx5day, wx
+  - Weights: NULL
+  - Experiment: RCP8.5
+title: Single and multi-model indices based on area averages
+youtube: 

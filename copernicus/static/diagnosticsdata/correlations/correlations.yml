@@ -1,0 +1,34 @@
+---
+id: 1
+name: Correlate a field with a timeseries
+partner: KNMI
+authors:
+  - Geert Jan van Oldenborgh (KNMI, The Netherlands)
+  - Maarten Plieger (KNMI, The Netherlands)
+contact:
+  - Geert Jan van Oldenborgh gert.jan.van.olderenborgh@knmi.nl
+  - Maarten Plieger maarten.plieger@knmi.nl
+description_short: Climate explorer allows the user to correlate a time series with other user-defined time series, as well as with system-defined time series of the same temporal resolution
+description_file: 'correlations/description.md'
+#media: https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=512&h=360
+enableADAGUC:
+  - data_url: https://portal.c3s-magic.eu/adagucserver?source=c3smagic%2FWP6_KNMI_Correlations%2Fclimexp_correlate_output.nc&
+  - projectionbutton: true
+  - layerselector: true
+  - timeselector: true
+  - styleselector: true
+  - layers: []
+reference:
+settings:
+  - NetCDF field: cru_ts3.22.1901.2013.pre.dat.nc
+  - NetCDF timeseries: nino3.nc
+  - Months: '1:12'
+  - Averaging method: ave
+  - Lag: 3
+  - Time frequency: mon
+title: KNMI Climate explorer Correlate a field with a timeseries
+
+
+
+
+

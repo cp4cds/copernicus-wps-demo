@@ -1,0 +1,33 @@
+---
+name: Modes of variability
+partner: BSC
+authors:
+  - Verónica Torralba
+  - Neven Fuckar
+  - Nicola Cortesi
+  - Virginie Guemas
+  - Alasdair Hunter
+  - Nicolau Manubens
+contact:
+  - Alasdair Hunter @alasdairhunter
+  - Nicolau Manubens @nmanuben
+description_short: Tool to compute the RMSE between the observed and modelled patterns of variability obtained through classification and their relative relative bias (percentage) in the frequency of occurrence and the persistence of each mode.
+description_file: 'modes_of_variability/description.md'
+media: diagnosticsdata/modes_of_variability/era_interim_1990-01-2010-01_clusters.png
+report_file: report.pdf
+references:
+  - "Fučkar, Neven S., Virginie Guemas, Nathaniel C. Johnson, François Massonnet, and Francisco J. Doblas-Reyes. \"Clusters of interannual sea ice variability in the northern hemisphere.\" Climate Dynamics 47, no. 5-6 (2016): 1527-1543."
+settings:
+  - Region:
+      - Arctic
+  - Models:
+      - NASA
+  - Variable:
+      - sic
+  - ncenters: 4
+  - cluster_method: "kmeans"
+  -  EOFS: "FALSE"
+  - detrend: 2
+  - Experiment: NULL
+title: Modes of variability
+youtube:

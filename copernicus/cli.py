@@ -14,6 +14,7 @@ from pywps import configuration
 from . import wsgi
 from six.moves.urllib.parse import urlparse
 
+
 PID_FILE = os.path.abspath(os.path.join(os.path.curdir, "pywps.pid"))
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
@@ -80,6 +81,7 @@ def _run(application, bind_host=None, daemon=False):
     bind_host = bind_host or host
     # need to serve the wps outputs
     static_files = {
+        # '/static/diagnosticsdata': util.diagdata_directory(),
         '/outputs': configuration.get_config_value('server', 'outputpath')
     }
     run_simple(

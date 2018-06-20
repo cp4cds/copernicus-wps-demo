@@ -1,0 +1,44 @@
+---
+id: 1
+name: EnsClus - Ensemble Clustering
+title: Ensemble Clustering - cluster analysis tool based on the k-means algorithm for ensembles of climate model simulations
+partner: ISAC-CNR
+authors:
+  - Irene Mavilia (ISAC-CNR, Italy)
+  - Susanna Corti (ISAC-CNR, Italy)
+contact:
+  - Jost von Hardenberg j.vonhardeberg@isac.cnr.it
+  - Enrico Arnone e.arnone@isac.cnr.it
+description_short: EnsClus is a cluster analysis tool in Python, based on the k-means algorithm, with the aim to group ensemble members according to similar characteristics and to select the most representative member for each cluster
+description_file: 'ensclus/description.md'
+#media: https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=512&h=360
+enableADAGUC:
+  - data_url: https://portal.c3s-magic.eu/wms?DATASET=WP5_ISAC_ensclus
+  - projectionbutton: true
+  - layerselector: true
+  - timeselector: true
+  - styleselector: true
+  - layers: []
+references:
+  - "Straus, D. M., S. Corti, and F. Molteni, 2007: Circulation regimes: Chaotic variability vs. SST forced predictability. J. Climate, 20, 2251–2272"
+settings:
+  - Models: ECEARTH31
+  - Varname: pr
+  - Number of ensemble members: 60
+  - Season: JJA
+  - Area: Eu
+  - Experiment: Historical
+  - Start year: 1979
+  - End year: 2008
+  - Extreme: 75th_percentile
+  - Number of clusters: 6
+  - Percentage of variance explained by PCs (perc): 80
+  - Number of PCs (numpcs): 'no' 
+youtube: MktvzcvflL8
+
+
+
+
+
+
+

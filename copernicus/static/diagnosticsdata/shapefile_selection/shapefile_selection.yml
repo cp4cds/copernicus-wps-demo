@@ -1,0 +1,28 @@
+---
+name: Shapefile selection
+partner: SMHI
+authors:
+  - Peter Berg
+  - Anna Kuenz
+contact:
+  - Peter Berg @PeterBergSMHI
+description_short: Tool for selecting gridded data within a user defined polygon shapefile and outputting as NetCDF or csv file.
+description_file: 'shapefile_selection/description.md'
+report_file:
+#media: diagnosticsdata/shapefile_selection/Basin_grid2.png
+enableEnsembleAnomalyPlots:
+reference:
+settings:
+  - Models:
+      - ERA-Interim
+  - Start year: 2000
+  - End year: 2000
+  - Experiment: reanaly
+  - shppath: 'hydrosheds/rhineselection.shp'
+  - wgtmet: 'mean_inside'
+  - write_csv: False
+title: Shapefile selection
+youtube:
+
+###
+# An example output is presented in the form of the figure 'Basin_grid2.png' with the caption: 'Example of grid point selection for a river basin of the hydrosheds data base. Red points are all grid points of the model, blue points are within the two largest polygons, and the orange polygon defaults to the grid point nearest to a representative point inside the polygon, which is most often the centroid point.'

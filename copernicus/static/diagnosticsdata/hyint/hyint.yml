@@ -1,0 +1,38 @@
+---
+id: 1
+name: Hydroclimatic intensity (HyInt) and extremes
+partner: ISAC-CNR
+authors:
+  - Enrico Arnone (ISAC-CNR, Italy)
+  - Jost von Hardenberg (ISAC-CNR, Italy)
+contact:
+  - Enrico Arnone e.arnone@isac.cnr.it
+  - Jost von Hardenberg j.vonhardeberg@isac.cnr.it
+description_short: The tool performs calculation and mapping of the hydroclimatic intensity index HY-INT, additional hydroclimatic indices and climate extreme indices
+description_file: 'hyint/description.md'
+#media: https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=512&h=360
+enableADAGUC:
+  - data_url: https://portal.c3s-magic.eu/wms?DATASET=WP4-6_ISAC_hyint
+  - projectionbutton: true
+  - layerselector: true
+  - timeselector: true
+  - styleselector: true
+  - layers: []
+references:
+  - "Giorgi et al., 2014, J. Geophys. Res. Atmos., 119, 11,695–11,708, doi:10.1002/ 2014JD022238; Giorgi et al., 2011, J. Climate 24, 5309-5324, doi:10.1175/2011JCLI3979.1"
+settings:
+  - Models:
+      - ACCESS1-0
+  - Experiment: Historical
+  - Start year: 1990
+  - End year: 2005
+  - Normalization period: [1990,2000]
+  - Indices: 4
+  - Figure type: 1
+title: Hydroclimatic intensity (HyInt) and extremes
+youtube: jCk9or69VF0
+
+
+
+
+

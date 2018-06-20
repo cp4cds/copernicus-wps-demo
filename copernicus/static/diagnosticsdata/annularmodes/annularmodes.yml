@@ -1,0 +1,34 @@
+---
+id: 1
+name: Indices of annular modes
+partner: ISAC-CNR
+authors:
+  - Federico Serva (ISAC-CNR, Italy)
+  - Chiara Cagnazzo (ISAC-CNR, Italy)
+contact:
+  - Jost von Hardenberg j.vonhardeberg@isac.cnr.it
+  - Federico Serva federico.serva@artov.isac.cnr.it
+description_short: Tool based on EOF/PC decomposition of the zonal mean geopotential height field to provide an evaluation of the Northern Annular Mode pattern at the surface and in the stratosphere.
+description_file: 'annularmodes/description.md'
+#media: 'https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=512&h=360'
+#enableADAGUC:
+#  - data_url: 'https://portal.c3s-magic.eu/wms?DATASET=WP4-6_ISAC_zmnam'
+#  - projectionbutton: true
+#  - layerselector: true
+#  - timeselector: true
+#  - styleselector: true
+#  - layers: []
+references:
+- "Baldwin, M. P. and Thompson, D. W. (2009), A critical comparison of stratosphere–troposphere coupling indices. Q.J.R. Meteorol. Soc., 135: 1661-1672. doi:10.1002/qj.479"
+settings:
+  - Models:
+      - MPI-ESM-LR
+  - Experiment: Historical
+  - Start year: 1979
+  - End year: 2008
+title: Indices of annular modes
+
+
+
+
+

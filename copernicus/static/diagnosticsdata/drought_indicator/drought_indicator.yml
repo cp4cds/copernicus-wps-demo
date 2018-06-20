@@ -1,0 +1,25 @@
+---
+name: Drought Indicator
+partner: SMHI
+authors:
+  - Peter Berg
+contact:
+  - Peter Berg @PeterBergSMHI
+description_short: The drought indicator calculates diagnostics for meteorological drought.
+description_file: 'drought_indicator/description.md'
+report_file:
+#images in description.md
+#media: diagnosticsdata/drought_indicator/dryfreq.png
+references:
+  - "Peterson, T. C., C. Folland, G. Gruza, W. Hogg, A. Mokssit, and N. Plummer, 2001: Report on the activities of the Working Group on Climate Change Detection and Related Rapporteurs 1998–2001. World Meteorological Organisation Rep. WCDMP-47, WMO-TD 1071, Geneva, Switzerland, 143 pp."
+settings:
+  - Models:
+      - bcc-csm1-1-m
+  - Start year: 1990
+  - End year: 1999
+  - Experiment: Historical
+  - dryindex: 'cdd'
+  - Dry day limit: 1 mm/day
+  - Minimum duration limit: 5 days
+title: Drought Indicator
+youtube:

@@ -1,0 +1,39 @@
+---
+name: Single Model Performance index
+partner: DLR
+authors:
+  - Veronika Eyring
+  - Axel Lauer
+  - Mattia Righi
+  - Birgit Hassler
+contact:
+  - Veronika Eyring @veyring 
+  - Birgit Hassler @hb326
+description_short: 'This diagnostic calculates the Single Model Performance Index (SMPI) following Reichler and Kim (2008). The SMPI (called "I2") is based on the comparison of several different climate variables (atmospheric, surface and oceanic) between climate model simulations and observations or reanalyses, and it focuses on the validation of the time-mean state of climate. For I2 to be determined, the differences between the climatological mean of each model variable and observations at each of the available data grid points are calculated, and scaled to the interannual variance from the validating observations. This interannual variability is determined by performing a bootstrapping method (random selection with replacement) for the creation of a large synthetic ensemble of observational climatologies. The results are then scaled to the average error from a reference ensemble of models, and in a final step the mean over all climate variables and one model is calculated. The plot shows the I2 values for each model (orange circles) and the multi-model mean (black circle), with the diameter of each circle representing the range of I2 values encompassed by the 5th and 95th percentiles of the bootstrap ensemble. The I2 values vary around one, with values greater than one for underperforming models, and values less than one for more accurate models.' 
+description_file: 'smpi/description.md'
+report_file:
+media: diagnosticsdata/smpi/Single.png
+references:
+  - "Reichler, T. and J. Kim, How well do coupled models simulate today`s climate? Bull. Amer. Meteor. Soc., 89, 303-311, doi: 10.1175/BAMS-89-3-303, 2008."
+settings:
+  - Models:
+      - MIROC-ESM
+      - CNRM-CM5
+      - MIROC-ESM-CHEM
+      - NorESM1-ME
+      - MIROC5
+      - GFDL-ESM2G
+      - multi-model-mean
+      - MRI-CGCM3
+      - MPI-ESM-MR
+      - CSIRO-Mk3-6-0
+      - MPI-ESM-LR
+      - NorESM1-M 
+  - start_reference: "1980-01-01"
+  - end_reference: "2012-12-01"
+  - start_projection: "1980-01-01"
+  - end_projection: "2005-12-01"
+  - Experiment: historical
+title: Single Model Performance index  
+
+youtube: 

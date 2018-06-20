@@ -1,0 +1,41 @@
+---
+id: 1
+name: RainFARM stochastic downscaling
+partner: ISAC-CNR
+authors:
+  - Jost von Hardenberg (ISAC-CNR, Italy)
+  - Enrico Arnone (ISAC-CNR, Italy)
+contact:
+  - Jost von Hardenberg j.vonhardeberg@isac.cnr.it
+  - Enrico Arnone e.arnone@isac.cnr.it
+description_short: Tool to perform stochastic precipitation downscaling, generating an ensemble of fine-scale precipitation fields from information simulated by climate models at regional scale.
+description_file: 'rainfarm/description.md'
+#media used as an alternative to a live adaguc viewer
+#media: diagnosticsdata/rainfarm/RainFARM_example_64x64.png
+enableADAGUC:
+  - data_url: https://portal.c3s-magic.eu/wms?DATASET=WP7_ISAC_rainfarm
+  - projectionbutton: true
+  - layerselector: true
+  - timeselector: true
+  - styleselector: true
+  - layers: []
+references:
+  - "D'Onofrio et al. 2014, J of Hydrometeorology 15, 830-843; Rebora et. al 2006, JHM 7, 724; von Hardenberg J  (2018) http://doi.org/10.5281/zenodo.1240477"
+settings:
+  - Models:
+      - ACCESS1-0
+  - Experiment: Historical
+  - Start year: 1997
+  - End year: 1997
+  - Geographical subset: [4,13,44,53]
+  - Regridding: false
+  - Slope: false
+  - Number of ensemble members: 2
+  - Number of subdivisions: 8
+title: RainFARM stochastic downscaling
+youtube: P3BCRFipKO0
+
+
+
+
+

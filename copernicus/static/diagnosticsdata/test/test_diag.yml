@@ -1,0 +1,33 @@
+---
+name: cmip5
+title: Test Diagnostic
+partner: NLeSC
+authors:
+  - Franziska Frank (DLR, Germany)
+  - Mattia Righi (DLR, Germany)
+  - Veronika Eyring (DLR, Germany)
+contact:
+  - dr. A.M. Scientist a.scientist@magic.eu
+description_short: Diagnostics for plotting the performance metrics
+description_file: 'test/description.md'
+report_file: report.pdf
+#media: https://placeholdit.imgix.net/~text?txtsize=33&txt=Place%20Holder%20Image&w=512&h=360
+enableADAGUC:
+  - data_url: 'https://portal.c3s-magic.eu/wms?DATASET=WP7_ISAC_rainfarm'
+  - showprojectionbutton: true
+  - showlayerselector: true
+  - showtimeselector: true
+  - showstyleselector: true
+  - layers: []
+settings:
+  - Models:
+      - ESM
+      - CSM
+      - ACCESS1-0
+      - CCSM4
+  - Start year: 1970
+  - End year: 2010
+  - Experiment: Historical
+youtube: SjQ60KXfhO4
+references:
+  - "Baldwin, M. P. and Thompson, D. W. (2009), A critical comparison of stratosphere–troposphere coupling indices. Q.J.R. Meteorol. Soc., 135: 1661-1672. doi:10.1002/qj.479"

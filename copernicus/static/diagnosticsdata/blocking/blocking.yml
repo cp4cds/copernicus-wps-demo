@@ -1,0 +1,38 @@
+---
+id: 1
+name: Blocking metrics and indices
+partner: ISAC-CNR
+authors:
+  - Paolo Davini (ISAC-CNR, Italy)
+  - Jost von Hardenberg (ISAC-CNR, Italy)
+  - Enrico Arnone (ISAC-CNR, Italy)
+contact:
+  - Paolo Davini p.davini@isac.cnr.it
+  - Jost von Hardenberg j.vonhardeberg@isac.cnr.it
+  - Enrico Arnone e.arnone@isac.cnr.it
+description_short: This tool calculates mid-latitude 1D and 2D blocking indices
+description_file: 'blocking/description.md'
+#media: 'https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=512&h=360'
+enableADAGUC:
+  - data_url: https://portal.c3s-magic.eu/wms?DATASET=WP4-6_ISAC_miles
+  - projectionbutton: true
+  - layerselector: true
+  - timeselector: true
+  - styleselector: true
+  - layers: []
+references:
+- "Davini, P., C. Cagnazzo, S. Gualdi, and A. Navarra, 2012: Bidimensional Diagnostics, Variability, and Trends of Northern Hemisphere Blocking. J. Climate, 25, 6496–6509, doi: 10.1175/JCLI-D-12-00032.1; Tibaldi S, Molteni F. 1990. On the operational predictability of blocking. Tellus A 42(3): 343–365, doi:10.1034/j.1600- 0870.1990.t01- 2- 00003.x; Paolo Davini. (2018, April 30). MiLES - Mid Latitude Evaluation System (Version v0.51). Zenodo. http://doi.org/10.5281/zenodo.1237838"
+settings:
+  - Models:
+      - MPI-ESM-P
+  - Start year: 1950
+  - End year: 2005
+  - Experiment: Historical
+  - Season: DJF
+  - Reference dataset: ERA-INTERIM
+title: Blocking metrics and indices
+
+
+
+
+

@@ -1,0 +1,34 @@
+---
+id: 1
+name: HyInt and ETCCDI trends and significance testing
+partner: ISAC-CNR
+authors:
+  - Enrico Arnone (ISAC-CNR, Italy)
+  - Jost von Hardenberg (ISAC-CNR, Italy)
+contact:
+  - Enrico Arnone e.arnone@isac.cnr.it
+  - Jost von Hardenberg j.vonhardeberg@isac.cnr.it
+description_short: Tool for calculation of timeseries and trends for the HyInt hydroclimatic indices and ETCCDI extremes indices
+description_file: 'hyint_timeseries/description.md'
+#media: https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=512&h=360
+#enableADAGUC:
+#  - data_url: https://portal.c3s-magic.eu/wms?DATASET=WP4-6_ISAC_hyint
+#  - projectionbutton: true
+#  - layerselector: true
+#  - timeselector: true
+#  - styleselector: true
+#  - layers: []
+references:
+  - "Giorgi et al., 2014, J. Geophys. Res. Atmos., 119, 11,695–11,708, doi:10.1002/ 2014JD022238; Giorgi et al., 2011, J. Climate 24, 5309-5324, doi:10.1175/2011JCLI3979.1"
+settings:
+  - Models:
+      - EC-Earth
+  - Experiment: Historical+rcp85
+  - Start year: 1976
+  - End year: 2100
+  - Normalization period: [1976,2005]
+  - Indices: [1,2,3,4,8,9]
+  - Regions: [1,2,3,4,5,6,7,8,9,10]
+  - Figure type: 14
+title: HyInt and ETCCDI trends and significance testing
+youtube: jCk9or69VF0
