@@ -4,9 +4,10 @@
 # Docker
 #Dockerfile
 
-# custom configs
+# PyWPS 
 custom.cfg
-Makefile.config
+.custom.cfg
+*.pid
 
 # Python / Extensions etc.
 *~
@@ -22,12 +23,13 @@ __pycache__
 
 # Unit test / Coverage reports
 .cache
+.pytest_cache
 .coverage
 .tox
 nosetests.xml
 unit_tests/testdata.json
 
-# R 
+# R
 *.Rhistory
 
 # Eclipse / PyDev
@@ -67,6 +69,7 @@ docs/build/
 
 # External Sources
 #src/external
+src/
 
 # tests
 *.log
@@ -81,5 +84,3 @@ testdata.json
 *.a
 *.mod
 *.out
-
-

@@ -1,36 +1,13 @@
-name: copernicus-wps-demo
+name: copernicus
 channels:
+- esmvalgroup
 - birdhouse
 - conda-forge
 - defaults
 dependencies:
-- python=2.7
-- setuptools=36.5.0
-- pyopenssl=0.16
-- cryptography=1.4
-- curl=7.54.1
-- icu=58.1
-# tests
-- pytest
-- flake8=3.3
-# wps
-- pywps=4.0.0
-- nginx=1.10.3
-- supervisor=3.3.1
-- gunicorn=19.7
-- gevent=1.2
-- eventlet=0.21
-- lxml=3.7
-- libxslt=1.1.29
-- genshi=0.7
-- mako
+- pywps=4.1.0
 - jinja2
-# helpers
-#- cdo=1.8.2
-#- python-cdo
+- click
+- psutil
 # esmvaltool
-- esmvaltool=2.0.0
-# ncl patch
-- ncl
-- libgdal=2.2.3
-# ncl patch end
+- esmvaltool=2.0

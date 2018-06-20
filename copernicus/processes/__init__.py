@@ -1,19 +1,15 @@
+from .wps_wordcounter import WordCounter
+from .wps_inout import InOut
+from .wps_sleep import Sleep
 from .wps_mydiag import MyDiag
 from .wps_pydemo import PyDemo
-# from .wps_overview import Overview
-# from .wps_cloud_taylor import CloudTaylor
-# from .wps_portrait import Portrait
-# from .wps_timeseries_plot import TimeSeriesPlot
-# from .wps_timeseries_plot_generic import GenericTimeSeriesPlot
-# from .wps_contour_plot import ContourPlot
+from .wps_perfmetrics import Perfmetrics
 
 processes = [
+    WordCounter(),
+    InOut(),
+    Sleep(),
     MyDiag(),
     PyDemo(),
-    # Overview(),
-    # CloudTaylor(),
-    # Portrait(),
-    # TimeSeriesPlot(),
-    # GenericTimeSeriesPlot(),
-    # ContourPlot(),
+    Perfmetrics(),
 ]

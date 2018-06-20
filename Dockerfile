@@ -1,48 +1,33 @@
 # vim:set ft=dockerfile:
-FROM debian:latest
-MAINTAINER https://github.com/cp4cds/copernicus-wps-demo
+FROM continuumio/miniconda3
+MAINTAINER https://github.com/cp4cds/copernicus
+LABEL Description="copernicus-wps-demo WPS" Vendor="Birdhouse" Version="0.3.0"
 
-LABEL Description="copernicus-wps-demo application" Vendor="CP4CDS" Version="0.2.2"
+# Update Debian system
+RUN apt-get update && apt-get install -y \
+ build-essential \
+&& rm -rf /var/lib/apt/lists/*
 
-# Configure hostname and ports for services
-ENV HTTP_PORT 8080
-#ENV HTTPS_PORT 8443
-ENV OUTPUT_PORT 8000
-ENV HOSTNAME localhost
+# Update conda
+RUN conda update -n base conda
 
-# Set current home
-ENV HOME /root
+# Copy WPS project
+COPY . /opt/wps
 
-# Copy application sources
-COPY . /opt/birdhouse/src/copernicus-wps-demo
+WORKDIR /opt/wps
 
-# cd into application
-WORKDIR /opt/birdhouse/src/copernicus-wps-demo
+# Create conda environment
+RUN conda env create -n wps -f environment.yml
 
-# Provide custom.cfg with settings for docker image
-RUN printf "[buildout]\nextends=profiles/docker.cfg" > custom.cfg
+# Install WPS
+RUN ["/bin/bash", "-c", "source activate wps && python setup.py develop"]
 
-# Install system dependencies
-RUN bash bootstrap.sh -i && bash requirements.sh
+# Start WPS service on port 5000 on 0.0.0.0
+EXPOSE 5000
+ENTRYPOINT ["/bin/bash", "-c"]
+CMD ["source activate wps && exec emu start -b 0.0.0.0 -config /opt/wps/etc/demo.cfg"]
 
-# Set conda enviroment
-ENV ANACONDA_HOME /opt/conda
-ENV CONDA_ENVS_DIR /opt/conda/envs
-
-# Run install and fix permissions
-RUN make clean install && chmod 755 /opt/birdhouse/etc && chmod 755 /opt/birdhouse/var/run
-
-# Volume for data, cache, logfiles, ...
-#VOLUME /opt/birdhouse/var/lib
-#VOLUME /opt/birdhouse/var/log
-# Volume for configs
-#VOLUME /opt/birdhouse/etc
-
-# Ports used in birdhouse
-EXPOSE $HTTP_PORT $OUTPUT_PORT
-
-# Start supervisor in foreground
-ENV DAEMON_OPTS --nodaemon
-
-# Start service ...
-CMD ["make", "update-config", "start"]
+# docker build -t cp4cds/copernicus .
+# docker run -p 5000:5000 cp4cds/copernicus
+# http://localhost:5000/wps?request=GetCapabilities&service=WPS
+# http://localhost:5000/wps?request=DescribeProcess&service=WPS&identifier=all&version=1.0.0

@@ -1,13 +1,13 @@
-wps:
-  image: cp4cds/copernicus-wps-demo
-  environment:
-    HOSTNAME: $HOSTNAME
-    HTTP_PORT: $HTTP_PORT
-    OUTPUT_PORT: $OUTPUT_PORT
-  ports:
-    - "$HTTP_PORT:$HTTP_PORT"
-    - "$OUTPUT_PORT:$OUTPUT_PORT"
-#  volumes:
-#    - lib:/opt/birdhouse/var/lib
-#    - log:/opt/birdhouse/var/log
-#  volume_driver: local
+version: '3'
+services:
+  emu:
+    build: .
+    image: cp4cds/copernicus
+    ports:
+      - "5000:5000"
+
+
+# docker-compose build
+# docker-compose up
+# docker-compose down
+# docker-compose rm
