@@ -1,0 +1,34 @@
+---
+name: Insurance risk indices (Tailored product - Insurance)
+partner: BSC
+authors:
+  - Louis-Philippe Caron
+  - Alasdair Hunter
+  - Dragana Bojović
+  - Nicolau Manubens
+contact:
+  - Alasdair Hunter @alasdairhunter
+  - Nicolau Manubens @nmanuben
+description_short: Tool to compute extreme indices relevant to the insurance industry (heat, cold, wind, flood and drought indices).
+description_file: 'risk_index/description.md'
+report_file: report.pdf
+media: diagnosticsdata/risk_index/insurance_risk_indices.png
+enableADAGUC:
+  - data_url: https://portal.c3s-magic.eu/wms?DATASET=WP7_BSC_ACI_Components
+  - projectionbutton: true
+  - layerselector: true
+  - timeselector: true
+  - styleselector: true
+  - layers: []
+references:
+  - "Manubens, Nicolau, Louis-Philippe Caron, Alasdair Hunter, Omar Bellprat, Eleftheria Exarchou, Neven S. Fučkar, Javier Garcia-Serrano et al. \"An R package for climate forecast verification.\" Environmental Modelling & Software 103 (2018): 29-42."
+settings:
+  - Models:
+    - IPSL
+  - start_historical: '1960-01-01'
+  - end_historical: '1991-12-31'
+  - start_projection: '2020-01-01'
+  - end_projection: '2040-12-31'
+  - Experiment: RCP8.5
+title: Insurance risk indices
+youtube:

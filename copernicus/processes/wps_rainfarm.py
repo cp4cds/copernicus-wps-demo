@@ -1,6 +1,4 @@
 import os
-import requests
-import shutil
 
 from pywps import Process
 from pywps import LiteralInput, LiteralOutput
@@ -9,6 +7,7 @@ from pywps import Format, FORMATS
 from pywps.app.Common import Metadata
 
 from copernicus import runner
+from copernicus import util
 
 import logging
 LOGGER = logging.getLogger("PYWPS")
@@ -70,11 +69,12 @@ class RainFarm(Process):
             " precipitation fields from information simulated by climate models at regional scale.",
             metadata=[
                 Metadata('ESMValTool', 'http://www.esmvaltool.org/'),
-                Metadata('Diagnostic Description', 'https://raw.githubusercontent.com/c3s-magic/c3s-magic-frontend/master/src/static/diagnosticsdata/rainfarm/rainfarm.yml'),  # noqa
+                Metadata('Diagnostic Description',
+                         util.diagdata_url() + '/rainfarm/rainfarm.yml'),
                 Metadata('Description',
-                         'https://raw.githubusercontent.com/c3s-magic/c3s-magic-frontend/master/src/static/diagnosticsdata/rainfarm/description.md',  # noqa
+                         util.diagdata_url() + '/rainfarm/description.md',
                          role='http://www.opengis.net/spec/wps/2.0/def/process/description/documentation'),  # noqa
-                Metadata('Media', 'https://github.com/c3s-magic/c3s-magic-frontend/raw/master/src/static/diagnosticsdata/rainfarm/rainfarm_thumbnail.png'),  # noqa
+                Metadata('Media', util.diagdata_url() + '/rainfarm/rainfarm_thumbnail.png'),
             ],
             inputs=inputs,
             outputs=outputs,
@@ -87,12 +87,7 @@ class RainFarm(Process):
         response.update_status("running diag ...", 20)
         # result plot
         response.update_status("collect output plot ...", 90)
-        url = 'https://github.com/c3s-magic/c3s-magic-frontend/raw/master/src/static/diagnosticsdata/rainfarm/RainFARM_example_64x64.png'  # noqa
-        resp = requests.get(url, stream=True)
-        with open(os.path.join(self.workdir, 'img.png'), 'wb') as out_file:
-            shutil.copyfileobj(resp.raw, out_file)
-        del resp
         response.outputs['output'].output_format = Format('image/png')
-        response.outputs['output'].file = out_file.name
+        response.outputs['output'].file = util.diagdata_file(os.path.join('rainfarm', 'RainFARM_example_64x64.png'))
         response.update_status("done.", 100)
         return response

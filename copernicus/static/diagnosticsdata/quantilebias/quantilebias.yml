@@ -1,0 +1,36 @@
+---
+id: 1
+name: Precipitation quantile bias
+partner: ISAC-CNR
+authors:
+  - Jost von Hardenberg (ISAC-CNR, Italy)
+  - Silvia Terzago (ISAC-CNR, Italy)
+  - Enrico Arnone (ISAC-CNR, Italy)
+contact:
+  - Jost von Hardenberg j.vonhardeberg@isac.cnr.it
+  - Enrico Arnone e.arnone@isac.cnr.it
+description_short: This tool calculates the quantile bias between models and a reference dataset
+description_file: 'quantilebias/description.md'
+#media: 'https://placeholdit.imgix.net/~text?txtsize=33&txt=256%C3%97180&w=512&h=360'
+enableADAGUC:
+  - data_url: https://portal.c3s-magic.eu/wms?DATASET=WP4_ISAC_quantilebias
+  - projectionbutton: true
+  - layerselector: true
+  - timeselector: true
+  - styleselector: true
+  - layers: []
+references:
+  - "Mehran, A. et al., 2014, Journal of Geophysical Research (Atmospheres), Volume 119, Issue 4, pp. 1695-1707"
+settings:
+  - Models:
+      - MPI-ESM-P
+  - Experiment: Historical
+  - Start year: 1979
+  - End year: 2005
+  - Quantile: 75
+title: Precipitation quantile bias
+
+
+
+
+

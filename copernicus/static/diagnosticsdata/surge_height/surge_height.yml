@@ -1,0 +1,23 @@
+---
+name: Surge Height Estimator
+title: Surge Height Estimator
+partner: KNMI
+authors:
+  - Nina Nadine Ridder (KNMI, The Netherlands)
+contact:
+  - Nina Nadine Ridder
+description_short: Diagnostic to estimate surge levels along the coast of the North Sea from anomalies in mean sea level pressure and wind components.
+description_file: 'surge_height/description.md'
+report_file: report.pdf
+#media: https://placeholdit.imgix.net/~text?txtsize=33&txt=Place%20Holder%20Image&w=512&h=360
+enableADAGUC:
+  - data_url: https://portal.c3s-magic.eu:443/adagucserver?source=c3smagic%2FWP7-surge_estimator%2Fsurge_heights_EC-Earth_s01r14_20131201-20140131.nc&
+  - projectionbutton: false
+  - layerselector: false
+  - timeselector: true
+  - styleselector: false
+  - layers: []
+settings:
+  - Start year: 2013
+  - End year: 2014
+references:

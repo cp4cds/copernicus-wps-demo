@@ -1,0 +1,36 @@
+---
+name: Generic multi-model products
+partner: BSC
+authors:
+  - Nicolau Manubens
+  - Alasdair Hunter
+  - Louis-Philippe Caron
+  - Javier Vegas.
+contact:
+  - Nicolau Manubens @nmanuben
+description_short: Tools to compute the ensemble mean anomaly and the ensemble variance and agreement and plot the results as maps and time series.
+description_file: 'anomaly_agreement/description.md'
+report_file: report.pdf
+media: diagnosticsdata/anomaly_agreement/bsc_anomaly_timeseries.png
+enableEnsembleAnomalyPlots:
+  - data_url: 'https://portal.c3s-magic.eu/wms?DATASET=anomaly_agreement_stippling&'
+  - map_slider: true
+references:
+  - "Manubens, Nicolau, Louis-Philippe Caron, Alasdair Hunter, Omar Bellprat, Eleftheria Exarchou, Neven S. Fučkar, Javier Garcia-Serrano et al. \"An R package for climate forecast verification.\" Environmental Modelling & Software 103 (2018): 29-42."
+settings:
+  - Variable:
+       - tas
+  - Models:
+      - CNRM-CM5
+      - IPSL-CM5A-LR
+      - MIROC5
+      - MPI-ESM-LR
+  - start_historical: "1960-01-01"
+  - end_historical: "1991-12-31"
+  - start_projection: "2020-01-01"
+  - end_projection: "2050-12-31"
+  - first_month: 6
+  - last_month: 8
+  - Experiment: RCP8.5
+title: Generic multi-model products
+youtube: CNWA4j2okcc
