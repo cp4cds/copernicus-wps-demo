@@ -1,0 +1,34 @@
+---
+
+models:
+  - {model: {{constraints['model']}}, project: CMIP5,  mip: {{constraints['cmor_table']}},  exp: {{constraints['experiment']}},  ensemble: {{constraints['ensemble']}},  start_year: {{start_year}},  end_year: {{end_year}}}
+  - {model: ERA-Interim, project: OBS, tier: 3, type: reanaly, version: 1, start_year: {{ start_year }}, end_year: {{ end_year }}}
+
+preprocessors:
+  preprocessor_1:
+    extract_levels:
+      levels: 85000
+      scheme: nearest
+    regrid: false
+    mask_landocean: false
+    multi_model_statistics: false
+
+diagnostics:
+  ta_diagnostics:
+    description: Air temperature tutorial diagnostics.
+    variables:
+      ta:
+        preprocessor: preprocessor_1
+        field: T3M
+    additional_models:
+      - {model: NCEP, project: OBS, tier: 2, type: reanaly, version: 1, start_year: {{ start_year }}, end_year: {{ end_year }} }
+    scripts:
+      test_ta: &settings
+        script: examples/diagnostic_ta.ncl
+        projection: Mollweide
+        styleset: CMIP5
+        colormap: WhiteBlueGreenYellowRed
+        ncdf: default
+      test_ta_no2:
+        <<: *settings
+        script: examples/diagnostic_ta.ncl

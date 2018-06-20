@@ -3,14 +3,14 @@ import glob
 
 from jinja2 import Environment, PackageLoader, select_autoescape
 
-from copernicus import config
+from pywps import configuration
 
 import logging
 LOGGER = logging.getLogger("PYWPS")
 
 template_env = Environment(
-    loader=PackageLoader('copernicus', 'templates'),
-    autoescape=select_autoescape(['yml', 'xml'])
+    loader=PackageLoader('copernicus', '/templates/esmvaltool'),
+    autoescape=select_autoescape(['yml', ])
 )
 
 VERSION = "2.0.0"
@@ -18,9 +18,9 @@ VERSION = "2.0.0"
 
 def run(namelist_file, config_file):
     """Run esmvaltool"""
-    from esmvaltool.main import configure_logging, read_config_file, process_namelist
+    from esmvaltool._main import configure_logging, read_config_user_file, process_namelist
     namelist_name = os.path.splitext(os.path.basename(namelist_file))[0]
-    cfg = read_config_file(config_file, namelist_name)
+    cfg = read_config_user_file(config_file, namelist_name)
 
     # Create run dir
     if os.path.exists(cfg['run_dir']):
@@ -47,7 +47,7 @@ def run(namelist_file, config_file):
         LOGGER.info("esmvaltool ... done.")
     except Exception as err:
         LOGGER.exception('esmvaltool failed!')
-        raise Exception('esmvaltool failed: {0}'.format(err.output))
+        raise Exception('esmvaltool failed: {0}'.format(err))
     # find the log
     logfile = os.path.join(cfg['run_dir'], 'main_log.txt')
     return logfile, cfg['plot_dir']
@@ -61,8 +61,8 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
     # write config.yml
     config_templ = template_env.get_template('config.yml')
     rendered_config = config_templ.render(
-        archive_root=config.archive_root(),
-        obs_root=config.obs_root(),
+        archive_root=configuration.get_config_value("data", "archive_root"),
+        obs_root=configuration.get_config_value("data", "obs_root"),
         output_dir=output_dir,
         output_format=output_format,
     )
@@ -94,7 +94,8 @@ def get_output(output_dir, path_filter, name_filter=None, output_format='pdf'):
     LOGGER.debug("output_fitler %s", output_filter)
     matches = glob.glob(output_filter)
     if len(matches) == 0:
-        raise Exception("no output found in workdir")
+        LOGGER.info("output_dir=%s", output_dir)
+        raise Exception("no output found in output dir.")
     elif len(matches) > 1:
         LOGGER.warn("more then one output found %s", matches)
     LOGGER.debug("output found=%s", matches[0])

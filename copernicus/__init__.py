@@ -1,4 +1,9 @@
-from .wsgi import application
-from .demo import main
+# -*- coding: utf-8 -*-
 
-__version__ = "0.2.2"
+"""Top-level package for copernicus-wps-demo."""
+
+from .wsgi import application
+
+__author__ = """Carsten Ehbrecht"""
+__email__ = 'ehbrecht@dkrz.de'
+__version__ = '0.3.0'

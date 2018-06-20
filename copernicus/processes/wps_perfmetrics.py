@@ -12,7 +12,7 @@ import logging
 LOGGER = logging.getLogger("PYWPS")
 
 
-class PyDemo(Process):
+class Perfmetrics(Process):
     def __init__(self):
         inputs = [
             LiteralInput('model', 'Model',
@@ -49,20 +49,17 @@ class PyDemo(Process):
             ComplexOutput('output', 'Output plot',
                           abstract='Generated output plot of ESMValTool processing.',
                           as_reference=True,
-                          supported_formats=[Format('image/png'), Format('application/pdf')]),
+                          supported_formats=[Format('application/pdf')]),
         ]
 
-        super(PyDemo, self).__init__(
+        super(Perfmetrics, self).__init__(
             self._handler,
-            identifier="py_demo",
-            title="Python Demo",
+            identifier="perfmetrics",
+            title="Model comparison report",
             version=runner.VERSION,
-            abstract="Generates a plot for temperature using ESMValTool."
-             " The default run uses the following CMIP5 data:"
-             " project=CMIP5, experiment=historical, ensemble=r1i1p1, variable=ta, model=MPI-ESM-LR, time_frequency=mon",  # noqa
+            abstract="Creates a performance metrics report comparing models using ESMValTool.",
             metadata=[
                 Metadata('ESMValTool', 'http://www.esmvaltool.org/'),
-                Metadata('ESGF Testdata', 'https://esgf1.dkrz.de/thredds/catalog/esgcet/7/cmip5.output1.MPI-M.MPI-ESM-LR.historical.mon.atmos.Amon.r1i1p1.v20120315.html?dataset=cmip5.output1.MPI-M.MPI-ESM-LR.historical.mon.atmos.Amon.r1i1p1.v20120315.ta_Amon_MPI-ESM-LR_historical_r1i1p1_199001-199912.nc'),  # noqa
             ],
             inputs=inputs,
             outputs=outputs,
@@ -84,12 +81,12 @@ class PyDemo(Process):
         # generate namelist
         response.update_status("generate namelist ...", 10)
         namelist_file, config_file = runner.generate_namelist(
-            workdir=self.workdir,
-            diag='py_demo',
+            diag='perfmetrics',
             constraints=constraints,
             start_year=request.inputs['start_year'][0].data,
             end_year=request.inputs['end_year'][0].data,
             output_format='pdf',
+            workdir=self.workdir,
         )
 
         # run diag
@@ -109,8 +106,8 @@ class PyDemo(Process):
         response.outputs['output'].output_format = Format('application/pdf')
         response.outputs['output'].file = runner.get_output(
             output_dir,
-            path_filter=os.path.join('ta_diagnostic', 'test_ta'),
-            name_filter="CMIP5*",
+            path_filter=os.path.join('ta850', 'cycle'),
+            name_filter="ta_cycle_monthlyclim__Glob",
             output_format="pdf")
         response.update_status("done.", 100)
         return response

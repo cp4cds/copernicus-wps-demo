@@ -90,6 +90,7 @@ class MyDiag(Process):
             start_year=request.inputs['start_year'][0].data,
             end_year=request.inputs['end_year'][0].data,
             output_format='pdf',
+            workdir=self.workdir,
         )
 
         # run diag
