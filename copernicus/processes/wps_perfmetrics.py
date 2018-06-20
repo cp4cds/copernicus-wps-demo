@@ -64,7 +64,7 @@ class Perfmetrics(Process):
             " and plots to better understand and interpret the results. "
             " The namelist can be used to calculate performance metrics at different vertical "
             " levels (e.g., 5, 30, 200, 850 hPa as in Gleckler et al., 2008) and in four "
-            " regions (global, tropics 20°N-20°S, northern extratropics 20°-90°N, southern extratropics 20°-90°S). "
+            " regions (global, tropics 20N-20S, northern extratropics 20-90N, southern extratropics 20-90S). "
             " As an additional reference, we consider the Righi et al. (2015) paper.",
             metadata=[
                 Metadata('ESMValTool', 'http://www.esmvaltool.org/'),
