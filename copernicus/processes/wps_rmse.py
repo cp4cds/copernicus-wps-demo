@@ -66,17 +66,22 @@ class RMSE(Process):
             title="Modes of variability",
             version=runner.VERSION,
             abstract="Tool to compute the RMSE between the observed and modelled patterns of variability "
-                " obtained through classification and their relative relative bias (percentage) "
-                " in the frequency of occurrence and the persistence of each mode.",
+            " obtained through classification and their relative relative bias (percentage) "
+            " in the frequency of occurrence and the persistence of each mode.",
             metadata=[
                 Metadata('ESMValTool', 'http://www.esmvaltool.org/'),
-                Metadata('Diagnostic Description',
-                         util.diagdata_url() + '/modes_of_variability/modes_of_variability.yml'),
-                Metadata('Description',
-                         util.diagdata_url() + '/modes_of_variability/description.md',
-                         role='http://www.opengis.net/spec/wps/2.0/def/process/description/documentation'),  # noqa
+                Metadata('Documentation',
+                         'https://copernicus-wps-demo.readthedocs.io/en/latest/processes.html#rmse',
+                         role=util.WPS_ROLE_DOC),
                 Metadata('Media',
-                         util.diagdata_url() + '/modes_of_variability/era_interim_1990-01-2010-01_clusters.png'),
+                         util.diagdata_url() + '/modes_of_variability/era_interim_1990-01-2010-01_clusters.png',
+                         role=util.WPS_ROLE_MEDIA),
+                Metadata('Diagnostic Description',
+                         util.diagdata_url() + '/modes_of_variability/description.md',
+                         role=util.MAGIC_ROLE_DOC),
+                Metadata('Diagnostic Metadata',
+                         util.diagdata_url() + '/modes_of_variability/modes_of_variability.yml',
+                         role=util.MAGIC_ROLE_METADATA),
             ],
             inputs=inputs,
             outputs=outputs,
