@@ -1,5 +1,4 @@
 import os
-from pywps import configuration
 
 
 def diagdata_file(filepath):
@@ -16,7 +15,6 @@ def static_directory():
 
 
 def static_url():
-    # return configuration.get_config_value('server', 'staticurl')
     # return 'http://localhost:5000/static'
     return 'https://raw.githubusercontent.com/cp4cds/copernicus-wps-demo/master/copernicus/static'
 

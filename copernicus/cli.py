@@ -81,7 +81,7 @@ def _run(application, bind_host=None, daemon=False):
     bind_host = bind_host or host
     # need to serve the wps outputs
     static_files = {
-        # '/static/diagnosticsdata': util.diagdata_directory(),
+        '/static': os.path.join(os.path.dirname(__file__), 'static'),
         '/outputs': configuration.get_config_value('server', 'outputpath')
     }
     run_simple(

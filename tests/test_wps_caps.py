@@ -18,5 +18,6 @@ def test_wps_caps():
         'perfmetrics',
         'py_demo',
         'rainfarm',
+        'rmse',
         'sleep',
         'wordcounter']

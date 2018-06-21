@@ -7,6 +7,7 @@ from pywps import Format, FORMATS
 from pywps.app.Common import Metadata
 
 from copernicus import runner
+from copernicus import util
 
 import logging
 LOGGER = logging.getLogger("PYWPS")
@@ -68,9 +69,13 @@ class Perfmetrics(Process):
             " As an additional reference, we consider the Righi et al. (2015) paper.",
             metadata=[
                 Metadata('ESMValTool', 'http://www.esmvaltool.org/'),
-                Metadata('Diagnostic Description', 'https://raw.githubusercontent.com/c3s-magic/c3s-magic-frontend/master/src/static/diagnosticsdata/perfmetrics/perfmetrics.yml'),  # noqa
-                Metadata('Description', 'https://raw.githubusercontent.com/c3s-magic/c3s-magic-frontend/master/src/static/diagnosticsdata/perfmetrics/description.md'),  # noqa
-                Metadata('Media', 'https://github.com/c3s-magic/c3s-magic-frontend/blob/master/src/static/diagnosticsdata/perfmetrics/Portait.png'),  # noqa
+                Metadata('Diagnostic Description',
+                         util.diagdata_url() + '/perfmetrics/perfmetrics.yml'),
+                Metadata('Description',
+                         util.diagdata_url() + '/perfmetrics/description.md',
+                         role='http://www.opengis.net/spec/wps/2.0/def/process/description/documentation'),  # noqa
+                Metadata('Media',
+                         util.diagdata_url() + '/perfmetrics/Portait.png'),
             ],
             inputs=inputs,
             outputs=outputs,
