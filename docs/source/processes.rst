@@ -48,3 +48,17 @@ PyDemo
 .. autoprocess:: copernicus.processes.wps_pydemo.PyDemo
   :docstring:
   :skiplines: 1
+
+RainFarm
+--------
+
+.. autoprocess:: copernicus.processes.wps_rainfarm.RainFarm
+  :docstring:
+  :skiplines: 1
+
+RMSE
+----
+
+.. autoprocess:: copernicus.processes.wps_rmse.RMSE
+  :docstring:
+  :skiplines: 1

@@ -1,6 +1,16 @@
 import os
 
 
+# wps roles
+WPS_ROLE_BASE_URL = 'http://www.opengis.net/spec/wps/2.0/def/process/description'
+WPS_ROLE_DOC = WPS_ROLE_BASE_URL + '/documentation'
+WPS_ROLE_MEDIA = WPS_ROLE_BASE_URL + '/media'
+# magic roles
+MAGIC_ROLE_BASE_URL = 'http://c3s-magic.eu/spec/diagnostic/2.0'
+MAGIC_ROLE_DOC = MAGIC_ROLE_BASE_URL + '/documentation'
+MAGIC_ROLE_METADATA = MAGIC_ROLE_BASE_URL + '/metadata'
+
+
 def diagdata_file(filepath):
     return os.path.join(diagdata_directory(), filepath)
 
