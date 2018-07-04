@@ -1,6 +1,6 @@
 version: '3'
 services:
-  emu:
+  copernicus:
     build: .
     image: cp4cds/copernicus
     ports:

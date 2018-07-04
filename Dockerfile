@@ -1,7 +1,7 @@
 # vim:set ft=dockerfile:
 FROM continuumio/miniconda3
 MAINTAINER https://github.com/cp4cds/copernicus
-LABEL Description="copernicus-wps-demo WPS" Vendor="Birdhouse" Version="0.3.0"
+LABEL Description="CP4CDS WPS Demo" Vendor="CP4CDS" Version="0.3.0"
 
 # Update Debian system
 RUN apt-get update && apt-get install -y \
@@ -25,7 +25,7 @@ RUN ["/bin/bash", "-c", "source activate wps && python setup.py develop"]
 # Start WPS service on port 5000 on 0.0.0.0
 EXPOSE 5000
 ENTRYPOINT ["/bin/bash", "-c"]
-CMD ["source activate wps && exec emu start -b 0.0.0.0 -config /opt/wps/etc/demo.cfg"]
+CMD ["source activate wps && exec copernicus start -b 0.0.0.0 -c /opt/wps/etc/demo.cfg"]
 
 # docker build -t cp4cds/copernicus .
 # docker run -p 5000:5000 cp4cds/copernicus
