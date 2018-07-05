@@ -6,6 +6,7 @@
 
    installation
    configuration
+   tutorial
    processes
    changes
 

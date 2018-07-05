@@ -14,20 +14,6 @@ Sleep
    :docstring:
    :skiplines: 1
 
-Wordcounter
------------
-
-.. autoprocess:: copernicus.processes.wps_wordcounter.WordCounter
-   :docstring:
-   :skiplines: 1
-
-InOut
------
-
-.. autoprocess:: copernicus.processes.wps_inout.InOut
-   :docstring:
-   :skiplines: 1
-
 MyDiag
 ------
 

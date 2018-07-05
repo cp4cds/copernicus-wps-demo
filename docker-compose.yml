@@ -2,7 +2,7 @@ version: '3'
 services:
   copernicus:
     build: .
-    image: cp4cds/copernicus
+    image: cp4cds/copernicus-wps-demo
     ports:
       - "5000:5000"
 
