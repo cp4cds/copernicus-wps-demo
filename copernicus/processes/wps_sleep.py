@@ -6,7 +6,7 @@ class Sleep(Process):
     def __init__(self):
         inputs = [
             LiteralInput('delay', 'Delay between every update',
-                         default='10', data_type='float')
+                         default='1', data_type='float')
         ]
         outputs = [
             LiteralOutput('sleep_output', 'Sleep Output', data_type='string')
@@ -36,7 +36,7 @@ class Sleep(Process):
         if 'delay' in request.inputs:
             sleep_delay = request.inputs['delay'][0].data
         else:
-            sleep_delay = 10
+            sleep_delay = 1
 
         time.sleep(sleep_delay)
         response.update_status('PyWPS Process started. Waiting...', 20)
@@ -47,6 +47,6 @@ class Sleep(Process):
         time.sleep(sleep_delay)
         response.update_status('PyWPS Process started. Waiting...', 80)
         time.sleep(sleep_delay)
-        response.outputs['sleep_output'].data = 'done sleeping'
+        response.outputs['sleep_output'].data = 'done sleeping (delay={})'.format(sleep_delay)
 
         return response

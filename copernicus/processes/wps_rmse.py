@@ -51,7 +51,8 @@ class RMSE(Process):
             LiteralInput('experiment', 'Experiment',
                          abstract='Choose an experiment.',
                          data_type='string',
-                         min_occurs=0),
+                         allowed_values=['historical', 'rcp26', 'rcp85'],
+                         default='historical'),
         ]
         outputs = [
             ComplexOutput('output', 'Output plot',
