@@ -19,4 +19,4 @@ rootpath:
   default: /tmp
 
 drs:
-  CMIP5: DKRZ
+  CMIP5: {{ drs_pattern | default('default') }}
