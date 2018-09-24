@@ -67,6 +67,7 @@ def generate_recipe(diag, constraints=None, start_year=2000, end_year=2005, outp
     rendered_config = config_templ.render(
         archive_root=configuration.get_config_value("data", "archive_root"),
         obs_root=configuration.get_config_value("data", "obs_root"),
+        drs_pattern=configuration.get_config_value("data", "drs_pattern"),
         output_dir=output_dir,
         output_format=output_format,
     )
