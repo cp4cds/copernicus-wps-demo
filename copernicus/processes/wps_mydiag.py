@@ -39,8 +39,8 @@ class MyDiag(Process):
                          default="2001"),
         ]
         outputs = [
-            ComplexOutput('namelist', 'namelist',
-                          abstract='ESMValTool namelist used for processing.',
+            ComplexOutput('recipe', 'recipe',
+                          abstract='ESMValTool recipe used for processing.',
                           as_reference=True,
                           supported_formats=[Format('text/plain')]),
             ComplexOutput('log', 'Log File',
@@ -89,9 +89,9 @@ class MyDiag(Process):
             ensemble=request.inputs['ensemble'][0].data,
         )
 
-        # generate namelist
-        response.update_status("generate namelist ...", 10)
-        namelist_file, config_file = runner.generate_namelist(
+        # generate recipe
+        response.update_status("generate recipe ...", 10)
+        recipe_file, config_file = runner.generate_recipe(
             diag='mydiag',
             constraints=constraints,
             start_year=request.inputs['start_year'][0].data,
@@ -102,11 +102,11 @@ class MyDiag(Process):
 
         # run diag
         response.update_status("running diag ...", 20)
-        logfile, output_dir = runner.run(namelist_file, config_file)
+        logfile, output_dir = runner.run(recipe_file, config_file)
 
-        # namelist output
-        response.outputs['namelist'].output_format = FORMATS.TEXT
-        response.outputs['namelist'].file = namelist_file
+        # recipe output
+        response.outputs['recipe'].output_format = FORMATS.TEXT
+        response.outputs['recipe'].file = recipe_file
 
         # log output
         response.outputs['log'].output_format = FORMATS.TEXT

@@ -22,10 +22,10 @@
 ###############################################################################
 ---
 
-models:
-  - {model: {{constraints['model']}}, project: CMIP5, exp: {{constraints['experiment']}},  ensemble: {{constraints['ensemble']}},  start_year: {{start_year}},  end_year: {{end_year}}}
-#  - {model: MPI-ESM-LR,       project: CMIP5, exp: historical, ensemble: r1i1p1, start_year: 2000, end_year: 2001}
-#  - {model: MPI-ESM-MR,       project: CMIP5, exp: historical, ensemble: r1i1p1, start_year: 2000, end_year: 2001}
+datasets:
+  - {dataset: {{constraints['model']}}, project: CMIP5, exp: {{constraints['experiment']}},  ensemble: {{constraints['ensemble']}},  start_year: {{start_year}},  end_year: {{end_year}}}
+#  - {dataset: MPI-ESM-LR,       project: CMIP5, exp: historical, ensemble: r1i1p1, start_year: 2000, end_year: 2001}
+#  - {dataset: MPI-ESM-MR,       project: CMIP5, exp: historical, ensemble: r1i1p1, start_year: 2000, end_year: 2001}
 
 preprocessors:
   pp850:
@@ -52,9 +52,9 @@ diagnostics:
         alternative_model: NCEP
         mip: Amon
         field: T3M
-    additional_models:
-      - {model: ERA-Interim,  project: OBS,  type: reanaly,  version: 1,  start_year: {{ start_year }},  end_year: {{ end_year }},  tier: 3}
-      - {model: NCEP,         project: OBS,  type: reanaly,  version: 1,  start_year: {{ start_year }},  end_year: {{ end_year }},  tier: 2}
+    additional_datasets:
+      - {dataset: ERA-Interim,  project: OBS,  type: reanaly,  version: 1,  start_year: {{ start_year }},  end_year: {{ end_year }},  tier: 3}
+      - {dataset: NCEP,         project: OBS,  type: reanaly,  version: 1,  start_year: {{ start_year }},  end_year: {{ end_year }},  tier: 2}
     scripts:
       cycle: &cycle_settings
         script: perfmetrics/main.ncl
