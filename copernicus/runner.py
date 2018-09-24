@@ -1,5 +1,6 @@
 import os
 import glob
+import sys
 
 from jinja2 import Environment, PackageLoader, select_autoescape
 
@@ -16,11 +17,11 @@ template_env = Environment(
 VERSION = "2.0.0"
 
 
-def run(namelist_file, config_file):
+def run(recipe_file, config_file):
     """Run esmvaltool"""
-    from esmvaltool._main import configure_logging, read_config_user_file, process_namelist
-    namelist_name = os.path.splitext(os.path.basename(namelist_file))[0]
-    cfg = read_config_user_file(config_file, namelist_name)
+    from esmvaltool._main import configure_logging, read_config_user_file, process_recipe
+    recipe_name = os.path.splitext(os.path.basename(recipe_file))[0]
+    cfg = read_config_user_file(config_file, recipe_name)
 
     # Create run dir
     if os.path.exists(cfg['run_dir']):
@@ -43,17 +44,20 @@ def run(namelist_file, config_file):
 
     try:
         LOGGER.info("run esmvaltool ...")
-        process_namelist(namelist_file=namelist_file, config_user=cfg)
+        process_recipe(recipe_file=recipe_file, config_user=cfg)
         LOGGER.info("esmvaltool ... done.")
     except Exception as err:
         LOGGER.exception('esmvaltool failed!')
+        # For debugging purposes, exit here to keep the temp folder
+        # Should ideally be an option in PyWPS
+        # sys.exit(1)
         raise Exception('esmvaltool failed: {0}'.format(err))
     # find the log
     logfile = os.path.join(cfg['run_dir'], 'main_log.txt')
-    return logfile, cfg['plot_dir']
+    return logfile, cfg['plot_dir'], cfg['work_dir']
 
 
-def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, output_format='pdf', workdir=None):
+def generate_recipe(diag, constraints=None, start_year=2000, end_year=2005, output_format='pdf', workdir=None):
     constraints = constraints or {}
     workdir = workdir or os.curdir
     workdir = os.path.abspath(workdir)
@@ -70,25 +74,25 @@ def generate_namelist(diag, constraints=None, start_year=2000, end_year=2005, ou
     with open(config_file, 'w') as fp:
         fp.write(rendered_config)
 
-    # write namelist.xml
-    namelist = 'namelist_{0}.yml'.format(diag)
-    namelist_templ = template_env.get_template(namelist)
-    rendered_namelist = namelist_templ.render(
+    # write recipe.xml
+    recipe = 'recipe_{0}.yml'.format(diag)
+    recipe_templ = template_env.get_template(recipe)
+    rendered_recipe = recipe_templ.render(
         diag=diag,
         workdir=workdir,
         constraints=constraints,
         start_year=start_year,
         end_year=end_year,
     )
-    namelist_file = os.path.abspath(os.path.join(workdir, "namelist.yml"))
-    with open(namelist_file, 'w') as fp:
-        fp.write(rendered_namelist)
-    return namelist_file, config_file
+    recipe_file = os.path.abspath(os.path.join(workdir, "recipe.yml"))
+    with open(recipe_file, 'w') as fp:
+        fp.write(rendered_recipe)
+    return recipe_file, config_file
 
 
 def get_output(output_dir, path_filter, name_filter=None, output_format='pdf'):
     name_filter = name_filter or '*'
-    # output/namelist_20180130_111116/plots/ta_diagnostics/test_ta/ta.pdf
+    # output/recipe_20180130_111116/plots/diagnostic1/script1/MultiModelMean_T3M_ta_2001-2002_mean.pdf
     output_filter = os.path.join(
         output_dir, path_filter, '{0}.{1}'.format(name_filter, output_format))
     LOGGER.debug("output_fitler %s", output_filter)
