@@ -1,13 +1,13 @@
 name: copernicus
 channels:
-- esmvalgroup
-- birdhouse
-- conda-forge
 - defaults
 dependencies:
-- pywps>=4.1.17
+- python=3.7
+- pip
 - jinja2
 - click
 - psutil
 # esmvaltool
-- esmvaltool=2.0a1
+#- esmvaltool=2.0a1
+- pip:
+  - -e git+https://github.com/geopython/pywps@master#egg=pywps
