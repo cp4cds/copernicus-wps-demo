@@ -1,6 +1,13 @@
 Changes
 *******
 
+0.4.0 (2019-03-04)
+==================
+
+* Update ESMValTool (v2.0) templates to new naming convention (#24).
+* Added client WPS examples to documentation (#28).
+* Bug-fixes: (#5, #27)
+
 0.3.0 (2018-06-22)
 ==================
 

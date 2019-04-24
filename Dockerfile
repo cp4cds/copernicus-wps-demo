@@ -1,7 +1,7 @@
 # vim:set ft=dockerfile:
 FROM continuumio/miniconda3
 MAINTAINER https://github.com/cp4cds/copernicus
-LABEL Description="CP4CDS WPS Demo" Vendor="CP4CDS" Version="0.3.0"
+LABEL Description="CP4CDS WPS Demo" Vendor="CP4CDS" Version="0.4.0"
 
 # Update Debian system
 RUN apt-get update && apt-get install -y \
